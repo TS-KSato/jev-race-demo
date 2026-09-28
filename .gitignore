@@ -1,0 +1,17 @@
+# 実データ（JRAの出馬表・結果など）。公開リポジトリに入れない
+local/
+
+# 秘密情報
+.env
+.env.*
+*.key
+*.pem
+
+# ページからダウンロードしたリクエスト・記録
+/jev_*.json
+
+# 環境
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
