@@ -1,0 +1,6266 @@
+{
+  "parsed": {
+    "race": {
+      "date": "2026-03-01",
+      "venue": "東京",
+      "postTime": "15時45分",
+      "raceNo": 11,
+      "distance": 1600,
+      "courseDesc": "ダート・左",
+      "surface": "ダ",
+      "conditions": "4歳以上 オープン （国際）（指定） 別定",
+      "name": "第9回テストマイルステークスGⅢ",
+      "track": {}
+    },
+    "horses": [
+      {
+        "num": 1,
+        "frame": 1,
+        "blinker": false,
+        "name": "テストアルファ",
+        "trainer": "仮名 一郎（栗東）",
+        "sire": "テストサイアーA",
+        "dam": "テストメアA",
+        "damSire": "テストダムサイアーA",
+        "sex": "牡",
+        "age": 6,
+        "carried": 58,
+        "jockey": "試験 太郎",
+        "rating": 110,
+        "ratingCategory": "M",
+        "past": [
+          {
+            "date": "2026-02-08",
+            "venue": "東京",
+            "race": "ツバメS",
+            "grade": "GⅢ",
+            "finish": 4,
+            "field": 16,
+            "gate": 3,
+            "pop": 5,
+            "jockey": "試験 太郎",
+            "carried": 57,
+            "dist": 1400,
+            "surface": "ダ",
+            "time": "1:23.7",
+            "going": "良",
+            "rating": 106,
+            "bodyWeight": "500kg",
+            "corners": [
+              1,
+              1
+            ],
+            "last3f": 36.2,
+            "vs": "テストヤンキー",
+            "margin": 0.4
+          },
+          {
+            "date": "2025-11-15",
+            "venue": "東京",
+            "race": "カモメS",
+            "grade": "GⅢ",
+            "finish": 7,
+            "field": 16,
+            "gate": 11,
+            "pop": 2,
+            "jockey": "試験 太郎",
+            "carried": 57,
+            "dist": 1600,
+            "surface": "ダ",
+            "time": "1:36.1",
+            "going": "良",
+            "rating": 106,
+            "bodyWeight": "494kg",
+            "corners": [
+              11,
+              11
+            ],
+            "last3f": 35.3,
+            "vs": "テストズールー",
+            "margin": 0.9
+          },
+          {
+            "date": "2025-10-04",
+            "venue": "東京",
+            "race": "ヒバリC",
+            "grade": "リステッド",
+            "finish": 1,
+            "field": 16,
+            "gate": 7,
+            "pop": 4,
+            "jockey": "試験 太郎",
+            "carried": 60,
+            "dist": 1600,
+            "surface": "ダ",
+            "time": "1:35.5",
+            "going": "良",
+            "rating": 110,
+            "bodyWeight": "496kg",
+            "corners": [
+              2,
+              2
+            ],
+            "last3f": 36,
+            "vs": "テストエックス",
+            "margin": 0.7
+          },
+          {
+            "date": "2025-07-27",
+            "venue": "中京",
+            "race": "スズメS",
+            "grade": "GⅢ",
+            "finish": 4,
+            "field": 16,
+            "gate": 3,
+            "pop": 5,
+            "jockey": "試験 太郎",
+            "carried": 57,
+            "dist": 1400,
+            "surface": "ダ",
+            "time": "1:23.2",
+            "going": "良",
+            "rating": 103,
+            "bodyWeight": "504kg",
+            "corners": [
+              11,
+              10
+            ],
+            "last3f": 35.6,
+            "vs": "テストウィスキー",
+            "margin": 1
+          }
+        ]
+      },
+      {
+        "num": 2,
+        "frame": 2,
+        "blinker": false,
+        "name": "テストブラボー",
+        "trainer": "仮名 二郎（栗東）",
+        "sire": "テストサイアーB",
+        "dam": "テストメアB",
+        "damSire": "テストダムサイアーB",
+        "sex": "牡",
+        "age": 4,
+        "carried": 58,
+        "jockey": "試験 次郎",
+        "rating": 111,
+        "ratingCategory": "M,I",
+        "past": [
+          {
+            "date": "2025-12-25",
+            "venue": "園田",
+            "race": "テスト兵庫",
+            "grade": "JpnⅢ",
+            "finish": 1,
+            "field": 11,
+            "gate": null,
+            "jockey": "仮名 三郎",
+            "carried": 57,
+            "dist": 1400,
+            "surface": "ダ",
+            "time": "1:27.7",
+            "going": "不良",
+            "rating": 111,
+            "bodyWeight": "474kg",
+            "vs": "テストビクター",
+            "margin": 0.1
+          },
+          {
+            "date": "2025-11-30",
+            "venue": "京都",
+            "race": "ツグミS",
+            "grade": "OP",
+            "finish": 1,
+            "field": 16,
+            "gate": 5,
+            "pop": 9,
+            "jockey": "試験 次郎",
+            "carried": 57,
+            "dist": 1400,
+            "surface": "ダ",
+            "time": "1:23.2",
+            "going": "良",
+            "rating": 107,
+            "bodyWeight": "472kg",
+            "corners": [
+              12,
+              7
+            ],
+            "last3f": 35.7,
+            "vs": "テストユニフォーム",
+            "margin": 0.1
+          },
+          {
+            "date": "2025-09-23",
+            "venue": "浦和",
+            "race": "テスト浦和",
+            "grade": "JpnⅢ",
+            "finish": 6,
+            "field": 12,
+            "gate": null,
+            "jockey": "仮名 三郎",
+            "carried": 52,
+            "dist": 1400,
+            "surface": "ダ",
+            "time": "1:26.1",
+            "going": "良",
+            "rating": 96,
+            "bodyWeight": "455kg",
+            "vs": "テストタンゴ",
+            "margin": 1.3
+          },
+          {
+            "date": "2025-09-04",
+            "venue": "佐賀",
+            "race": "テスト佐賀",
+            "grade": "JpnⅢ",
+            "finish": 4,
+            "field": 10,
+            "gate": null,
+            "jockey": "仮名 三郎",
+            "carried": 55.5,
+            "dist": 1400,
+            "surface": "ダ",
+            "time": "1:27.3",
+            "going": "良",
+            "rating": 106,
+            "bodyWeight": "459kg",
+            "vs": "テストシエラ",
+            "margin": 0.4
+          }
+        ]
+      },
+      {
+        "num": 3,
+        "frame": 3,
+        "blinker": false,
+        "name": "テストチャーリー",
+        "trainer": "仮名 四郎（美浦）",
+        "sire": "テストサイアーC",
+        "dam": "テストメアC",
+        "damSire": "テストダムサイアーC",
+        "sex": "牝",
+        "age": 5,
+        "carried": 56,
+        "jockey": "試験 三郎",
+        "rating": 110,
+        "ratingCategory": "M",
+        "past": [
+          {
+            "date": "2026-01-25",
+            "venue": "京都",
+            "race": "キジS",
+            "grade": "GⅡ",
+            "finish": 4,
+            "field": 16,
+            "gate": 9,
+            "pop": 2,
+            "jockey": "試験 三郎",
+            "carried": 55,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:51.2",
+            "going": "良",
+            "rating": 110,
+            "bodyWeight": "524kg",
+            "corners": [
+              8,
+              7,
+              8,
+              7
+            ],
+            "last3f": 36.4,
+            "vs": "テストロメオ",
+            "margin": 0.2
+          },
+          {
+            "date": "2025-12-14",
+            "venue": "中山",
+            "race": "ウズラS",
+            "grade": "リステッド",
+            "finish": 1,
+            "field": 16,
+            "gate": 14,
+            "pop": 2,
+            "jockey": "試験 三郎",
+            "carried": 56,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:51.7",
+            "going": "稍重",
+            "rating": 110,
+            "bodyWeight": "520kg",
+            "corners": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "last3f": 37.3,
+            "vs": "テストケベック",
+            "margin": 1
+          },
+          {
+            "date": "2025-11-09",
+            "venue": "京都",
+            "race": "トキS",
+            "grade": "GⅢ",
+            "finish": 6,
+            "field": 15,
+            "gate": 8,
+            "pop": 9,
+            "jockey": "試験 四郎",
+            "carried": 55,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:48.7",
+            "going": "不良",
+            "rating": 102,
+            "bodyWeight": "524kg",
+            "corners": [
+              6,
+              6,
+              6,
+              4
+            ],
+            "last3f": 37,
+            "vs": "テストパパ",
+            "margin": 1.2
+          },
+          {
+            "date": "2025-09-27",
+            "venue": "阪神",
+            "race": "ヒワS",
+            "grade": "GⅢ",
+            "finish": 5,
+            "field": 14,
+            "gate": 11,
+            "pop": 7,
+            "jockey": "試験 三郎",
+            "carried": 55,
+            "dist": 2000,
+            "surface": "ダ",
+            "time": "2:05.2",
+            "going": "重",
+            "rating": 109,
+            "bodyWeight": "510kg",
+            "corners": [
+              9,
+              9,
+              10,
+              10
+            ],
+            "last3f": 36.9,
+            "vs": "テストオスカー",
+            "margin": 0.4
+          }
+        ]
+      },
+      {
+        "num": 4,
+        "frame": 4,
+        "blinker": false,
+        "name": "テストデルタ",
+        "trainer": "仮名 五郎（美浦）",
+        "sire": "テストサイアーD",
+        "dam": "テストメアD",
+        "damSire": "Test Damsire",
+        "sex": "牡",
+        "age": 5,
+        "carried": 58,
+        "jockey": "試験 四郎",
+        "rating": 112,
+        "ratingCategory": "M",
+        "past": [
+          {
+            "date": "2025-12-07",
+            "venue": "中京",
+            "race": "テストCS",
+            "grade": "GⅠ",
+            "finish": 11,
+            "field": 16,
+            "gate": 11,
+            "pop": 5,
+            "jockey": "仮名 六郎",
+            "carried": 58,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:51.5",
+            "going": "良",
+            "rating": 105,
+            "bodyWeight": "502kg",
+            "corners": [
+              2,
+              1,
+              2,
+              2
+            ],
+            "last3f": 38.6,
+            "vs": "テストノベンバー",
+            "margin": 1.3
+          },
+          {
+            "date": "2025-10-13",
+            "venue": "盛岡",
+            "race": "テスト盛岡",
+            "grade": "JpnⅠ",
+            "finish": 2,
+            "field": 16,
+            "gate": null,
+            "jockey": "仮名 七郎",
+            "carried": 57,
+            "dist": 1600,
+            "surface": "ダ",
+            "time": "1:34.9",
+            "going": "良",
+            "rating": 112,
+            "bodyWeight": "503kg",
+            "vs": "テストマイク",
+            "margin": 0.6
+          },
+          {
+            "date": "2025-06-08",
+            "venue": "東京",
+            "race": "テスト記念",
+            "grade": "GⅠ",
+            "finish": 12,
+            "field": 18,
+            "gate": 1,
+            "pop": 3,
+            "jockey": "仮名 六郎",
+            "carried": 58,
+            "dist": 1600,
+            "surface": "芝",
+            "time": "1:33.4",
+            "going": "良",
+            "rating": 111,
+            "bodyWeight": "504kg",
+            "corners": [
+              4,
+              4
+            ],
+            "last3f": 34.7,
+            "vs": "テストリマ",
+            "margin": 0.7
+          }
+        ]
+      },
+      {
+        "num": 5,
+        "frame": 5,
+        "blinker": true,
+        "name": "テストエコー",
+        "trainer": "仮名 八郎（栗東）",
+        "sire": "テストサイアーE",
+        "dam": "テストメアE",
+        "damSire": "テストダムサイアーE",
+        "sex": "牡",
+        "age": 5,
+        "carried": 58,
+        "jockey": "試験 五郎",
+        "rating": 114,
+        "ratingCategory": "M",
+        "past": [
+          {
+            "date": "2025-12-07",
+            "venue": "中京",
+            "race": "テストCS",
+            "grade": "GⅠ",
+            "finish": 3,
+            "field": 16,
+            "gate": 7,
+            "pop": 7,
+            "jockey": "試験 五郎",
+            "carried": 58,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:50.6",
+            "going": "良",
+            "rating": 114,
+            "bodyWeight": "516kg",
+            "corners": [
+              12,
+              12,
+              10,
+              11
+            ],
+            "last3f": 36.9,
+            "vs": "テストノベンバー",
+            "margin": 0.4
+          },
+          {
+            "date": "2025-11-09",
+            "venue": "京都",
+            "race": "トキS",
+            "grade": "GⅢ",
+            "finish": 4,
+            "field": 15,
+            "gate": 4,
+            "pop": 5,
+            "jockey": "試験 五郎",
+            "carried": 58,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:48.0",
+            "going": "不良",
+            "rating": 110,
+            "bodyWeight": "516kg",
+            "corners": [
+              14,
+              14,
+              13,
+              13
+            ],
+            "last3f": 35.3,
+            "vs": "テストパパ",
+            "margin": 0.5
+          },
+          {
+            "date": "2025-09-07",
+            "venue": "韓",
+            "race": "テスト韓国C",
+            "grade": "GⅢ",
+            "finish": 3,
+            "field": 11,
+            "gate": null,
+            "jockey": "試験 五郎",
+            "carried": 57,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:51.4",
+            "going": "稍重",
+            "rating": 110,
+            "bodyWeight": "516kg",
+            "vs": "テストキロ",
+            "margin": 0.6
+          },
+          {
+            "date": "2025-07-02",
+            "venue": "大井",
+            "race": "テスト大井",
+            "grade": "JpnⅠ",
+            "finish": 6,
+            "field": 13,
+            "gate": null,
+            "jockey": "試験 五郎",
+            "carried": 57,
+            "dist": 2000,
+            "surface": "ダ",
+            "time": "2:04.4",
+            "going": "良",
+            "rating": 106,
+            "bodyWeight": "515kg",
+            "vs": "テストジュリエット",
+            "margin": 1.3
+          }
+        ]
+      },
+      {
+        "num": 6,
+        "frame": 6,
+        "blinker": false,
+        "name": "テストフォックス",
+        "trainer": "仮名 九郎（美浦）",
+        "sire": "テストサイアーF",
+        "dam": "テストメアF",
+        "damSire": "Test Damsire F",
+        "carried": 58,
+        "jockey": "試験 六郎",
+        "rating": 111,
+        "past": [
+          {
+            "date": "2025-11-23",
+            "venue": "京都",
+            "race": "テストSS",
+            "grade": "GⅠ",
+            "finish": 15,
+            "field": 18,
+            "gate": 13,
+            "pop": 16,
+            "jockey": "仮名 十郎",
+            "carried": 57,
+            "dist": 1200,
+            "surface": "芝",
+            "time": "1:08.5",
+            "going": "良",
+            "rating": 105,
+            "bodyWeight": "478kg",
+            "corners": [
+              2,
+              2
+            ],
+            "last3f": 34.1,
+            "vs": "テストインディア",
+            "margin": 1.4
+          },
+          {
+            "date": "2025-10-05",
+            "venue": "東京",
+            "race": "テスト王冠",
+            "grade": "GⅡ",
+            "finish": 8,
+            "field": 10,
+            "gate": 1,
+            "pop": 9,
+            "jockey": "仮名 十郎",
+            "carried": 58,
+            "dist": 1800,
+            "surface": "芝",
+            "time": "1:44.7",
+            "going": "良",
+            "rating": 109,
+            "bodyWeight": "490kg",
+            "corners": [
+              10,
+              10,
+              9
+            ],
+            "last3f": 33.3,
+            "vs": "テストホテル",
+            "margin": 0.7
+          },
+          {
+            "date": "2025-06-08",
+            "venue": "東京",
+            "race": "テスト記念",
+            "grade": "GⅠ",
+            "finish": 13,
+            "field": 18,
+            "gate": 12,
+            "pop": 15,
+            "jockey": "仮名 十郎",
+            "carried": 58,
+            "dist": 1600,
+            "surface": "芝",
+            "time": "1:33.7",
+            "going": "良",
+            "rating": 107,
+            "bodyWeight": "476kg",
+            "corners": [
+              4,
+              4
+            ],
+            "last3f": 35.1,
+            "vs": "テストリマ",
+            "margin": 1
+          },
+          {
+            "date": "2025-04-27",
+            "venue": "京都",
+            "race": "テストSC",
+            "grade": "GⅡ",
+            "finish": 1,
+            "field": 10,
+            "gate": 10,
+            "pop": 5,
+            "jockey": "仮名 十郎",
+            "carried": 57,
+            "dist": 1200,
+            "surface": "芝",
+            "time": "1:09.0",
+            "going": "良",
+            "rating": 111,
+            "bodyWeight": "478kg",
+            "corners": [
+              6,
+              7
+            ],
+            "last3f": 33.8,
+            "vs": "テストゴルフ",
+            "margin": 0.1
+          }
+        ]
+      },
+      {
+        "num": 7,
+        "frame": 7,
+        "blinker": true,
+        "name": "テストゴルフ",
+        "trainer": "仮名 十一郎（栗東）",
+        "sire": "テストサイアーG",
+        "dam": "テストメアG",
+        "damSire": "テストダムサイアーG",
+        "sex": "牡",
+        "age": 8,
+        "carried": 58,
+        "jockey": "試験 七郎",
+        "rating": 113,
+        "ratingCategory": "M",
+        "past": [
+          {
+            "date": "2025-12-07",
+            "venue": "中京",
+            "race": "テストCS",
+            "grade": "GⅠ",
+            "finish": 12,
+            "field": 16,
+            "gate": 14,
+            "pop": 12,
+            "jockey": "仮名 十二郎",
+            "carried": 58,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:52.3",
+            "going": "良",
+            "rating": 98,
+            "bodyWeight": "526kg",
+            "corners": [
+              8,
+              9,
+              10,
+              11
+            ],
+            "last3f": 38.5,
+            "vs": "テストノベンバー",
+            "margin": 2.1
+          },
+          {
+            "date": "2025-11-15",
+            "venue": "東京",
+            "race": "カモメS",
+            "grade": "GⅢ",
+            "finish": 9,
+            "field": 16,
+            "gate": 14,
+            "pop": 5,
+            "jockey": "仮名 十二郎",
+            "carried": 58,
+            "dist": 1600,
+            "surface": "ダ",
+            "time": "1:36.2",
+            "going": "良",
+            "rating": 107,
+            "bodyWeight": "530kg",
+            "corners": [
+              3,
+              2
+            ],
+            "last3f": 36.2,
+            "vs": "テストズールー",
+            "margin": 1
+          },
+          {
+            "date": "2025-10-13",
+            "venue": "盛岡",
+            "race": "テスト盛岡",
+            "grade": "JpnⅠ",
+            "finish": 3,
+            "field": 16,
+            "gate": null,
+            "jockey": "仮名 十二郎",
+            "carried": 57,
+            "dist": 1600,
+            "surface": "ダ",
+            "time": "1:35.6",
+            "going": "良",
+            "rating": 106,
+            "bodyWeight": "532kg",
+            "vs": "テストマイク",
+            "margin": 1.3
+          },
+          {
+            "date": "2025-04-05",
+            "venue": "ア首",
+            "race": "テストドバイ",
+            "grade": "GⅡ",
+            "finish": 11,
+            "field": 14,
+            "gate": null,
+            "jockey": "仮名 十二郎",
+            "carried": 57,
+            "dist": 1600,
+            "surface": "ダ",
+            "time": "1:41.5",
+            "going": "良",
+            "rating": 73,
+            "bodyWeight": "計不",
+            "vs": "テストアルファロメオ",
+            "margin": 4.9
+          }
+        ]
+      },
+      {
+        "num": 8,
+        "frame": 8,
+        "blinker": false,
+        "name": "テストホテル",
+        "trainer": "仮名 十三郎（栗東）",
+        "sire": "テストサイアーH",
+        "dam": "テストメアH",
+        "damSire": "テストダムサイアーH",
+        "sex": "牡",
+        "age": 6,
+        "carried": 58,
+        "jockey": "試験 八郎",
+        "rating": 113,
+        "ratingCategory": "M",
+        "past": [
+          {
+            "date": "2026-01-25",
+            "venue": "京都",
+            "race": "キジS",
+            "grade": "GⅡ",
+            "finish": 9,
+            "field": 16,
+            "gate": 2,
+            "pop": 4,
+            "jockey": "試験 八郎",
+            "carried": 57,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:51.9",
+            "going": "良",
+            "rating": 103,
+            "bodyWeight": "478kg",
+            "corners": [
+              4,
+              5,
+              4,
+              5
+            ],
+            "last3f": 37.3,
+            "vs": "テストロメオ",
+            "margin": 0.9
+          },
+          {
+            "date": "2025-11-09",
+            "venue": "京都",
+            "race": "トキS",
+            "grade": "GⅢ",
+            "finish": 2,
+            "field": 15,
+            "gate": 5,
+            "pop": 7,
+            "jockey": "仮名 十四郎",
+            "carried": 57,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:47.5",
+            "going": "不良",
+            "rating": 113,
+            "bodyWeight": "474kg",
+            "corners": [
+              8,
+              7,
+              6,
+              4
+            ],
+            "last3f": 35.7,
+            "vs": "テストパパ",
+            "margin": 0
+          },
+          {
+            "date": "2025-09-27",
+            "venue": "阪神",
+            "race": "ヒワS",
+            "grade": "GⅢ",
+            "finish": 2,
+            "field": 14,
+            "gate": 8,
+            "pop": 9,
+            "jockey": "試験 八郎",
+            "carried": 55,
+            "dist": 2000,
+            "surface": "ダ",
+            "time": "2:04.9",
+            "going": "良",
+            "rating": 104,
+            "bodyWeight": "480kg",
+            "corners": [
+              8,
+              8,
+              5,
+              5
+            ],
+            "last3f": 36.7,
+            "vs": "テストオスカー",
+            "margin": 0.1
+          },
+          {
+            "date": "2025-06-28",
+            "venue": "小倉",
+            "race": "テスト博多S",
+            "grade": "3勝ク",
+            "finish": 1,
+            "field": 16,
+            "gate": 9,
+            "pop": 1,
+            "jockey": "仮名 十四郎",
+            "carried": 58,
+            "dist": 1700,
+            "surface": "ダ",
+            "time": "1:44.2",
+            "going": "良",
+            "bodyWeight": "474kg",
+            "corners": [
+              5,
+              5,
+              6,
+              3
+            ],
+            "last3f": 36.8,
+            "vs": "テストマイクロ",
+            "margin": 0
+          }
+        ]
+      }
+    ],
+    "warnings": [
+      "馬場状態（「天候：」以降）が見つかりません。馬場の情報なしで進みます",
+      "1番 テストアルファ：単勝オッズが読み取れません（発売前・取消の可能性）",
+      "2番 テストブラボー：単勝オッズが読み取れません（発売前・取消の可能性）",
+      "2番 テストブラボー：2025-12-25 テスト兵庫 に通過順がありません（海外・地方・直線競馬など）",
+      "2番 テストブラボー：2025-09-23 テスト浦和 に通過順がありません（海外・地方・直線競馬など）",
+      "2番 テストブラボー：2025-09-04 テスト佐賀 に通過順がありません（海外・地方・直線競馬など）",
+      "3番 テストチャーリー：単勝オッズが読み取れません（発売前・取消の可能性）",
+      "4番 テストデルタ：単勝オッズが読み取れません（発売前・取消の可能性）",
+      "4番 テストデルタ：過去走が3件です",
+      "4番 テストデルタ：2025-10-13 テスト盛岡 に通過順がありません（海外・地方・直線競馬など）",
+      "5番 テストエコー：単勝オッズが読み取れません（発売前・取消の可能性）",
+      "5番 テストエコー：2025-09-07 テスト韓国C に通過順がありません（海外・地方・直線競馬など）",
+      "5番 テストエコー：2025-07-02 テスト大井 に通過順がありません（海外・地方・直線競馬など）",
+      "6番 テストフォックス：単勝オッズが読み取れません（発売前・取消の可能性）",
+      "7番 テストゴルフ：単勝オッズが読み取れません（発売前・取消の可能性）",
+      "7番 テストゴルフ：2025-10-13 テスト盛岡 に通過順がありません（海外・地方・直線競馬など）",
+      "7番 テストゴルフ：2025-04-05 テストドバイ に通過順がありません（海外・地方・直線競馬など）",
+      "8番 テストホテル：単勝オッズが読み取れません（発売前・取消の可能性）"
+    ]
+  },
+  "derived": {
+    "race": {
+      "date": "2026-03-01",
+      "venue": "東京",
+      "postTime": "15時45分",
+      "raceNo": 11,
+      "distance": 1600,
+      "courseDesc": "ダート・左",
+      "surface": "ダ",
+      "conditions": "4歳以上 オープン （国際）（指定） 別定",
+      "name": "第9回テストマイルステークスGⅢ",
+      "track": {}
+    },
+    "horses": [
+      {
+        "num": 1,
+        "frame": 1,
+        "blinker": false,
+        "name": "テストアルファ",
+        "trainer": "仮名 一郎（栗東）",
+        "sire": "テストサイアーA",
+        "dam": "テストメアA",
+        "damSire": "テストダムサイアーA",
+        "sex": "牡",
+        "age": 6,
+        "carried": 58,
+        "jockey": "試験 太郎",
+        "rating": 110,
+        "ratingCategory": "M",
+        "past": [
+          {
+            "date": "2026-02-08",
+            "venue": "東京",
+            "race": "ツバメS",
+            "grade": "GⅢ",
+            "finish": 4,
+            "field": 16,
+            "gate": 3,
+            "pop": 5,
+            "jockey": "試験 太郎",
+            "carried": 57,
+            "dist": 1400,
+            "surface": "ダ",
+            "time": "1:23.7",
+            "going": "良",
+            "rating": 106,
+            "bodyWeight": "500kg",
+            "corners": [
+              1,
+              1
+            ],
+            "last3f": 36.2,
+            "vs": "テストヤンキー",
+            "margin": 0.4,
+            "timeSec": 83.7,
+            "first": 1,
+            "last": 1,
+            "firstZone": "先頭",
+            "lastZone": "先頭",
+            "tags": [
+              "今回との距離差-200m"
+            ]
+          },
+          {
+            "date": "2025-11-15",
+            "venue": "東京",
+            "race": "カモメS",
+            "grade": "GⅢ",
+            "finish": 7,
+            "field": 16,
+            "gate": 11,
+            "pop": 2,
+            "jockey": "試験 太郎",
+            "carried": 57,
+            "dist": 1600,
+            "surface": "ダ",
+            "time": "1:36.1",
+            "going": "良",
+            "rating": 106,
+            "bodyWeight": "494kg",
+            "corners": [
+              11,
+              11
+            ],
+            "last3f": 35.3,
+            "vs": "テストズールー",
+            "margin": 0.9,
+            "timeSec": 96.1,
+            "first": 11,
+            "last": 11,
+            "firstZone": "中団",
+            "lastZone": "中団",
+            "tags": []
+          },
+          {
+            "date": "2025-10-04",
+            "venue": "東京",
+            "race": "ヒバリC",
+            "grade": "リステッド",
+            "finish": 1,
+            "field": 16,
+            "gate": 7,
+            "pop": 4,
+            "jockey": "試験 太郎",
+            "carried": 60,
+            "dist": 1600,
+            "surface": "ダ",
+            "time": "1:35.5",
+            "going": "良",
+            "rating": 110,
+            "bodyWeight": "496kg",
+            "corners": [
+              2,
+              2
+            ],
+            "last3f": 36,
+            "vs": "テストエックス",
+            "margin": 0.7,
+            "timeSec": 95.5,
+            "first": 2,
+            "last": 2,
+            "firstZone": "好位",
+            "lastZone": "好位",
+            "tags": []
+          },
+          {
+            "date": "2025-07-27",
+            "venue": "中京",
+            "race": "スズメS",
+            "grade": "GⅢ",
+            "finish": 4,
+            "field": 16,
+            "gate": 3,
+            "pop": 5,
+            "jockey": "試験 太郎",
+            "carried": 57,
+            "dist": 1400,
+            "surface": "ダ",
+            "time": "1:23.2",
+            "going": "良",
+            "rating": 103,
+            "bodyWeight": "504kg",
+            "corners": [
+              11,
+              10
+            ],
+            "last3f": 35.6,
+            "vs": "テストウィスキー",
+            "margin": 1,
+            "timeSec": 83.2,
+            "first": 11,
+            "last": 10,
+            "firstZone": "中団",
+            "lastZone": "中団",
+            "tags": [
+              "今回との距離差-200m"
+            ]
+          }
+        ],
+        "facts": {
+          "led": 1,
+          "top2": 2,
+          "racesWithCorners": 4,
+          "bestFront3f": null,
+          "jockeyChange": false,
+          "daysSinceLast": 21
+        }
+      },
+      {
+        "num": 2,
+        "frame": 2,
+        "blinker": false,
+        "name": "テストブラボー",
+        "trainer": "仮名 二郎（栗東）",
+        "sire": "テストサイアーB",
+        "dam": "テストメアB",
+        "damSire": "テストダムサイアーB",
+        "sex": "牡",
+        "age": 4,
+        "carried": 58,
+        "jockey": "試験 次郎",
+        "rating": 111,
+        "ratingCategory": "M,I",
+        "past": [
+          {
+            "date": "2025-12-25",
+            "venue": "園田",
+            "race": "テスト兵庫",
+            "grade": "JpnⅢ",
+            "finish": 1,
+            "field": 11,
+            "gate": null,
+            "jockey": "仮名 三郎",
+            "carried": 57,
+            "dist": 1400,
+            "surface": "ダ",
+            "time": "1:27.7",
+            "going": "不良",
+            "rating": 111,
+            "bodyWeight": "474kg",
+            "vs": "テストビクター",
+            "margin": 0.1,
+            "timeSec": 87.7,
+            "tags": [
+              "今回との距離差-200m",
+              "通過順なし",
+              "不良馬場"
+            ]
+          },
+          {
+            "date": "2025-11-30",
+            "venue": "京都",
+            "race": "ツグミS",
+            "grade": "OP",
+            "finish": 1,
+            "field": 16,
+            "gate": 5,
+            "pop": 9,
+            "jockey": "試験 次郎",
+            "carried": 57,
+            "dist": 1400,
+            "surface": "ダ",
+            "time": "1:23.2",
+            "going": "良",
+            "rating": 107,
+            "bodyWeight": "472kg",
+            "corners": [
+              12,
+              7
+            ],
+            "last3f": 35.7,
+            "vs": "テストユニフォーム",
+            "margin": 0.1,
+            "timeSec": 83.2,
+            "first": 12,
+            "last": 7,
+            "firstZone": "後方",
+            "lastZone": "中団",
+            "tags": [
+              "今回との距離差-200m"
+            ]
+          },
+          {
+            "date": "2025-09-23",
+            "venue": "浦和",
+            "race": "テスト浦和",
+            "grade": "JpnⅢ",
+            "finish": 6,
+            "field": 12,
+            "gate": null,
+            "jockey": "仮名 三郎",
+            "carried": 52,
+            "dist": 1400,
+            "surface": "ダ",
+            "time": "1:26.1",
+            "going": "良",
+            "rating": 96,
+            "bodyWeight": "455kg",
+            "vs": "テストタンゴ",
+            "margin": 1.3,
+            "timeSec": 86.1,
+            "tags": [
+              "今回との距離差-200m",
+              "通過順なし"
+            ]
+          },
+          {
+            "date": "2025-09-04",
+            "venue": "佐賀",
+            "race": "テスト佐賀",
+            "grade": "JpnⅢ",
+            "finish": 4,
+            "field": 10,
+            "gate": null,
+            "jockey": "仮名 三郎",
+            "carried": 55.5,
+            "dist": 1400,
+            "surface": "ダ",
+            "time": "1:27.3",
+            "going": "良",
+            "rating": 106,
+            "bodyWeight": "459kg",
+            "vs": "テストシエラ",
+            "margin": 0.4,
+            "timeSec": 87.3,
+            "tags": [
+              "今回との距離差-200m",
+              "通過順なし"
+            ]
+          }
+        ],
+        "facts": {
+          "led": 0,
+          "top2": 0,
+          "racesWithCorners": 1,
+          "bestFront3f": null,
+          "jockeyChange": true,
+          "daysSinceLast": 66
+        }
+      },
+      {
+        "num": 3,
+        "frame": 3,
+        "blinker": false,
+        "name": "テストチャーリー",
+        "trainer": "仮名 四郎（美浦）",
+        "sire": "テストサイアーC",
+        "dam": "テストメアC",
+        "damSire": "テストダムサイアーC",
+        "sex": "牝",
+        "age": 5,
+        "carried": 56,
+        "jockey": "試験 三郎",
+        "rating": 110,
+        "ratingCategory": "M",
+        "past": [
+          {
+            "date": "2026-01-25",
+            "venue": "京都",
+            "race": "キジS",
+            "grade": "GⅡ",
+            "finish": 4,
+            "field": 16,
+            "gate": 9,
+            "pop": 2,
+            "jockey": "試験 三郎",
+            "carried": 55,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:51.2",
+            "going": "良",
+            "rating": 110,
+            "bodyWeight": "524kg",
+            "corners": [
+              8,
+              7,
+              8,
+              7
+            ],
+            "last3f": 36.4,
+            "vs": "テストロメオ",
+            "margin": 0.2,
+            "timeSec": 111.2,
+            "first": 8,
+            "last": 7,
+            "firstZone": "中団",
+            "lastZone": "中団",
+            "tags": [
+              "今回との距離差+200m"
+            ]
+          },
+          {
+            "date": "2025-12-14",
+            "venue": "中山",
+            "race": "ウズラS",
+            "grade": "リステッド",
+            "finish": 1,
+            "field": 16,
+            "gate": 14,
+            "pop": 2,
+            "jockey": "試験 三郎",
+            "carried": 56,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:51.7",
+            "going": "稍重",
+            "rating": 110,
+            "bodyWeight": "520kg",
+            "corners": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "last3f": 37.3,
+            "vs": "テストケベック",
+            "margin": 1,
+            "timeSec": 111.7,
+            "first": 1,
+            "last": 1,
+            "firstZone": "先頭",
+            "lastZone": "先頭",
+            "tags": [
+              "今回との距離差+200m",
+              "稍重馬場"
+            ]
+          },
+          {
+            "date": "2025-11-09",
+            "venue": "京都",
+            "race": "トキS",
+            "grade": "GⅢ",
+            "finish": 6,
+            "field": 15,
+            "gate": 8,
+            "pop": 9,
+            "jockey": "試験 四郎",
+            "carried": 55,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:48.7",
+            "going": "不良",
+            "rating": 102,
+            "bodyWeight": "524kg",
+            "corners": [
+              6,
+              6,
+              6,
+              4
+            ],
+            "last3f": 37,
+            "vs": "テストパパ",
+            "margin": 1.2,
+            "timeSec": 108.7,
+            "first": 6,
+            "last": 4,
+            "firstZone": "中団",
+            "lastZone": "好位",
+            "tags": [
+              "今回との距離差+200m",
+              "不良馬場"
+            ]
+          },
+          {
+            "date": "2025-09-27",
+            "venue": "阪神",
+            "race": "ヒワS",
+            "grade": "GⅢ",
+            "finish": 5,
+            "field": 14,
+            "gate": 11,
+            "pop": 7,
+            "jockey": "試験 三郎",
+            "carried": 55,
+            "dist": 2000,
+            "surface": "ダ",
+            "time": "2:05.2",
+            "going": "重",
+            "rating": 109,
+            "bodyWeight": "510kg",
+            "corners": [
+              9,
+              9,
+              10,
+              10
+            ],
+            "last3f": 36.9,
+            "vs": "テストオスカー",
+            "margin": 0.4,
+            "timeSec": 125.2,
+            "first": 9,
+            "last": 10,
+            "firstZone": "中団",
+            "lastZone": "中団",
+            "tags": [
+              "今回との距離差+400m",
+              "重馬場"
+            ]
+          }
+        ],
+        "facts": {
+          "led": 1,
+          "top2": 1,
+          "racesWithCorners": 4,
+          "bestFront3f": null,
+          "jockeyChange": false,
+          "daysSinceLast": 35
+        }
+      },
+      {
+        "num": 4,
+        "frame": 4,
+        "blinker": false,
+        "name": "テストデルタ",
+        "trainer": "仮名 五郎（美浦）",
+        "sire": "テストサイアーD",
+        "dam": "テストメアD",
+        "damSire": "Test Damsire",
+        "sex": "牡",
+        "age": 5,
+        "carried": 58,
+        "jockey": "試験 四郎",
+        "rating": 112,
+        "ratingCategory": "M",
+        "past": [
+          {
+            "date": "2025-12-07",
+            "venue": "中京",
+            "race": "テストCS",
+            "grade": "GⅠ",
+            "finish": 11,
+            "field": 16,
+            "gate": 11,
+            "pop": 5,
+            "jockey": "仮名 六郎",
+            "carried": 58,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:51.5",
+            "going": "良",
+            "rating": 105,
+            "bodyWeight": "502kg",
+            "corners": [
+              2,
+              1,
+              2,
+              2
+            ],
+            "last3f": 38.6,
+            "vs": "テストノベンバー",
+            "margin": 1.3,
+            "timeSec": 111.5,
+            "first": 2,
+            "last": 2,
+            "firstZone": "好位",
+            "lastZone": "好位",
+            "tags": [
+              "今回との距離差+200m"
+            ]
+          },
+          {
+            "date": "2025-10-13",
+            "venue": "盛岡",
+            "race": "テスト盛岡",
+            "grade": "JpnⅠ",
+            "finish": 2,
+            "field": 16,
+            "gate": null,
+            "jockey": "仮名 七郎",
+            "carried": 57,
+            "dist": 1600,
+            "surface": "ダ",
+            "time": "1:34.9",
+            "going": "良",
+            "rating": 112,
+            "bodyWeight": "503kg",
+            "vs": "テストマイク",
+            "margin": 0.6,
+            "timeSec": 94.9,
+            "tags": [
+              "通過順なし"
+            ]
+          },
+          {
+            "date": "2025-06-08",
+            "venue": "東京",
+            "race": "テスト記念",
+            "grade": "GⅠ",
+            "finish": 12,
+            "field": 18,
+            "gate": 1,
+            "pop": 3,
+            "jockey": "仮名 六郎",
+            "carried": 58,
+            "dist": 1600,
+            "surface": "芝",
+            "time": "1:33.4",
+            "going": "良",
+            "rating": 111,
+            "bodyWeight": "504kg",
+            "corners": [
+              4,
+              4
+            ],
+            "last3f": 34.7,
+            "vs": "テストリマ",
+            "margin": 0.7,
+            "timeSec": 93.4,
+            "first": 4,
+            "last": 4,
+            "firstZone": "好位",
+            "lastZone": "好位",
+            "tags": [
+              "馬場種別が異なる"
+            ]
+          }
+        ],
+        "facts": {
+          "led": 0,
+          "top2": 1,
+          "racesWithCorners": 2,
+          "bestFront3f": null,
+          "jockeyChange": true,
+          "daysSinceLast": 84
+        }
+      },
+      {
+        "num": 5,
+        "frame": 5,
+        "blinker": true,
+        "name": "テストエコー",
+        "trainer": "仮名 八郎（栗東）",
+        "sire": "テストサイアーE",
+        "dam": "テストメアE",
+        "damSire": "テストダムサイアーE",
+        "sex": "牡",
+        "age": 5,
+        "carried": 58,
+        "jockey": "試験 五郎",
+        "rating": 114,
+        "ratingCategory": "M",
+        "past": [
+          {
+            "date": "2025-12-07",
+            "venue": "中京",
+            "race": "テストCS",
+            "grade": "GⅠ",
+            "finish": 3,
+            "field": 16,
+            "gate": 7,
+            "pop": 7,
+            "jockey": "試験 五郎",
+            "carried": 58,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:50.6",
+            "going": "良",
+            "rating": 114,
+            "bodyWeight": "516kg",
+            "corners": [
+              12,
+              12,
+              10,
+              11
+            ],
+            "last3f": 36.9,
+            "vs": "テストノベンバー",
+            "margin": 0.4,
+            "timeSec": 110.6,
+            "first": 12,
+            "last": 11,
+            "firstZone": "後方",
+            "lastZone": "中団",
+            "tags": [
+              "今回との距離差+200m"
+            ]
+          },
+          {
+            "date": "2025-11-09",
+            "venue": "京都",
+            "race": "トキS",
+            "grade": "GⅢ",
+            "finish": 4,
+            "field": 15,
+            "gate": 4,
+            "pop": 5,
+            "jockey": "試験 五郎",
+            "carried": 58,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:48.0",
+            "going": "不良",
+            "rating": 110,
+            "bodyWeight": "516kg",
+            "corners": [
+              14,
+              14,
+              13,
+              13
+            ],
+            "last3f": 35.3,
+            "vs": "テストパパ",
+            "margin": 0.5,
+            "timeSec": 108,
+            "first": 14,
+            "last": 13,
+            "firstZone": "後方",
+            "lastZone": "後方",
+            "tags": [
+              "今回との距離差+200m",
+              "不良馬場"
+            ]
+          },
+          {
+            "date": "2025-09-07",
+            "venue": "韓",
+            "race": "テスト韓国C",
+            "grade": "GⅢ",
+            "finish": 3,
+            "field": 11,
+            "gate": null,
+            "jockey": "試験 五郎",
+            "carried": 57,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:51.4",
+            "going": "稍重",
+            "rating": 110,
+            "bodyWeight": "516kg",
+            "vs": "テストキロ",
+            "margin": 0.6,
+            "timeSec": 111.4,
+            "tags": [
+              "今回との距離差+200m",
+              "通過順なし",
+              "稍重馬場"
+            ]
+          },
+          {
+            "date": "2025-07-02",
+            "venue": "大井",
+            "race": "テスト大井",
+            "grade": "JpnⅠ",
+            "finish": 6,
+            "field": 13,
+            "gate": null,
+            "jockey": "試験 五郎",
+            "carried": 57,
+            "dist": 2000,
+            "surface": "ダ",
+            "time": "2:04.4",
+            "going": "良",
+            "rating": 106,
+            "bodyWeight": "515kg",
+            "vs": "テストジュリエット",
+            "margin": 1.3,
+            "timeSec": 124.4,
+            "tags": [
+              "今回との距離差+400m",
+              "通過順なし"
+            ]
+          }
+        ],
+        "facts": {
+          "led": 0,
+          "top2": 0,
+          "racesWithCorners": 2,
+          "bestFront3f": null,
+          "jockeyChange": false,
+          "daysSinceLast": 84
+        }
+      },
+      {
+        "num": 6,
+        "frame": 6,
+        "blinker": false,
+        "name": "テストフォックス",
+        "trainer": "仮名 九郎（美浦）",
+        "sire": "テストサイアーF",
+        "dam": "テストメアF",
+        "damSire": "Test Damsire F",
+        "carried": 58,
+        "jockey": "試験 六郎",
+        "rating": 111,
+        "past": [
+          {
+            "date": "2025-11-23",
+            "venue": "京都",
+            "race": "テストSS",
+            "grade": "GⅠ",
+            "finish": 15,
+            "field": 18,
+            "gate": 13,
+            "pop": 16,
+            "jockey": "仮名 十郎",
+            "carried": 57,
+            "dist": 1200,
+            "surface": "芝",
+            "time": "1:08.5",
+            "going": "良",
+            "rating": 105,
+            "bodyWeight": "478kg",
+            "corners": [
+              2,
+              2
+            ],
+            "last3f": 34.1,
+            "vs": "テストインディア",
+            "margin": 1.4,
+            "timeSec": 68.5,
+            "first": 2,
+            "last": 2,
+            "firstZone": "好位",
+            "lastZone": "好位",
+            "front3f": 34.4,
+            "tags": [
+              "馬場種別が異なる",
+              "今回との距離差-400m"
+            ]
+          },
+          {
+            "date": "2025-10-05",
+            "venue": "東京",
+            "race": "テスト王冠",
+            "grade": "GⅡ",
+            "finish": 8,
+            "field": 10,
+            "gate": 1,
+            "pop": 9,
+            "jockey": "仮名 十郎",
+            "carried": 58,
+            "dist": 1800,
+            "surface": "芝",
+            "time": "1:44.7",
+            "going": "良",
+            "rating": 109,
+            "bodyWeight": "490kg",
+            "corners": [
+              10,
+              10,
+              9
+            ],
+            "last3f": 33.3,
+            "vs": "テストホテル",
+            "margin": 0.7,
+            "timeSec": 104.7,
+            "first": 10,
+            "last": 9,
+            "firstZone": "後方",
+            "lastZone": "後方",
+            "tags": [
+              "馬場種別が異なる",
+              "今回との距離差+200m"
+            ]
+          },
+          {
+            "date": "2025-06-08",
+            "venue": "東京",
+            "race": "テスト記念",
+            "grade": "GⅠ",
+            "finish": 13,
+            "field": 18,
+            "gate": 12,
+            "pop": 15,
+            "jockey": "仮名 十郎",
+            "carried": 58,
+            "dist": 1600,
+            "surface": "芝",
+            "time": "1:33.7",
+            "going": "良",
+            "rating": 107,
+            "bodyWeight": "476kg",
+            "corners": [
+              4,
+              4
+            ],
+            "last3f": 35.1,
+            "vs": "テストリマ",
+            "margin": 1,
+            "timeSec": 93.7,
+            "first": 4,
+            "last": 4,
+            "firstZone": "好位",
+            "lastZone": "好位",
+            "tags": [
+              "馬場種別が異なる"
+            ]
+          },
+          {
+            "date": "2025-04-27",
+            "venue": "京都",
+            "race": "テストSC",
+            "grade": "GⅡ",
+            "finish": 1,
+            "field": 10,
+            "gate": 10,
+            "pop": 5,
+            "jockey": "仮名 十郎",
+            "carried": 57,
+            "dist": 1200,
+            "surface": "芝",
+            "time": "1:09.0",
+            "going": "良",
+            "rating": 111,
+            "bodyWeight": "478kg",
+            "corners": [
+              6,
+              7
+            ],
+            "last3f": 33.8,
+            "vs": "テストゴルフ",
+            "margin": 0.1,
+            "timeSec": 69,
+            "first": 6,
+            "last": 7,
+            "firstZone": "中団",
+            "lastZone": "中団",
+            "front3f": 35.2,
+            "tags": [
+              "馬場種別が異なる",
+              "今回との距離差-400m"
+            ]
+          }
+        ],
+        "facts": {
+          "led": 0,
+          "top2": 1,
+          "racesWithCorners": 4,
+          "bestFront3f": 34.4,
+          "jockeyChange": true,
+          "daysSinceLast": 98
+        }
+      },
+      {
+        "num": 7,
+        "frame": 7,
+        "blinker": true,
+        "name": "テストゴルフ",
+        "trainer": "仮名 十一郎（栗東）",
+        "sire": "テストサイアーG",
+        "dam": "テストメアG",
+        "damSire": "テストダムサイアーG",
+        "sex": "牡",
+        "age": 8,
+        "carried": 58,
+        "jockey": "試験 七郎",
+        "rating": 113,
+        "ratingCategory": "M",
+        "past": [
+          {
+            "date": "2025-12-07",
+            "venue": "中京",
+            "race": "テストCS",
+            "grade": "GⅠ",
+            "finish": 12,
+            "field": 16,
+            "gate": 14,
+            "pop": 12,
+            "jockey": "仮名 十二郎",
+            "carried": 58,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:52.3",
+            "going": "良",
+            "rating": 98,
+            "bodyWeight": "526kg",
+            "corners": [
+              8,
+              9,
+              10,
+              11
+            ],
+            "last3f": 38.5,
+            "vs": "テストノベンバー",
+            "margin": 2.1,
+            "timeSec": 112.3,
+            "first": 8,
+            "last": 11,
+            "firstZone": "中団",
+            "lastZone": "中団",
+            "tags": [
+              "今回との距離差+200m"
+            ]
+          },
+          {
+            "date": "2025-11-15",
+            "venue": "東京",
+            "race": "カモメS",
+            "grade": "GⅢ",
+            "finish": 9,
+            "field": 16,
+            "gate": 14,
+            "pop": 5,
+            "jockey": "仮名 十二郎",
+            "carried": 58,
+            "dist": 1600,
+            "surface": "ダ",
+            "time": "1:36.2",
+            "going": "良",
+            "rating": 107,
+            "bodyWeight": "530kg",
+            "corners": [
+              3,
+              2
+            ],
+            "last3f": 36.2,
+            "vs": "テストズールー",
+            "margin": 1,
+            "timeSec": 96.2,
+            "first": 3,
+            "last": 2,
+            "firstZone": "好位",
+            "lastZone": "好位",
+            "tags": []
+          },
+          {
+            "date": "2025-10-13",
+            "venue": "盛岡",
+            "race": "テスト盛岡",
+            "grade": "JpnⅠ",
+            "finish": 3,
+            "field": 16,
+            "gate": null,
+            "jockey": "仮名 十二郎",
+            "carried": 57,
+            "dist": 1600,
+            "surface": "ダ",
+            "time": "1:35.6",
+            "going": "良",
+            "rating": 106,
+            "bodyWeight": "532kg",
+            "vs": "テストマイク",
+            "margin": 1.3,
+            "timeSec": 95.6,
+            "tags": [
+              "通過順なし"
+            ]
+          },
+          {
+            "date": "2025-04-05",
+            "venue": "ア首",
+            "race": "テストドバイ",
+            "grade": "GⅡ",
+            "finish": 11,
+            "field": 14,
+            "gate": null,
+            "jockey": "仮名 十二郎",
+            "carried": 57,
+            "dist": 1600,
+            "surface": "ダ",
+            "time": "1:41.5",
+            "going": "良",
+            "rating": 73,
+            "bodyWeight": "計不",
+            "vs": "テストアルファロメオ",
+            "margin": 4.9,
+            "timeSec": 101.5,
+            "tags": [
+              "通過順なし"
+            ]
+          }
+        ],
+        "facts": {
+          "led": 0,
+          "top2": 0,
+          "racesWithCorners": 2,
+          "bestFront3f": null,
+          "jockeyChange": true,
+          "daysSinceLast": 84
+        }
+      },
+      {
+        "num": 8,
+        "frame": 8,
+        "blinker": false,
+        "name": "テストホテル",
+        "trainer": "仮名 十三郎（栗東）",
+        "sire": "テストサイアーH",
+        "dam": "テストメアH",
+        "damSire": "テストダムサイアーH",
+        "sex": "牡",
+        "age": 6,
+        "carried": 58,
+        "jockey": "試験 八郎",
+        "rating": 113,
+        "ratingCategory": "M",
+        "past": [
+          {
+            "date": "2026-01-25",
+            "venue": "京都",
+            "race": "キジS",
+            "grade": "GⅡ",
+            "finish": 9,
+            "field": 16,
+            "gate": 2,
+            "pop": 4,
+            "jockey": "試験 八郎",
+            "carried": 57,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:51.9",
+            "going": "良",
+            "rating": 103,
+            "bodyWeight": "478kg",
+            "corners": [
+              4,
+              5,
+              4,
+              5
+            ],
+            "last3f": 37.3,
+            "vs": "テストロメオ",
+            "margin": 0.9,
+            "timeSec": 111.9,
+            "first": 4,
+            "last": 5,
+            "firstZone": "好位",
+            "lastZone": "好位",
+            "tags": [
+              "今回との距離差+200m"
+            ]
+          },
+          {
+            "date": "2025-11-09",
+            "venue": "京都",
+            "race": "トキS",
+            "grade": "GⅢ",
+            "finish": 2,
+            "field": 15,
+            "gate": 5,
+            "pop": 7,
+            "jockey": "仮名 十四郎",
+            "carried": 57,
+            "dist": 1800,
+            "surface": "ダ",
+            "time": "1:47.5",
+            "going": "不良",
+            "rating": 113,
+            "bodyWeight": "474kg",
+            "corners": [
+              8,
+              7,
+              6,
+              4
+            ],
+            "last3f": 35.7,
+            "vs": "テストパパ",
+            "margin": 0,
+            "timeSec": 107.5,
+            "first": 8,
+            "last": 4,
+            "firstZone": "中団",
+            "lastZone": "好位",
+            "tags": [
+              "今回との距離差+200m",
+              "不良馬場"
+            ]
+          },
+          {
+            "date": "2025-09-27",
+            "venue": "阪神",
+            "race": "ヒワS",
+            "grade": "GⅢ",
+            "finish": 2,
+            "field": 14,
+            "gate": 8,
+            "pop": 9,
+            "jockey": "試験 八郎",
+            "carried": 55,
+            "dist": 2000,
+            "surface": "ダ",
+            "time": "2:04.9",
+            "going": "良",
+            "rating": 104,
+            "bodyWeight": "480kg",
+            "corners": [
+              8,
+              8,
+              5,
+              5
+            ],
+            "last3f": 36.7,
+            "vs": "テストオスカー",
+            "margin": 0.1,
+            "timeSec": 124.9,
+            "first": 8,
+            "last": 5,
+            "firstZone": "中団",
+            "lastZone": "中団",
+            "tags": [
+              "今回との距離差+400m"
+            ]
+          },
+          {
+            "date": "2025-06-28",
+            "venue": "小倉",
+            "race": "テスト博多S",
+            "grade": "3勝ク",
+            "finish": 1,
+            "field": 16,
+            "gate": 9,
+            "pop": 1,
+            "jockey": "仮名 十四郎",
+            "carried": 58,
+            "dist": 1700,
+            "surface": "ダ",
+            "time": "1:44.2",
+            "going": "良",
+            "bodyWeight": "474kg",
+            "corners": [
+              5,
+              5,
+              6,
+              3
+            ],
+            "last3f": 36.8,
+            "vs": "テストマイクロ",
+            "margin": 0,
+            "timeSec": 104.2,
+            "first": 5,
+            "last": 3,
+            "firstZone": "好位",
+            "lastZone": "好位",
+            "tags": []
+          }
+        ],
+        "facts": {
+          "led": 0,
+          "top2": 0,
+          "racesWithCorners": 4,
+          "bestFront3f": null,
+          "jockeyChange": false,
+          "daysSinceLast": 35
+        }
+      }
+    ],
+    "raceFacts": {
+      "frontRunners": [
+        {
+          "number": 1,
+          "name": "テストアルファ",
+          "frame": 1,
+          "led_count": 1,
+          "within_2nd_count": 2
+        },
+        {
+          "number": 3,
+          "name": "テストチャーリー",
+          "frame": 3,
+          "led_count": 1,
+          "within_2nd_count": 1
+        }
+      ],
+      "front3fRanking": [
+        {
+          "number": 6,
+          "name": "テストフォックス",
+          "frame": 6,
+          "best_front3f": 34.4
+        }
+      ]
+    }
+  },
+  "raceRequest": {
+    "state": {
+      "race": {
+        "name": "第9回テストマイルステークスGⅢ",
+        "date": "2026-03-01",
+        "venue": "東京",
+        "course": "1600m（ダート・左）",
+        "conditions": "4歳以上 オープン （国際）（指定） 別定",
+        "field_size": 8
+      },
+      "track": {
+        "weather": null,
+        "turf_going": null,
+        "turf_condition_note": null,
+        "course_in_use": null,
+        "cushion_value": null,
+        "cushion_category": null,
+        "turf_moisture_pct": null
+      },
+      "race_facts": {
+        "explanation": "コードで計算した事実。front_runners は直近の過去走で最初のコーナーを先頭で通過した馬。front_3f_ranking は芝1200m戦の前半3F（走破時計−上がり3F）の最速値が速い順。",
+        "front_runners": [
+          {
+            "number": 1,
+            "name": "テストアルファ",
+            "frame": 1,
+            "led_count": 1,
+            "within_2nd_count": 2
+          },
+          {
+            "number": 3,
+            "name": "テストチャーリー",
+            "frame": 3,
+            "led_count": 1,
+            "within_2nd_count": 1
+          }
+        ],
+        "front_3f_ranking": [
+          {
+            "number": 6,
+            "name": "テストフォックス",
+            "frame": 6,
+            "best_front3f": 34.4
+          }
+        ]
+      },
+      "horses": [
+        {
+          "number": 1,
+          "frame": 1,
+          "name": "テストアルファ",
+          "carried_kg": 58,
+          "jockey": "試験 太郎",
+          "jockey_changed_from_last_race": false,
+          "blinker": false,
+          "recent_races": [
+            {
+              "date": "2026-02-08",
+              "race": "ツバメS GⅢ",
+              "course": "東京 1400ダ",
+              "going": "良",
+              "field_size": 16,
+              "finish": 4,
+              "corner_positions": "1-1",
+              "first_corner_zone": "先頭",
+              "last_corner_zone": "先頭",
+              "front_3f_sec": null,
+              "last_3f_sec": 36.2,
+              "notes": [
+                "今回との距離差-200m"
+              ]
+            },
+            {
+              "date": "2025-11-15",
+              "race": "カモメS GⅢ",
+              "course": "東京 1600ダ",
+              "going": "良",
+              "field_size": 16,
+              "finish": 7,
+              "corner_positions": "11-11",
+              "first_corner_zone": "中団",
+              "last_corner_zone": "中団",
+              "front_3f_sec": null,
+              "last_3f_sec": 35.3
+            },
+            {
+              "date": "2025-10-04",
+              "race": "ヒバリC リステッド",
+              "course": "東京 1600ダ",
+              "going": "良",
+              "field_size": 16,
+              "finish": 1,
+              "corner_positions": "2-2",
+              "first_corner_zone": "好位",
+              "last_corner_zone": "好位",
+              "front_3f_sec": null,
+              "last_3f_sec": 36
+            },
+            {
+              "date": "2025-07-27",
+              "race": "スズメS GⅢ",
+              "course": "中京 1400ダ",
+              "going": "良",
+              "field_size": 16,
+              "finish": 4,
+              "corner_positions": "11-10",
+              "first_corner_zone": "中団",
+              "last_corner_zone": "中団",
+              "front_3f_sec": null,
+              "last_3f_sec": 35.6,
+              "notes": [
+                "今回との距離差-200m"
+              ]
+            }
+          ],
+          "facts": {
+            "led_at_first_corner": 1,
+            "within_2nd_at_first_corner": 2,
+            "races_with_corner_data": 4,
+            "best_front_3f_turf1200_sec": null,
+            "days_since_last_race": 21
+          }
+        },
+        {
+          "number": 2,
+          "frame": 2,
+          "name": "テストブラボー",
+          "carried_kg": 58,
+          "jockey": "試験 次郎",
+          "jockey_changed_from_last_race": true,
+          "blinker": false,
+          "recent_races": [
+            {
+              "date": "2025-12-25",
+              "race": "テスト兵庫 JpnⅢ",
+              "course": "園田 1400ダ",
+              "going": "不良",
+              "field_size": 11,
+              "finish": 1,
+              "corner_positions": null,
+              "first_corner_zone": null,
+              "last_corner_zone": null,
+              "front_3f_sec": null,
+              "last_3f_sec": null,
+              "notes": [
+                "今回との距離差-200m",
+                "通過順なし",
+                "不良馬場"
+              ]
+            },
+            {
+              "date": "2025-11-30",
+              "race": "ツグミS OP",
+              "course": "京都 1400ダ",
+              "going": "良",
+              "field_size": 16,
+              "finish": 1,
+              "corner_positions": "12-7",
+              "first_corner_zone": "後方",
+              "last_corner_zone": "中団",
+              "front_3f_sec": null,
+              "last_3f_sec": 35.7,
+              "notes": [
+                "今回との距離差-200m"
+              ]
+            },
+            {
+              "date": "2025-09-23",
+              "race": "テスト浦和 JpnⅢ",
+              "course": "浦和 1400ダ",
+              "going": "良",
+              "field_size": 12,
+              "finish": 6,
+              "corner_positions": null,
+              "first_corner_zone": null,
+              "last_corner_zone": null,
+              "front_3f_sec": null,
+              "last_3f_sec": null,
+              "notes": [
+                "今回との距離差-200m",
+                "通過順なし"
+              ]
+            },
+            {
+              "date": "2025-09-04",
+              "race": "テスト佐賀 JpnⅢ",
+              "course": "佐賀 1400ダ",
+              "going": "良",
+              "field_size": 10,
+              "finish": 4,
+              "corner_positions": null,
+              "first_corner_zone": null,
+              "last_corner_zone": null,
+              "front_3f_sec": null,
+              "last_3f_sec": null,
+              "notes": [
+                "今回との距離差-200m",
+                "通過順なし"
+              ]
+            }
+          ],
+          "facts": {
+            "led_at_first_corner": 0,
+            "within_2nd_at_first_corner": 0,
+            "races_with_corner_data": 1,
+            "best_front_3f_turf1200_sec": null,
+            "days_since_last_race": 66
+          }
+        },
+        {
+          "number": 3,
+          "frame": 3,
+          "name": "テストチャーリー",
+          "carried_kg": 56,
+          "jockey": "試験 三郎",
+          "jockey_changed_from_last_race": false,
+          "blinker": false,
+          "recent_races": [
+            {
+              "date": "2026-01-25",
+              "race": "キジS GⅡ",
+              "course": "京都 1800ダ",
+              "going": "良",
+              "field_size": 16,
+              "finish": 4,
+              "corner_positions": "8-7-8-7",
+              "first_corner_zone": "中団",
+              "last_corner_zone": "中団",
+              "front_3f_sec": null,
+              "last_3f_sec": 36.4,
+              "notes": [
+                "今回との距離差+200m"
+              ]
+            },
+            {
+              "date": "2025-12-14",
+              "race": "ウズラS リステッド",
+              "course": "中山 1800ダ",
+              "going": "稍重",
+              "field_size": 16,
+              "finish": 1,
+              "corner_positions": "1-1-1-1",
+              "first_corner_zone": "先頭",
+              "last_corner_zone": "先頭",
+              "front_3f_sec": null,
+              "last_3f_sec": 37.3,
+              "notes": [
+                "今回との距離差+200m",
+                "稍重馬場"
+              ]
+            },
+            {
+              "date": "2025-11-09",
+              "race": "トキS GⅢ",
+              "course": "京都 1800ダ",
+              "going": "不良",
+              "field_size": 15,
+              "finish": 6,
+              "corner_positions": "6-6-6-4",
+              "first_corner_zone": "中団",
+              "last_corner_zone": "好位",
+              "front_3f_sec": null,
+              "last_3f_sec": 37,
+              "notes": [
+                "今回との距離差+200m",
+                "不良馬場"
+              ]
+            },
+            {
+              "date": "2025-09-27",
+              "race": "ヒワS GⅢ",
+              "course": "阪神 2000ダ",
+              "going": "重",
+              "field_size": 14,
+              "finish": 5,
+              "corner_positions": "9-9-10-10",
+              "first_corner_zone": "中団",
+              "last_corner_zone": "中団",
+              "front_3f_sec": null,
+              "last_3f_sec": 36.9,
+              "notes": [
+                "今回との距離差+400m",
+                "重馬場"
+              ]
+            }
+          ],
+          "facts": {
+            "led_at_first_corner": 1,
+            "within_2nd_at_first_corner": 1,
+            "races_with_corner_data": 4,
+            "best_front_3f_turf1200_sec": null,
+            "days_since_last_race": 35
+          }
+        },
+        {
+          "number": 4,
+          "frame": 4,
+          "name": "テストデルタ",
+          "carried_kg": 58,
+          "jockey": "試験 四郎",
+          "jockey_changed_from_last_race": true,
+          "blinker": false,
+          "recent_races": [
+            {
+              "date": "2025-12-07",
+              "race": "テストCS GⅠ",
+              "course": "中京 1800ダ",
+              "going": "良",
+              "field_size": 16,
+              "finish": 11,
+              "corner_positions": "2-1-2-2",
+              "first_corner_zone": "好位",
+              "last_corner_zone": "好位",
+              "front_3f_sec": null,
+              "last_3f_sec": 38.6,
+              "notes": [
+                "今回との距離差+200m"
+              ]
+            },
+            {
+              "date": "2025-10-13",
+              "race": "テスト盛岡 JpnⅠ",
+              "course": "盛岡 1600ダ",
+              "going": "良",
+              "field_size": 16,
+              "finish": 2,
+              "corner_positions": null,
+              "first_corner_zone": null,
+              "last_corner_zone": null,
+              "front_3f_sec": null,
+              "last_3f_sec": null,
+              "notes": [
+                "通過順なし"
+              ]
+            },
+            {
+              "date": "2025-06-08",
+              "race": "テスト記念 GⅠ",
+              "course": "東京 1600芝",
+              "going": "良",
+              "field_size": 18,
+              "finish": 12,
+              "corner_positions": "4-4",
+              "first_corner_zone": "好位",
+              "last_corner_zone": "好位",
+              "front_3f_sec": null,
+              "last_3f_sec": 34.7,
+              "notes": [
+                "馬場種別が異なる"
+              ]
+            }
+          ],
+          "facts": {
+            "led_at_first_corner": 0,
+            "within_2nd_at_first_corner": 1,
+            "races_with_corner_data": 2,
+            "best_front_3f_turf1200_sec": null,
+            "days_since_last_race": 84
+          }
+        },
+        {
+          "number": 5,
+          "frame": 5,
+          "name": "テストエコー",
+          "carried_kg": 58,
+          "jockey": "試験 五郎",
+          "jockey_changed_from_last_race": false,
+          "blinker": true,
+          "recent_races": [
+            {
+              "date": "2025-12-07",
+              "race": "テストCS GⅠ",
+              "course": "中京 1800ダ",
+              "going": "良",
+              "field_size": 16,
+              "finish": 3,
+              "corner_positions": "12-12-10-11",
+              "first_corner_zone": "後方",
+              "last_corner_zone": "中団",
+              "front_3f_sec": null,
+              "last_3f_sec": 36.9,
+              "notes": [
+                "今回との距離差+200m"
+              ]
+            },
+            {
+              "date": "2025-11-09",
+              "race": "トキS GⅢ",
+              "course": "京都 1800ダ",
+              "going": "不良",
+              "field_size": 15,
+              "finish": 4,
+              "corner_positions": "14-14-13-13",
+              "first_corner_zone": "後方",
+              "last_corner_zone": "後方",
+              "front_3f_sec": null,
+              "last_3f_sec": 35.3,
+              "notes": [
+                "今回との距離差+200m",
+                "不良馬場"
+              ]
+            },
+            {
+              "date": "2025-09-07",
+              "race": "テスト韓国C GⅢ",
+              "course": "韓 1800ダ",
+              "going": "稍重",
+              "field_size": 11,
+              "finish": 3,
+              "corner_positions": null,
+              "first_corner_zone": null,
+              "last_corner_zone": null,
+              "front_3f_sec": null,
+              "last_3f_sec": null,
+              "notes": [
+                "今回との距離差+200m",
+                "通過順なし",
+                "稍重馬場"
+              ]
+            },
+            {
+              "date": "2025-07-02",
+              "race": "テスト大井 JpnⅠ",
+              "course": "大井 2000ダ",
+              "going": "良",
+              "field_size": 13,
+              "finish": 6,
+              "corner_positions": null,
+              "first_corner_zone": null,
+              "last_corner_zone": null,
+              "front_3f_sec": null,
+              "last_3f_sec": null,
+              "notes": [
+                "今回との距離差+400m",
+                "通過順なし"
+              ]
+            }
+          ],
+          "facts": {
+            "led_at_first_corner": 0,
+            "within_2nd_at_first_corner": 0,
+            "races_with_corner_data": 2,
+            "best_front_3f_turf1200_sec": null,
+            "days_since_last_race": 84
+          }
+        },
+        {
+          "number": 6,
+          "frame": 6,
+          "name": "テストフォックス",
+          "carried_kg": 58,
+          "jockey": "試験 六郎",
+          "jockey_changed_from_last_race": true,
+          "blinker": false,
+          "recent_races": [
+            {
+              "date": "2025-11-23",
+              "race": "テストSS GⅠ",
+              "course": "京都 1200芝",
+              "going": "良",
+              "field_size": 18,
+              "finish": 15,
+              "corner_positions": "2-2",
+              "first_corner_zone": "好位",
+              "last_corner_zone": "好位",
+              "front_3f_sec": 34.4,
+              "last_3f_sec": 34.1,
+              "notes": [
+                "馬場種別が異なる",
+                "今回との距離差-400m"
+              ]
+            },
+            {
+              "date": "2025-10-05",
+              "race": "テスト王冠 GⅡ",
+              "course": "東京 1800芝",
+              "going": "良",
+              "field_size": 10,
+              "finish": 8,
+              "corner_positions": "10-10-9",
+              "first_corner_zone": "後方",
+              "last_corner_zone": "後方",
+              "front_3f_sec": null,
+              "last_3f_sec": 33.3,
+              "notes": [
+                "馬場種別が異なる",
+                "今回との距離差+200m"
+              ]
+            },
+            {
+              "date": "2025-06-08",
+              "race": "テスト記念 GⅠ",
+              "course": "東京 1600芝",
+              "going": "良",
+              "field_size": 18,
+              "finish": 13,
+              "corner_positions": "4-4",
+              "first_corner_zone": "好位",
+              "last_corner_zone": "好位",
+              "front_3f_sec": null,
+              "last_3f_sec": 35.1,
+              "notes": [
+                "馬場種別が異なる"
+              ]
+            },
+            {
+              "date": "2025-04-27",
+              "race": "テストSC GⅡ",
+              "course": "京都 1200芝",
+              "going": "良",
+              "field_size": 10,
+              "finish": 1,
+              "corner_positions": "6-7",
+              "first_corner_zone": "中団",
+              "last_corner_zone": "中団",
+              "front_3f_sec": 35.2,
+              "last_3f_sec": 33.8,
+              "notes": [
+                "馬場種別が異なる",
+                "今回との距離差-400m"
+              ]
+            }
+          ],
+          "facts": {
+            "led_at_first_corner": 0,
+            "within_2nd_at_first_corner": 1,
+            "races_with_corner_data": 4,
+            "best_front_3f_turf1200_sec": 34.4,
+            "days_since_last_race": 98
+          }
+        },
+        {
+          "number": 7,
+          "frame": 7,
+          "name": "テストゴルフ",
+          "carried_kg": 58,
+          "jockey": "試験 七郎",
+          "jockey_changed_from_last_race": true,
+          "blinker": true,
+          "recent_races": [
+            {
+              "date": "2025-12-07",
+              "race": "テストCS GⅠ",
+              "course": "中京 1800ダ",
+              "going": "良",
+              "field_size": 16,
+              "finish": 12,
+              "corner_positions": "8-9-10-11",
+              "first_corner_zone": "中団",
+              "last_corner_zone": "中団",
+              "front_3f_sec": null,
+              "last_3f_sec": 38.5,
+              "notes": [
+                "今回との距離差+200m"
+              ]
+            },
+            {
+              "date": "2025-11-15",
+              "race": "カモメS GⅢ",
+              "course": "東京 1600ダ",
+              "going": "良",
+              "field_size": 16,
+              "finish": 9,
+              "corner_positions": "3-2",
+              "first_corner_zone": "好位",
+              "last_corner_zone": "好位",
+              "front_3f_sec": null,
+              "last_3f_sec": 36.2
+            },
+            {
+              "date": "2025-10-13",
+              "race": "テスト盛岡 JpnⅠ",
+              "course": "盛岡 1600ダ",
+              "going": "良",
+              "field_size": 16,
+              "finish": 3,
+              "corner_positions": null,
+              "first_corner_zone": null,
+              "last_corner_zone": null,
+              "front_3f_sec": null,
+              "last_3f_sec": null,
+              "notes": [
+                "通過順なし"
+              ]
+            },
+            {
+              "date": "2025-04-05",
+              "race": "テストドバイ GⅡ",
+              "course": "ア首 1600ダ",
+              "going": "良",
+              "field_size": 14,
+              "finish": 11,
+              "corner_positions": null,
+              "first_corner_zone": null,
+              "last_corner_zone": null,
+              "front_3f_sec": null,
+              "last_3f_sec": null,
+              "notes": [
+                "通過順なし"
+              ]
+            }
+          ],
+          "facts": {
+            "led_at_first_corner": 0,
+            "within_2nd_at_first_corner": 0,
+            "races_with_corner_data": 2,
+            "best_front_3f_turf1200_sec": null,
+            "days_since_last_race": 84
+          }
+        },
+        {
+          "number": 8,
+          "frame": 8,
+          "name": "テストホテル",
+          "carried_kg": 58,
+          "jockey": "試験 八郎",
+          "jockey_changed_from_last_race": false,
+          "blinker": false,
+          "recent_races": [
+            {
+              "date": "2026-01-25",
+              "race": "キジS GⅡ",
+              "course": "京都 1800ダ",
+              "going": "良",
+              "field_size": 16,
+              "finish": 9,
+              "corner_positions": "4-5-4-5",
+              "first_corner_zone": "好位",
+              "last_corner_zone": "好位",
+              "front_3f_sec": null,
+              "last_3f_sec": 37.3,
+              "notes": [
+                "今回との距離差+200m"
+              ]
+            },
+            {
+              "date": "2025-11-09",
+              "race": "トキS GⅢ",
+              "course": "京都 1800ダ",
+              "going": "不良",
+              "field_size": 15,
+              "finish": 2,
+              "corner_positions": "8-7-6-4",
+              "first_corner_zone": "中団",
+              "last_corner_zone": "好位",
+              "front_3f_sec": null,
+              "last_3f_sec": 35.7,
+              "notes": [
+                "今回との距離差+200m",
+                "不良馬場"
+              ]
+            },
+            {
+              "date": "2025-09-27",
+              "race": "ヒワS GⅢ",
+              "course": "阪神 2000ダ",
+              "going": "良",
+              "field_size": 14,
+              "finish": 2,
+              "corner_positions": "8-8-5-5",
+              "first_corner_zone": "中団",
+              "last_corner_zone": "中団",
+              "front_3f_sec": null,
+              "last_3f_sec": 36.7,
+              "notes": [
+                "今回との距離差+400m"
+              ]
+            },
+            {
+              "date": "2025-06-28",
+              "race": "テスト博多S 3勝ク",
+              "course": "小倉 1700ダ",
+              "going": "良",
+              "field_size": 16,
+              "finish": 1,
+              "corner_positions": "5-5-6-3",
+              "first_corner_zone": "好位",
+              "last_corner_zone": "好位",
+              "front_3f_sec": null,
+              "last_3f_sec": 36.8
+            }
+          ],
+          "facts": {
+            "led_at_first_corner": 0,
+            "within_2nd_at_first_corner": 0,
+            "races_with_corner_data": 4,
+            "best_front_3f_turf1200_sec": null,
+            "days_since_last_race": 35
+          }
+        }
+      ]
+    },
+    "questions": {
+      "lead_horse": {
+        "type": "choice",
+        "instructions": "このレース 第9回テストマイルステークスGⅢ（1600m） で、最初のコーナーを先頭で通過する馬を選ぶ。stateの`horses`の過去の通過位置と枠、`race_facts.front_runners`を根拠にする。根拠が足りない場合は unclear を選ぶ。",
+        "criteria": {
+          "h01": "1番 テストアルファ（1枠。直近の過去走で最初のコーナーの位置：先頭、中団、好位、中団）",
+          "h02": "2番 テストブラボー（2枠。直近の過去走で最初のコーナーの位置：不明、後方、不明、不明）",
+          "h03": "3番 テストチャーリー（3枠。直近の過去走で最初のコーナーの位置：中団、先頭、中団、中団）",
+          "h04": "4番 テストデルタ（4枠。直近の過去走で最初のコーナーの位置：好位、不明、好位）",
+          "h05": "5番 テストエコー（5枠。直近の過去走で最初のコーナーの位置：後方、後方、不明、不明）",
+          "h06": "6番 テストフォックス（6枠。直近の過去走で最初のコーナーの位置：好位、後方、好位、中団）",
+          "h07": "7番 テストゴルフ（7枠。直近の過去走で最初のコーナーの位置：中団、好位、不明、不明）",
+          "h08": "8番 テストホテル（8枠。直近の過去走で最初のコーナーの位置：好位、中団、中団、好位）",
+          "unclear": "stateの情報からは、先頭で通過する馬を特定できない"
+        }
+      },
+      "contested_lead": {
+        "type": "noul",
+        "instructions": "このレース 第9回テストマイルステークスGⅢ（1600m） では、序盤に2頭以上の馬が先頭を主張し、先行争いが激しくなる。stateの`race_facts.front_runners`と各馬の枠を根拠に判断し、それを示す根拠がstateにない場合は偽とする。"
+      },
+      "pace": {
+        "type": "score",
+        "instructions": "このレース 第9回テストマイルステークスGⅢ（1600m） の前半のペースを、このクラス・距離の標準と比べて評価する。先行しそうな馬の数と枠、`race_facts.front_3f_ranking`の前半3F、馬場状態を根拠にする。根拠が足りない場合は中央の段階（ミドル）とする。",
+        "criteria": [
+          "スロー：このクラス・距離としては前半が落ち着いた流れ。先行争いが起きず、先行した馬が後半まで止まりにくい",
+          "ミドル：このクラス・距離として標準的な流れ。前半と後半の配分に大きな偏りがない",
+          "ハイ：このクラス・距離としては前半が速い流れ。先行争いで前半が速くなり、先行した馬が後半に苦しくなる"
+        ]
+      }
+    }
+  },
+  "horseRequests": {
+    "noOutlook": [
+      {
+        "state": {
+          "race": {
+            "name": "第9回テストマイルステークスGⅢ",
+            "date": "2026-03-01",
+            "venue": "東京",
+            "course": "1600m（ダート・左）",
+            "conditions": "4歳以上 オープン （国際）（指定） 別定",
+            "field_size": 8
+          },
+          "track": {
+            "weather": null,
+            "turf_going": null,
+            "turf_condition_note": null,
+            "course_in_use": null,
+            "cushion_value": null,
+            "cushion_category": null,
+            "turf_moisture_pct": null
+          },
+          "target": {
+            "number": 1,
+            "frame": 1,
+            "name": "テストアルファ",
+            "carried_kg": 58,
+            "jockey": "試験 太郎",
+            "jockey_changed_from_last_race": false,
+            "blinker": false,
+            "recent_races": [
+              {
+                "date": "2026-02-08",
+                "race": "ツバメS GⅢ",
+                "course": "東京 1400ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 4,
+                "corner_positions": "1-1",
+                "first_corner_zone": "先頭",
+                "last_corner_zone": "先頭",
+                "front_3f_sec": null,
+                "last_3f_sec": 36.2,
+                "notes": [
+                  "今回との距離差-200m"
+                ]
+              },
+              {
+                "date": "2025-11-15",
+                "race": "カモメS GⅢ",
+                "course": "東京 1600ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 7,
+                "corner_positions": "11-11",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "中団",
+                "front_3f_sec": null,
+                "last_3f_sec": 35.3
+              },
+              {
+                "date": "2025-10-04",
+                "race": "ヒバリC リステッド",
+                "course": "東京 1600ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 1,
+                "corner_positions": "2-2",
+                "first_corner_zone": "好位",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 36
+              },
+              {
+                "date": "2025-07-27",
+                "race": "スズメS GⅢ",
+                "course": "中京 1400ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 4,
+                "corner_positions": "11-10",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "中団",
+                "front_3f_sec": null,
+                "last_3f_sec": 35.6,
+                "notes": [
+                  "今回との距離差-200m"
+                ]
+              }
+            ],
+            "facts": {
+              "led_at_first_corner": 1,
+              "within_2nd_at_first_corner": 2,
+              "races_with_corner_data": 4,
+              "best_front_3f_turf1200_sec": null,
+              "days_since_last_race": 21
+            }
+          },
+          "others": [
+            {
+              "number": 2,
+              "frame": 2,
+              "name": "テストブラボー",
+              "recent_first_corner_zones": [
+                "不明",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 3,
+              "frame": 3,
+              "name": "テストチャーリー",
+              "recent_first_corner_zones": [
+                "中団",
+                "先頭",
+                "中団",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 4,
+              "frame": 4,
+              "name": "テストデルタ",
+              "recent_first_corner_zones": [
+                "好位",
+                "不明",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 5,
+              "frame": 5,
+              "name": "テストエコー",
+              "recent_first_corner_zones": [
+                "後方",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 6,
+              "frame": 6,
+              "name": "テストフォックス",
+              "recent_first_corner_zones": [
+                "好位",
+                "後方",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 7,
+              "frame": 7,
+              "name": "テストゴルフ",
+              "recent_first_corner_zones": [
+                "中団",
+                "好位",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 8,
+              "frame": 8,
+              "name": "テストホテル",
+              "recent_first_corner_zones": [
+                "好位",
+                "中団",
+                "中団",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            }
+          ]
+        },
+        "questions": {
+          "first_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          },
+          "last_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          }
+        }
+      },
+      {
+        "state": {
+          "race": {
+            "name": "第9回テストマイルステークスGⅢ",
+            "date": "2026-03-01",
+            "venue": "東京",
+            "course": "1600m（ダート・左）",
+            "conditions": "4歳以上 オープン （国際）（指定） 別定",
+            "field_size": 8
+          },
+          "track": {
+            "weather": null,
+            "turf_going": null,
+            "turf_condition_note": null,
+            "course_in_use": null,
+            "cushion_value": null,
+            "cushion_category": null,
+            "turf_moisture_pct": null
+          },
+          "target": {
+            "number": 2,
+            "frame": 2,
+            "name": "テストブラボー",
+            "carried_kg": 58,
+            "jockey": "試験 次郎",
+            "jockey_changed_from_last_race": true,
+            "blinker": false,
+            "recent_races": [
+              {
+                "date": "2025-12-25",
+                "race": "テスト兵庫 JpnⅢ",
+                "course": "園田 1400ダ",
+                "going": "不良",
+                "field_size": 11,
+                "finish": 1,
+                "corner_positions": null,
+                "first_corner_zone": null,
+                "last_corner_zone": null,
+                "front_3f_sec": null,
+                "last_3f_sec": null,
+                "notes": [
+                  "今回との距離差-200m",
+                  "通過順なし",
+                  "不良馬場"
+                ]
+              },
+              {
+                "date": "2025-11-30",
+                "race": "ツグミS OP",
+                "course": "京都 1400ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 1,
+                "corner_positions": "12-7",
+                "first_corner_zone": "後方",
+                "last_corner_zone": "中団",
+                "front_3f_sec": null,
+                "last_3f_sec": 35.7,
+                "notes": [
+                  "今回との距離差-200m"
+                ]
+              },
+              {
+                "date": "2025-09-23",
+                "race": "テスト浦和 JpnⅢ",
+                "course": "浦和 1400ダ",
+                "going": "良",
+                "field_size": 12,
+                "finish": 6,
+                "corner_positions": null,
+                "first_corner_zone": null,
+                "last_corner_zone": null,
+                "front_3f_sec": null,
+                "last_3f_sec": null,
+                "notes": [
+                  "今回との距離差-200m",
+                  "通過順なし"
+                ]
+              },
+              {
+                "date": "2025-09-04",
+                "race": "テスト佐賀 JpnⅢ",
+                "course": "佐賀 1400ダ",
+                "going": "良",
+                "field_size": 10,
+                "finish": 4,
+                "corner_positions": null,
+                "first_corner_zone": null,
+                "last_corner_zone": null,
+                "front_3f_sec": null,
+                "last_3f_sec": null,
+                "notes": [
+                  "今回との距離差-200m",
+                  "通過順なし"
+                ]
+              }
+            ],
+            "facts": {
+              "led_at_first_corner": 0,
+              "within_2nd_at_first_corner": 0,
+              "races_with_corner_data": 1,
+              "best_front_3f_turf1200_sec": null,
+              "days_since_last_race": 66
+            }
+          },
+          "others": [
+            {
+              "number": 1,
+              "frame": 1,
+              "name": "テストアルファ",
+              "recent_first_corner_zones": [
+                "先頭",
+                "中団",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 3,
+              "frame": 3,
+              "name": "テストチャーリー",
+              "recent_first_corner_zones": [
+                "中団",
+                "先頭",
+                "中団",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 4,
+              "frame": 4,
+              "name": "テストデルタ",
+              "recent_first_corner_zones": [
+                "好位",
+                "不明",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 5,
+              "frame": 5,
+              "name": "テストエコー",
+              "recent_first_corner_zones": [
+                "後方",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 6,
+              "frame": 6,
+              "name": "テストフォックス",
+              "recent_first_corner_zones": [
+                "好位",
+                "後方",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 7,
+              "frame": 7,
+              "name": "テストゴルフ",
+              "recent_first_corner_zones": [
+                "中団",
+                "好位",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 8,
+              "frame": 8,
+              "name": "テストホテル",
+              "recent_first_corner_zones": [
+                "好位",
+                "中団",
+                "中団",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            }
+          ]
+        },
+        "questions": {
+          "first_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          },
+          "last_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          }
+        }
+      },
+      {
+        "state": {
+          "race": {
+            "name": "第9回テストマイルステークスGⅢ",
+            "date": "2026-03-01",
+            "venue": "東京",
+            "course": "1600m（ダート・左）",
+            "conditions": "4歳以上 オープン （国際）（指定） 別定",
+            "field_size": 8
+          },
+          "track": {
+            "weather": null,
+            "turf_going": null,
+            "turf_condition_note": null,
+            "course_in_use": null,
+            "cushion_value": null,
+            "cushion_category": null,
+            "turf_moisture_pct": null
+          },
+          "target": {
+            "number": 3,
+            "frame": 3,
+            "name": "テストチャーリー",
+            "carried_kg": 56,
+            "jockey": "試験 三郎",
+            "jockey_changed_from_last_race": false,
+            "blinker": false,
+            "recent_races": [
+              {
+                "date": "2026-01-25",
+                "race": "キジS GⅡ",
+                "course": "京都 1800ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 4,
+                "corner_positions": "8-7-8-7",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "中団",
+                "front_3f_sec": null,
+                "last_3f_sec": 36.4,
+                "notes": [
+                  "今回との距離差+200m"
+                ]
+              },
+              {
+                "date": "2025-12-14",
+                "race": "ウズラS リステッド",
+                "course": "中山 1800ダ",
+                "going": "稍重",
+                "field_size": 16,
+                "finish": 1,
+                "corner_positions": "1-1-1-1",
+                "first_corner_zone": "先頭",
+                "last_corner_zone": "先頭",
+                "front_3f_sec": null,
+                "last_3f_sec": 37.3,
+                "notes": [
+                  "今回との距離差+200m",
+                  "稍重馬場"
+                ]
+              },
+              {
+                "date": "2025-11-09",
+                "race": "トキS GⅢ",
+                "course": "京都 1800ダ",
+                "going": "不良",
+                "field_size": 15,
+                "finish": 6,
+                "corner_positions": "6-6-6-4",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 37,
+                "notes": [
+                  "今回との距離差+200m",
+                  "不良馬場"
+                ]
+              },
+              {
+                "date": "2025-09-27",
+                "race": "ヒワS GⅢ",
+                "course": "阪神 2000ダ",
+                "going": "重",
+                "field_size": 14,
+                "finish": 5,
+                "corner_positions": "9-9-10-10",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "中団",
+                "front_3f_sec": null,
+                "last_3f_sec": 36.9,
+                "notes": [
+                  "今回との距離差+400m",
+                  "重馬場"
+                ]
+              }
+            ],
+            "facts": {
+              "led_at_first_corner": 1,
+              "within_2nd_at_first_corner": 1,
+              "races_with_corner_data": 4,
+              "best_front_3f_turf1200_sec": null,
+              "days_since_last_race": 35
+            }
+          },
+          "others": [
+            {
+              "number": 1,
+              "frame": 1,
+              "name": "テストアルファ",
+              "recent_first_corner_zones": [
+                "先頭",
+                "中団",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 2,
+              "frame": 2,
+              "name": "テストブラボー",
+              "recent_first_corner_zones": [
+                "不明",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 4,
+              "frame": 4,
+              "name": "テストデルタ",
+              "recent_first_corner_zones": [
+                "好位",
+                "不明",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 5,
+              "frame": 5,
+              "name": "テストエコー",
+              "recent_first_corner_zones": [
+                "後方",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 6,
+              "frame": 6,
+              "name": "テストフォックス",
+              "recent_first_corner_zones": [
+                "好位",
+                "後方",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 7,
+              "frame": 7,
+              "name": "テストゴルフ",
+              "recent_first_corner_zones": [
+                "中団",
+                "好位",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 8,
+              "frame": 8,
+              "name": "テストホテル",
+              "recent_first_corner_zones": [
+                "好位",
+                "中団",
+                "中団",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            }
+          ]
+        },
+        "questions": {
+          "first_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          },
+          "last_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          }
+        }
+      },
+      {
+        "state": {
+          "race": {
+            "name": "第9回テストマイルステークスGⅢ",
+            "date": "2026-03-01",
+            "venue": "東京",
+            "course": "1600m（ダート・左）",
+            "conditions": "4歳以上 オープン （国際）（指定） 別定",
+            "field_size": 8
+          },
+          "track": {
+            "weather": null,
+            "turf_going": null,
+            "turf_condition_note": null,
+            "course_in_use": null,
+            "cushion_value": null,
+            "cushion_category": null,
+            "turf_moisture_pct": null
+          },
+          "target": {
+            "number": 4,
+            "frame": 4,
+            "name": "テストデルタ",
+            "carried_kg": 58,
+            "jockey": "試験 四郎",
+            "jockey_changed_from_last_race": true,
+            "blinker": false,
+            "recent_races": [
+              {
+                "date": "2025-12-07",
+                "race": "テストCS GⅠ",
+                "course": "中京 1800ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 11,
+                "corner_positions": "2-1-2-2",
+                "first_corner_zone": "好位",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 38.6,
+                "notes": [
+                  "今回との距離差+200m"
+                ]
+              },
+              {
+                "date": "2025-10-13",
+                "race": "テスト盛岡 JpnⅠ",
+                "course": "盛岡 1600ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 2,
+                "corner_positions": null,
+                "first_corner_zone": null,
+                "last_corner_zone": null,
+                "front_3f_sec": null,
+                "last_3f_sec": null,
+                "notes": [
+                  "通過順なし"
+                ]
+              },
+              {
+                "date": "2025-06-08",
+                "race": "テスト記念 GⅠ",
+                "course": "東京 1600芝",
+                "going": "良",
+                "field_size": 18,
+                "finish": 12,
+                "corner_positions": "4-4",
+                "first_corner_zone": "好位",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 34.7,
+                "notes": [
+                  "馬場種別が異なる"
+                ]
+              }
+            ],
+            "facts": {
+              "led_at_first_corner": 0,
+              "within_2nd_at_first_corner": 1,
+              "races_with_corner_data": 2,
+              "best_front_3f_turf1200_sec": null,
+              "days_since_last_race": 84
+            }
+          },
+          "others": [
+            {
+              "number": 1,
+              "frame": 1,
+              "name": "テストアルファ",
+              "recent_first_corner_zones": [
+                "先頭",
+                "中団",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 2,
+              "frame": 2,
+              "name": "テストブラボー",
+              "recent_first_corner_zones": [
+                "不明",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 3,
+              "frame": 3,
+              "name": "テストチャーリー",
+              "recent_first_corner_zones": [
+                "中団",
+                "先頭",
+                "中団",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 5,
+              "frame": 5,
+              "name": "テストエコー",
+              "recent_first_corner_zones": [
+                "後方",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 6,
+              "frame": 6,
+              "name": "テストフォックス",
+              "recent_first_corner_zones": [
+                "好位",
+                "後方",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 7,
+              "frame": 7,
+              "name": "テストゴルフ",
+              "recent_first_corner_zones": [
+                "中団",
+                "好位",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 8,
+              "frame": 8,
+              "name": "テストホテル",
+              "recent_first_corner_zones": [
+                "好位",
+                "中団",
+                "中団",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            }
+          ]
+        },
+        "questions": {
+          "first_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          },
+          "last_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          }
+        }
+      },
+      {
+        "state": {
+          "race": {
+            "name": "第9回テストマイルステークスGⅢ",
+            "date": "2026-03-01",
+            "venue": "東京",
+            "course": "1600m（ダート・左）",
+            "conditions": "4歳以上 オープン （国際）（指定） 別定",
+            "field_size": 8
+          },
+          "track": {
+            "weather": null,
+            "turf_going": null,
+            "turf_condition_note": null,
+            "course_in_use": null,
+            "cushion_value": null,
+            "cushion_category": null,
+            "turf_moisture_pct": null
+          },
+          "target": {
+            "number": 5,
+            "frame": 5,
+            "name": "テストエコー",
+            "carried_kg": 58,
+            "jockey": "試験 五郎",
+            "jockey_changed_from_last_race": false,
+            "blinker": true,
+            "recent_races": [
+              {
+                "date": "2025-12-07",
+                "race": "テストCS GⅠ",
+                "course": "中京 1800ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 3,
+                "corner_positions": "12-12-10-11",
+                "first_corner_zone": "後方",
+                "last_corner_zone": "中団",
+                "front_3f_sec": null,
+                "last_3f_sec": 36.9,
+                "notes": [
+                  "今回との距離差+200m"
+                ]
+              },
+              {
+                "date": "2025-11-09",
+                "race": "トキS GⅢ",
+                "course": "京都 1800ダ",
+                "going": "不良",
+                "field_size": 15,
+                "finish": 4,
+                "corner_positions": "14-14-13-13",
+                "first_corner_zone": "後方",
+                "last_corner_zone": "後方",
+                "front_3f_sec": null,
+                "last_3f_sec": 35.3,
+                "notes": [
+                  "今回との距離差+200m",
+                  "不良馬場"
+                ]
+              },
+              {
+                "date": "2025-09-07",
+                "race": "テスト韓国C GⅢ",
+                "course": "韓 1800ダ",
+                "going": "稍重",
+                "field_size": 11,
+                "finish": 3,
+                "corner_positions": null,
+                "first_corner_zone": null,
+                "last_corner_zone": null,
+                "front_3f_sec": null,
+                "last_3f_sec": null,
+                "notes": [
+                  "今回との距離差+200m",
+                  "通過順なし",
+                  "稍重馬場"
+                ]
+              },
+              {
+                "date": "2025-07-02",
+                "race": "テスト大井 JpnⅠ",
+                "course": "大井 2000ダ",
+                "going": "良",
+                "field_size": 13,
+                "finish": 6,
+                "corner_positions": null,
+                "first_corner_zone": null,
+                "last_corner_zone": null,
+                "front_3f_sec": null,
+                "last_3f_sec": null,
+                "notes": [
+                  "今回との距離差+400m",
+                  "通過順なし"
+                ]
+              }
+            ],
+            "facts": {
+              "led_at_first_corner": 0,
+              "within_2nd_at_first_corner": 0,
+              "races_with_corner_data": 2,
+              "best_front_3f_turf1200_sec": null,
+              "days_since_last_race": 84
+            }
+          },
+          "others": [
+            {
+              "number": 1,
+              "frame": 1,
+              "name": "テストアルファ",
+              "recent_first_corner_zones": [
+                "先頭",
+                "中団",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 2,
+              "frame": 2,
+              "name": "テストブラボー",
+              "recent_first_corner_zones": [
+                "不明",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 3,
+              "frame": 3,
+              "name": "テストチャーリー",
+              "recent_first_corner_zones": [
+                "中団",
+                "先頭",
+                "中団",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 4,
+              "frame": 4,
+              "name": "テストデルタ",
+              "recent_first_corner_zones": [
+                "好位",
+                "不明",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 6,
+              "frame": 6,
+              "name": "テストフォックス",
+              "recent_first_corner_zones": [
+                "好位",
+                "後方",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 7,
+              "frame": 7,
+              "name": "テストゴルフ",
+              "recent_first_corner_zones": [
+                "中団",
+                "好位",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 8,
+              "frame": 8,
+              "name": "テストホテル",
+              "recent_first_corner_zones": [
+                "好位",
+                "中団",
+                "中団",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            }
+          ]
+        },
+        "questions": {
+          "first_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          },
+          "last_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          }
+        }
+      },
+      {
+        "state": {
+          "race": {
+            "name": "第9回テストマイルステークスGⅢ",
+            "date": "2026-03-01",
+            "venue": "東京",
+            "course": "1600m（ダート・左）",
+            "conditions": "4歳以上 オープン （国際）（指定） 別定",
+            "field_size": 8
+          },
+          "track": {
+            "weather": null,
+            "turf_going": null,
+            "turf_condition_note": null,
+            "course_in_use": null,
+            "cushion_value": null,
+            "cushion_category": null,
+            "turf_moisture_pct": null
+          },
+          "target": {
+            "number": 6,
+            "frame": 6,
+            "name": "テストフォックス",
+            "carried_kg": 58,
+            "jockey": "試験 六郎",
+            "jockey_changed_from_last_race": true,
+            "blinker": false,
+            "recent_races": [
+              {
+                "date": "2025-11-23",
+                "race": "テストSS GⅠ",
+                "course": "京都 1200芝",
+                "going": "良",
+                "field_size": 18,
+                "finish": 15,
+                "corner_positions": "2-2",
+                "first_corner_zone": "好位",
+                "last_corner_zone": "好位",
+                "front_3f_sec": 34.4,
+                "last_3f_sec": 34.1,
+                "notes": [
+                  "馬場種別が異なる",
+                  "今回との距離差-400m"
+                ]
+              },
+              {
+                "date": "2025-10-05",
+                "race": "テスト王冠 GⅡ",
+                "course": "東京 1800芝",
+                "going": "良",
+                "field_size": 10,
+                "finish": 8,
+                "corner_positions": "10-10-9",
+                "first_corner_zone": "後方",
+                "last_corner_zone": "後方",
+                "front_3f_sec": null,
+                "last_3f_sec": 33.3,
+                "notes": [
+                  "馬場種別が異なる",
+                  "今回との距離差+200m"
+                ]
+              },
+              {
+                "date": "2025-06-08",
+                "race": "テスト記念 GⅠ",
+                "course": "東京 1600芝",
+                "going": "良",
+                "field_size": 18,
+                "finish": 13,
+                "corner_positions": "4-4",
+                "first_corner_zone": "好位",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 35.1,
+                "notes": [
+                  "馬場種別が異なる"
+                ]
+              },
+              {
+                "date": "2025-04-27",
+                "race": "テストSC GⅡ",
+                "course": "京都 1200芝",
+                "going": "良",
+                "field_size": 10,
+                "finish": 1,
+                "corner_positions": "6-7",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "中団",
+                "front_3f_sec": 35.2,
+                "last_3f_sec": 33.8,
+                "notes": [
+                  "馬場種別が異なる",
+                  "今回との距離差-400m"
+                ]
+              }
+            ],
+            "facts": {
+              "led_at_first_corner": 0,
+              "within_2nd_at_first_corner": 1,
+              "races_with_corner_data": 4,
+              "best_front_3f_turf1200_sec": 34.4,
+              "days_since_last_race": 98
+            }
+          },
+          "others": [
+            {
+              "number": 1,
+              "frame": 1,
+              "name": "テストアルファ",
+              "recent_first_corner_zones": [
+                "先頭",
+                "中団",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 2,
+              "frame": 2,
+              "name": "テストブラボー",
+              "recent_first_corner_zones": [
+                "不明",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 3,
+              "frame": 3,
+              "name": "テストチャーリー",
+              "recent_first_corner_zones": [
+                "中団",
+                "先頭",
+                "中団",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 4,
+              "frame": 4,
+              "name": "テストデルタ",
+              "recent_first_corner_zones": [
+                "好位",
+                "不明",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 5,
+              "frame": 5,
+              "name": "テストエコー",
+              "recent_first_corner_zones": [
+                "後方",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 7,
+              "frame": 7,
+              "name": "テストゴルフ",
+              "recent_first_corner_zones": [
+                "中団",
+                "好位",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 8,
+              "frame": 8,
+              "name": "テストホテル",
+              "recent_first_corner_zones": [
+                "好位",
+                "中団",
+                "中団",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            }
+          ]
+        },
+        "questions": {
+          "first_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          },
+          "last_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          }
+        }
+      },
+      {
+        "state": {
+          "race": {
+            "name": "第9回テストマイルステークスGⅢ",
+            "date": "2026-03-01",
+            "venue": "東京",
+            "course": "1600m（ダート・左）",
+            "conditions": "4歳以上 オープン （国際）（指定） 別定",
+            "field_size": 8
+          },
+          "track": {
+            "weather": null,
+            "turf_going": null,
+            "turf_condition_note": null,
+            "course_in_use": null,
+            "cushion_value": null,
+            "cushion_category": null,
+            "turf_moisture_pct": null
+          },
+          "target": {
+            "number": 7,
+            "frame": 7,
+            "name": "テストゴルフ",
+            "carried_kg": 58,
+            "jockey": "試験 七郎",
+            "jockey_changed_from_last_race": true,
+            "blinker": true,
+            "recent_races": [
+              {
+                "date": "2025-12-07",
+                "race": "テストCS GⅠ",
+                "course": "中京 1800ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 12,
+                "corner_positions": "8-9-10-11",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "中団",
+                "front_3f_sec": null,
+                "last_3f_sec": 38.5,
+                "notes": [
+                  "今回との距離差+200m"
+                ]
+              },
+              {
+                "date": "2025-11-15",
+                "race": "カモメS GⅢ",
+                "course": "東京 1600ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 9,
+                "corner_positions": "3-2",
+                "first_corner_zone": "好位",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 36.2
+              },
+              {
+                "date": "2025-10-13",
+                "race": "テスト盛岡 JpnⅠ",
+                "course": "盛岡 1600ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 3,
+                "corner_positions": null,
+                "first_corner_zone": null,
+                "last_corner_zone": null,
+                "front_3f_sec": null,
+                "last_3f_sec": null,
+                "notes": [
+                  "通過順なし"
+                ]
+              },
+              {
+                "date": "2025-04-05",
+                "race": "テストドバイ GⅡ",
+                "course": "ア首 1600ダ",
+                "going": "良",
+                "field_size": 14,
+                "finish": 11,
+                "corner_positions": null,
+                "first_corner_zone": null,
+                "last_corner_zone": null,
+                "front_3f_sec": null,
+                "last_3f_sec": null,
+                "notes": [
+                  "通過順なし"
+                ]
+              }
+            ],
+            "facts": {
+              "led_at_first_corner": 0,
+              "within_2nd_at_first_corner": 0,
+              "races_with_corner_data": 2,
+              "best_front_3f_turf1200_sec": null,
+              "days_since_last_race": 84
+            }
+          },
+          "others": [
+            {
+              "number": 1,
+              "frame": 1,
+              "name": "テストアルファ",
+              "recent_first_corner_zones": [
+                "先頭",
+                "中団",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 2,
+              "frame": 2,
+              "name": "テストブラボー",
+              "recent_first_corner_zones": [
+                "不明",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 3,
+              "frame": 3,
+              "name": "テストチャーリー",
+              "recent_first_corner_zones": [
+                "中団",
+                "先頭",
+                "中団",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 4,
+              "frame": 4,
+              "name": "テストデルタ",
+              "recent_first_corner_zones": [
+                "好位",
+                "不明",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 5,
+              "frame": 5,
+              "name": "テストエコー",
+              "recent_first_corner_zones": [
+                "後方",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 6,
+              "frame": 6,
+              "name": "テストフォックス",
+              "recent_first_corner_zones": [
+                "好位",
+                "後方",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 8,
+              "frame": 8,
+              "name": "テストホテル",
+              "recent_first_corner_zones": [
+                "好位",
+                "中団",
+                "中団",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            }
+          ]
+        },
+        "questions": {
+          "first_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          },
+          "last_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          }
+        }
+      },
+      {
+        "state": {
+          "race": {
+            "name": "第9回テストマイルステークスGⅢ",
+            "date": "2026-03-01",
+            "venue": "東京",
+            "course": "1600m（ダート・左）",
+            "conditions": "4歳以上 オープン （国際）（指定） 別定",
+            "field_size": 8
+          },
+          "track": {
+            "weather": null,
+            "turf_going": null,
+            "turf_condition_note": null,
+            "course_in_use": null,
+            "cushion_value": null,
+            "cushion_category": null,
+            "turf_moisture_pct": null
+          },
+          "target": {
+            "number": 8,
+            "frame": 8,
+            "name": "テストホテル",
+            "carried_kg": 58,
+            "jockey": "試験 八郎",
+            "jockey_changed_from_last_race": false,
+            "blinker": false,
+            "recent_races": [
+              {
+                "date": "2026-01-25",
+                "race": "キジS GⅡ",
+                "course": "京都 1800ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 9,
+                "corner_positions": "4-5-4-5",
+                "first_corner_zone": "好位",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 37.3,
+                "notes": [
+                  "今回との距離差+200m"
+                ]
+              },
+              {
+                "date": "2025-11-09",
+                "race": "トキS GⅢ",
+                "course": "京都 1800ダ",
+                "going": "不良",
+                "field_size": 15,
+                "finish": 2,
+                "corner_positions": "8-7-6-4",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 35.7,
+                "notes": [
+                  "今回との距離差+200m",
+                  "不良馬場"
+                ]
+              },
+              {
+                "date": "2025-09-27",
+                "race": "ヒワS GⅢ",
+                "course": "阪神 2000ダ",
+                "going": "良",
+                "field_size": 14,
+                "finish": 2,
+                "corner_positions": "8-8-5-5",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "中団",
+                "front_3f_sec": null,
+                "last_3f_sec": 36.7,
+                "notes": [
+                  "今回との距離差+400m"
+                ]
+              },
+              {
+                "date": "2025-06-28",
+                "race": "テスト博多S 3勝ク",
+                "course": "小倉 1700ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 1,
+                "corner_positions": "5-5-6-3",
+                "first_corner_zone": "好位",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 36.8
+              }
+            ],
+            "facts": {
+              "led_at_first_corner": 0,
+              "within_2nd_at_first_corner": 0,
+              "races_with_corner_data": 4,
+              "best_front_3f_turf1200_sec": null,
+              "days_since_last_race": 35
+            }
+          },
+          "others": [
+            {
+              "number": 1,
+              "frame": 1,
+              "name": "テストアルファ",
+              "recent_first_corner_zones": [
+                "先頭",
+                "中団",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 2,
+              "frame": 2,
+              "name": "テストブラボー",
+              "recent_first_corner_zones": [
+                "不明",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 3,
+              "frame": 3,
+              "name": "テストチャーリー",
+              "recent_first_corner_zones": [
+                "中団",
+                "先頭",
+                "中団",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 4,
+              "frame": 4,
+              "name": "テストデルタ",
+              "recent_first_corner_zones": [
+                "好位",
+                "不明",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 5,
+              "frame": 5,
+              "name": "テストエコー",
+              "recent_first_corner_zones": [
+                "後方",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 6,
+              "frame": 6,
+              "name": "テストフォックス",
+              "recent_first_corner_zones": [
+                "好位",
+                "後方",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 7,
+              "frame": 7,
+              "name": "テストゴルフ",
+              "recent_first_corner_zones": [
+                "中団",
+                "好位",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            }
+          ]
+        },
+        "questions": {
+          "first_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          },
+          "last_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          }
+        }
+      }
+    ],
+    "withOutlook": [
+      {
+        "state": {
+          "race": {
+            "name": "第9回テストマイルステークスGⅢ",
+            "date": "2026-03-01",
+            "venue": "東京",
+            "course": "1600m（ダート・左）",
+            "conditions": "4歳以上 オープン （国際）（指定） 別定",
+            "field_size": 8
+          },
+          "track": {
+            "weather": null,
+            "turf_going": null,
+            "turf_condition_note": null,
+            "course_in_use": null,
+            "cushion_value": null,
+            "cushion_category": null,
+            "turf_moisture_pct": null
+          },
+          "race_outlook": {
+            "note": "STEP3でJevが推定した展開。確定した事実ではない",
+            "expected_leader": "1番 テストアルファ",
+            "early_lead_battle": "激しくなる",
+            "pace": "ミドル"
+          },
+          "target": {
+            "number": 1,
+            "frame": 1,
+            "name": "テストアルファ",
+            "carried_kg": 58,
+            "jockey": "試験 太郎",
+            "jockey_changed_from_last_race": false,
+            "blinker": false,
+            "recent_races": [
+              {
+                "date": "2026-02-08",
+                "race": "ツバメS GⅢ",
+                "course": "東京 1400ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 4,
+                "corner_positions": "1-1",
+                "first_corner_zone": "先頭",
+                "last_corner_zone": "先頭",
+                "front_3f_sec": null,
+                "last_3f_sec": 36.2,
+                "notes": [
+                  "今回との距離差-200m"
+                ]
+              },
+              {
+                "date": "2025-11-15",
+                "race": "カモメS GⅢ",
+                "course": "東京 1600ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 7,
+                "corner_positions": "11-11",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "中団",
+                "front_3f_sec": null,
+                "last_3f_sec": 35.3
+              },
+              {
+                "date": "2025-10-04",
+                "race": "ヒバリC リステッド",
+                "course": "東京 1600ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 1,
+                "corner_positions": "2-2",
+                "first_corner_zone": "好位",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 36
+              },
+              {
+                "date": "2025-07-27",
+                "race": "スズメS GⅢ",
+                "course": "中京 1400ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 4,
+                "corner_positions": "11-10",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "中団",
+                "front_3f_sec": null,
+                "last_3f_sec": 35.6,
+                "notes": [
+                  "今回との距離差-200m"
+                ]
+              }
+            ],
+            "facts": {
+              "led_at_first_corner": 1,
+              "within_2nd_at_first_corner": 2,
+              "races_with_corner_data": 4,
+              "best_front_3f_turf1200_sec": null,
+              "days_since_last_race": 21
+            }
+          },
+          "others": [
+            {
+              "number": 2,
+              "frame": 2,
+              "name": "テストブラボー",
+              "recent_first_corner_zones": [
+                "不明",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 3,
+              "frame": 3,
+              "name": "テストチャーリー",
+              "recent_first_corner_zones": [
+                "中団",
+                "先頭",
+                "中団",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 4,
+              "frame": 4,
+              "name": "テストデルタ",
+              "recent_first_corner_zones": [
+                "好位",
+                "不明",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 5,
+              "frame": 5,
+              "name": "テストエコー",
+              "recent_first_corner_zones": [
+                "後方",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 6,
+              "frame": 6,
+              "name": "テストフォックス",
+              "recent_first_corner_zones": [
+                "好位",
+                "後方",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 7,
+              "frame": 7,
+              "name": "テストゴルフ",
+              "recent_first_corner_zones": [
+                "中団",
+                "好位",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 8,
+              "frame": 8,
+              "name": "テストホテル",
+              "recent_first_corner_zones": [
+                "好位",
+                "中団",
+                "中団",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            }
+          ]
+        },
+        "questions": {
+          "first_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          },
+          "last_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          }
+        }
+      },
+      {
+        "state": {
+          "race": {
+            "name": "第9回テストマイルステークスGⅢ",
+            "date": "2026-03-01",
+            "venue": "東京",
+            "course": "1600m（ダート・左）",
+            "conditions": "4歳以上 オープン （国際）（指定） 別定",
+            "field_size": 8
+          },
+          "track": {
+            "weather": null,
+            "turf_going": null,
+            "turf_condition_note": null,
+            "course_in_use": null,
+            "cushion_value": null,
+            "cushion_category": null,
+            "turf_moisture_pct": null
+          },
+          "race_outlook": {
+            "note": "STEP3でJevが推定した展開。確定した事実ではない",
+            "expected_leader": "1番 テストアルファ",
+            "early_lead_battle": "激しくなる",
+            "pace": "ミドル"
+          },
+          "target": {
+            "number": 2,
+            "frame": 2,
+            "name": "テストブラボー",
+            "carried_kg": 58,
+            "jockey": "試験 次郎",
+            "jockey_changed_from_last_race": true,
+            "blinker": false,
+            "recent_races": [
+              {
+                "date": "2025-12-25",
+                "race": "テスト兵庫 JpnⅢ",
+                "course": "園田 1400ダ",
+                "going": "不良",
+                "field_size": 11,
+                "finish": 1,
+                "corner_positions": null,
+                "first_corner_zone": null,
+                "last_corner_zone": null,
+                "front_3f_sec": null,
+                "last_3f_sec": null,
+                "notes": [
+                  "今回との距離差-200m",
+                  "通過順なし",
+                  "不良馬場"
+                ]
+              },
+              {
+                "date": "2025-11-30",
+                "race": "ツグミS OP",
+                "course": "京都 1400ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 1,
+                "corner_positions": "12-7",
+                "first_corner_zone": "後方",
+                "last_corner_zone": "中団",
+                "front_3f_sec": null,
+                "last_3f_sec": 35.7,
+                "notes": [
+                  "今回との距離差-200m"
+                ]
+              },
+              {
+                "date": "2025-09-23",
+                "race": "テスト浦和 JpnⅢ",
+                "course": "浦和 1400ダ",
+                "going": "良",
+                "field_size": 12,
+                "finish": 6,
+                "corner_positions": null,
+                "first_corner_zone": null,
+                "last_corner_zone": null,
+                "front_3f_sec": null,
+                "last_3f_sec": null,
+                "notes": [
+                  "今回との距離差-200m",
+                  "通過順なし"
+                ]
+              },
+              {
+                "date": "2025-09-04",
+                "race": "テスト佐賀 JpnⅢ",
+                "course": "佐賀 1400ダ",
+                "going": "良",
+                "field_size": 10,
+                "finish": 4,
+                "corner_positions": null,
+                "first_corner_zone": null,
+                "last_corner_zone": null,
+                "front_3f_sec": null,
+                "last_3f_sec": null,
+                "notes": [
+                  "今回との距離差-200m",
+                  "通過順なし"
+                ]
+              }
+            ],
+            "facts": {
+              "led_at_first_corner": 0,
+              "within_2nd_at_first_corner": 0,
+              "races_with_corner_data": 1,
+              "best_front_3f_turf1200_sec": null,
+              "days_since_last_race": 66
+            }
+          },
+          "others": [
+            {
+              "number": 1,
+              "frame": 1,
+              "name": "テストアルファ",
+              "recent_first_corner_zones": [
+                "先頭",
+                "中団",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 3,
+              "frame": 3,
+              "name": "テストチャーリー",
+              "recent_first_corner_zones": [
+                "中団",
+                "先頭",
+                "中団",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 4,
+              "frame": 4,
+              "name": "テストデルタ",
+              "recent_first_corner_zones": [
+                "好位",
+                "不明",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 5,
+              "frame": 5,
+              "name": "テストエコー",
+              "recent_first_corner_zones": [
+                "後方",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 6,
+              "frame": 6,
+              "name": "テストフォックス",
+              "recent_first_corner_zones": [
+                "好位",
+                "後方",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 7,
+              "frame": 7,
+              "name": "テストゴルフ",
+              "recent_first_corner_zones": [
+                "中団",
+                "好位",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 8,
+              "frame": 8,
+              "name": "テストホテル",
+              "recent_first_corner_zones": [
+                "好位",
+                "中団",
+                "中団",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            }
+          ]
+        },
+        "questions": {
+          "first_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          },
+          "last_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          }
+        }
+      },
+      {
+        "state": {
+          "race": {
+            "name": "第9回テストマイルステークスGⅢ",
+            "date": "2026-03-01",
+            "venue": "東京",
+            "course": "1600m（ダート・左）",
+            "conditions": "4歳以上 オープン （国際）（指定） 別定",
+            "field_size": 8
+          },
+          "track": {
+            "weather": null,
+            "turf_going": null,
+            "turf_condition_note": null,
+            "course_in_use": null,
+            "cushion_value": null,
+            "cushion_category": null,
+            "turf_moisture_pct": null
+          },
+          "race_outlook": {
+            "note": "STEP3でJevが推定した展開。確定した事実ではない",
+            "expected_leader": "1番 テストアルファ",
+            "early_lead_battle": "激しくなる",
+            "pace": "ミドル"
+          },
+          "target": {
+            "number": 3,
+            "frame": 3,
+            "name": "テストチャーリー",
+            "carried_kg": 56,
+            "jockey": "試験 三郎",
+            "jockey_changed_from_last_race": false,
+            "blinker": false,
+            "recent_races": [
+              {
+                "date": "2026-01-25",
+                "race": "キジS GⅡ",
+                "course": "京都 1800ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 4,
+                "corner_positions": "8-7-8-7",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "中団",
+                "front_3f_sec": null,
+                "last_3f_sec": 36.4,
+                "notes": [
+                  "今回との距離差+200m"
+                ]
+              },
+              {
+                "date": "2025-12-14",
+                "race": "ウズラS リステッド",
+                "course": "中山 1800ダ",
+                "going": "稍重",
+                "field_size": 16,
+                "finish": 1,
+                "corner_positions": "1-1-1-1",
+                "first_corner_zone": "先頭",
+                "last_corner_zone": "先頭",
+                "front_3f_sec": null,
+                "last_3f_sec": 37.3,
+                "notes": [
+                  "今回との距離差+200m",
+                  "稍重馬場"
+                ]
+              },
+              {
+                "date": "2025-11-09",
+                "race": "トキS GⅢ",
+                "course": "京都 1800ダ",
+                "going": "不良",
+                "field_size": 15,
+                "finish": 6,
+                "corner_positions": "6-6-6-4",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 37,
+                "notes": [
+                  "今回との距離差+200m",
+                  "不良馬場"
+                ]
+              },
+              {
+                "date": "2025-09-27",
+                "race": "ヒワS GⅢ",
+                "course": "阪神 2000ダ",
+                "going": "重",
+                "field_size": 14,
+                "finish": 5,
+                "corner_positions": "9-9-10-10",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "中団",
+                "front_3f_sec": null,
+                "last_3f_sec": 36.9,
+                "notes": [
+                  "今回との距離差+400m",
+                  "重馬場"
+                ]
+              }
+            ],
+            "facts": {
+              "led_at_first_corner": 1,
+              "within_2nd_at_first_corner": 1,
+              "races_with_corner_data": 4,
+              "best_front_3f_turf1200_sec": null,
+              "days_since_last_race": 35
+            }
+          },
+          "others": [
+            {
+              "number": 1,
+              "frame": 1,
+              "name": "テストアルファ",
+              "recent_first_corner_zones": [
+                "先頭",
+                "中団",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 2,
+              "frame": 2,
+              "name": "テストブラボー",
+              "recent_first_corner_zones": [
+                "不明",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 4,
+              "frame": 4,
+              "name": "テストデルタ",
+              "recent_first_corner_zones": [
+                "好位",
+                "不明",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 5,
+              "frame": 5,
+              "name": "テストエコー",
+              "recent_first_corner_zones": [
+                "後方",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 6,
+              "frame": 6,
+              "name": "テストフォックス",
+              "recent_first_corner_zones": [
+                "好位",
+                "後方",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 7,
+              "frame": 7,
+              "name": "テストゴルフ",
+              "recent_first_corner_zones": [
+                "中団",
+                "好位",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 8,
+              "frame": 8,
+              "name": "テストホテル",
+              "recent_first_corner_zones": [
+                "好位",
+                "中団",
+                "中団",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            }
+          ]
+        },
+        "questions": {
+          "first_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          },
+          "last_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          }
+        }
+      },
+      {
+        "state": {
+          "race": {
+            "name": "第9回テストマイルステークスGⅢ",
+            "date": "2026-03-01",
+            "venue": "東京",
+            "course": "1600m（ダート・左）",
+            "conditions": "4歳以上 オープン （国際）（指定） 別定",
+            "field_size": 8
+          },
+          "track": {
+            "weather": null,
+            "turf_going": null,
+            "turf_condition_note": null,
+            "course_in_use": null,
+            "cushion_value": null,
+            "cushion_category": null,
+            "turf_moisture_pct": null
+          },
+          "race_outlook": {
+            "note": "STEP3でJevが推定した展開。確定した事実ではない",
+            "expected_leader": "1番 テストアルファ",
+            "early_lead_battle": "激しくなる",
+            "pace": "ミドル"
+          },
+          "target": {
+            "number": 4,
+            "frame": 4,
+            "name": "テストデルタ",
+            "carried_kg": 58,
+            "jockey": "試験 四郎",
+            "jockey_changed_from_last_race": true,
+            "blinker": false,
+            "recent_races": [
+              {
+                "date": "2025-12-07",
+                "race": "テストCS GⅠ",
+                "course": "中京 1800ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 11,
+                "corner_positions": "2-1-2-2",
+                "first_corner_zone": "好位",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 38.6,
+                "notes": [
+                  "今回との距離差+200m"
+                ]
+              },
+              {
+                "date": "2025-10-13",
+                "race": "テスト盛岡 JpnⅠ",
+                "course": "盛岡 1600ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 2,
+                "corner_positions": null,
+                "first_corner_zone": null,
+                "last_corner_zone": null,
+                "front_3f_sec": null,
+                "last_3f_sec": null,
+                "notes": [
+                  "通過順なし"
+                ]
+              },
+              {
+                "date": "2025-06-08",
+                "race": "テスト記念 GⅠ",
+                "course": "東京 1600芝",
+                "going": "良",
+                "field_size": 18,
+                "finish": 12,
+                "corner_positions": "4-4",
+                "first_corner_zone": "好位",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 34.7,
+                "notes": [
+                  "馬場種別が異なる"
+                ]
+              }
+            ],
+            "facts": {
+              "led_at_first_corner": 0,
+              "within_2nd_at_first_corner": 1,
+              "races_with_corner_data": 2,
+              "best_front_3f_turf1200_sec": null,
+              "days_since_last_race": 84
+            }
+          },
+          "others": [
+            {
+              "number": 1,
+              "frame": 1,
+              "name": "テストアルファ",
+              "recent_first_corner_zones": [
+                "先頭",
+                "中団",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 2,
+              "frame": 2,
+              "name": "テストブラボー",
+              "recent_first_corner_zones": [
+                "不明",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 3,
+              "frame": 3,
+              "name": "テストチャーリー",
+              "recent_first_corner_zones": [
+                "中団",
+                "先頭",
+                "中団",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 5,
+              "frame": 5,
+              "name": "テストエコー",
+              "recent_first_corner_zones": [
+                "後方",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 6,
+              "frame": 6,
+              "name": "テストフォックス",
+              "recent_first_corner_zones": [
+                "好位",
+                "後方",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 7,
+              "frame": 7,
+              "name": "テストゴルフ",
+              "recent_first_corner_zones": [
+                "中団",
+                "好位",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 8,
+              "frame": 8,
+              "name": "テストホテル",
+              "recent_first_corner_zones": [
+                "好位",
+                "中団",
+                "中団",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            }
+          ]
+        },
+        "questions": {
+          "first_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          },
+          "last_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          }
+        }
+      },
+      {
+        "state": {
+          "race": {
+            "name": "第9回テストマイルステークスGⅢ",
+            "date": "2026-03-01",
+            "venue": "東京",
+            "course": "1600m（ダート・左）",
+            "conditions": "4歳以上 オープン （国際）（指定） 別定",
+            "field_size": 8
+          },
+          "track": {
+            "weather": null,
+            "turf_going": null,
+            "turf_condition_note": null,
+            "course_in_use": null,
+            "cushion_value": null,
+            "cushion_category": null,
+            "turf_moisture_pct": null
+          },
+          "race_outlook": {
+            "note": "STEP3でJevが推定した展開。確定した事実ではない",
+            "expected_leader": "1番 テストアルファ",
+            "early_lead_battle": "激しくなる",
+            "pace": "ミドル"
+          },
+          "target": {
+            "number": 5,
+            "frame": 5,
+            "name": "テストエコー",
+            "carried_kg": 58,
+            "jockey": "試験 五郎",
+            "jockey_changed_from_last_race": false,
+            "blinker": true,
+            "recent_races": [
+              {
+                "date": "2025-12-07",
+                "race": "テストCS GⅠ",
+                "course": "中京 1800ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 3,
+                "corner_positions": "12-12-10-11",
+                "first_corner_zone": "後方",
+                "last_corner_zone": "中団",
+                "front_3f_sec": null,
+                "last_3f_sec": 36.9,
+                "notes": [
+                  "今回との距離差+200m"
+                ]
+              },
+              {
+                "date": "2025-11-09",
+                "race": "トキS GⅢ",
+                "course": "京都 1800ダ",
+                "going": "不良",
+                "field_size": 15,
+                "finish": 4,
+                "corner_positions": "14-14-13-13",
+                "first_corner_zone": "後方",
+                "last_corner_zone": "後方",
+                "front_3f_sec": null,
+                "last_3f_sec": 35.3,
+                "notes": [
+                  "今回との距離差+200m",
+                  "不良馬場"
+                ]
+              },
+              {
+                "date": "2025-09-07",
+                "race": "テスト韓国C GⅢ",
+                "course": "韓 1800ダ",
+                "going": "稍重",
+                "field_size": 11,
+                "finish": 3,
+                "corner_positions": null,
+                "first_corner_zone": null,
+                "last_corner_zone": null,
+                "front_3f_sec": null,
+                "last_3f_sec": null,
+                "notes": [
+                  "今回との距離差+200m",
+                  "通過順なし",
+                  "稍重馬場"
+                ]
+              },
+              {
+                "date": "2025-07-02",
+                "race": "テスト大井 JpnⅠ",
+                "course": "大井 2000ダ",
+                "going": "良",
+                "field_size": 13,
+                "finish": 6,
+                "corner_positions": null,
+                "first_corner_zone": null,
+                "last_corner_zone": null,
+                "front_3f_sec": null,
+                "last_3f_sec": null,
+                "notes": [
+                  "今回との距離差+400m",
+                  "通過順なし"
+                ]
+              }
+            ],
+            "facts": {
+              "led_at_first_corner": 0,
+              "within_2nd_at_first_corner": 0,
+              "races_with_corner_data": 2,
+              "best_front_3f_turf1200_sec": null,
+              "days_since_last_race": 84
+            }
+          },
+          "others": [
+            {
+              "number": 1,
+              "frame": 1,
+              "name": "テストアルファ",
+              "recent_first_corner_zones": [
+                "先頭",
+                "中団",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 2,
+              "frame": 2,
+              "name": "テストブラボー",
+              "recent_first_corner_zones": [
+                "不明",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 3,
+              "frame": 3,
+              "name": "テストチャーリー",
+              "recent_first_corner_zones": [
+                "中団",
+                "先頭",
+                "中団",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 4,
+              "frame": 4,
+              "name": "テストデルタ",
+              "recent_first_corner_zones": [
+                "好位",
+                "不明",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 6,
+              "frame": 6,
+              "name": "テストフォックス",
+              "recent_first_corner_zones": [
+                "好位",
+                "後方",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 7,
+              "frame": 7,
+              "name": "テストゴルフ",
+              "recent_first_corner_zones": [
+                "中団",
+                "好位",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 8,
+              "frame": 8,
+              "name": "テストホテル",
+              "recent_first_corner_zones": [
+                "好位",
+                "中団",
+                "中団",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            }
+          ]
+        },
+        "questions": {
+          "first_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          },
+          "last_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          }
+        }
+      },
+      {
+        "state": {
+          "race": {
+            "name": "第9回テストマイルステークスGⅢ",
+            "date": "2026-03-01",
+            "venue": "東京",
+            "course": "1600m（ダート・左）",
+            "conditions": "4歳以上 オープン （国際）（指定） 別定",
+            "field_size": 8
+          },
+          "track": {
+            "weather": null,
+            "turf_going": null,
+            "turf_condition_note": null,
+            "course_in_use": null,
+            "cushion_value": null,
+            "cushion_category": null,
+            "turf_moisture_pct": null
+          },
+          "race_outlook": {
+            "note": "STEP3でJevが推定した展開。確定した事実ではない",
+            "expected_leader": "1番 テストアルファ",
+            "early_lead_battle": "激しくなる",
+            "pace": "ミドル"
+          },
+          "target": {
+            "number": 6,
+            "frame": 6,
+            "name": "テストフォックス",
+            "carried_kg": 58,
+            "jockey": "試験 六郎",
+            "jockey_changed_from_last_race": true,
+            "blinker": false,
+            "recent_races": [
+              {
+                "date": "2025-11-23",
+                "race": "テストSS GⅠ",
+                "course": "京都 1200芝",
+                "going": "良",
+                "field_size": 18,
+                "finish": 15,
+                "corner_positions": "2-2",
+                "first_corner_zone": "好位",
+                "last_corner_zone": "好位",
+                "front_3f_sec": 34.4,
+                "last_3f_sec": 34.1,
+                "notes": [
+                  "馬場種別が異なる",
+                  "今回との距離差-400m"
+                ]
+              },
+              {
+                "date": "2025-10-05",
+                "race": "テスト王冠 GⅡ",
+                "course": "東京 1800芝",
+                "going": "良",
+                "field_size": 10,
+                "finish": 8,
+                "corner_positions": "10-10-9",
+                "first_corner_zone": "後方",
+                "last_corner_zone": "後方",
+                "front_3f_sec": null,
+                "last_3f_sec": 33.3,
+                "notes": [
+                  "馬場種別が異なる",
+                  "今回との距離差+200m"
+                ]
+              },
+              {
+                "date": "2025-06-08",
+                "race": "テスト記念 GⅠ",
+                "course": "東京 1600芝",
+                "going": "良",
+                "field_size": 18,
+                "finish": 13,
+                "corner_positions": "4-4",
+                "first_corner_zone": "好位",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 35.1,
+                "notes": [
+                  "馬場種別が異なる"
+                ]
+              },
+              {
+                "date": "2025-04-27",
+                "race": "テストSC GⅡ",
+                "course": "京都 1200芝",
+                "going": "良",
+                "field_size": 10,
+                "finish": 1,
+                "corner_positions": "6-7",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "中団",
+                "front_3f_sec": 35.2,
+                "last_3f_sec": 33.8,
+                "notes": [
+                  "馬場種別が異なる",
+                  "今回との距離差-400m"
+                ]
+              }
+            ],
+            "facts": {
+              "led_at_first_corner": 0,
+              "within_2nd_at_first_corner": 1,
+              "races_with_corner_data": 4,
+              "best_front_3f_turf1200_sec": 34.4,
+              "days_since_last_race": 98
+            }
+          },
+          "others": [
+            {
+              "number": 1,
+              "frame": 1,
+              "name": "テストアルファ",
+              "recent_first_corner_zones": [
+                "先頭",
+                "中団",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 2,
+              "frame": 2,
+              "name": "テストブラボー",
+              "recent_first_corner_zones": [
+                "不明",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 3,
+              "frame": 3,
+              "name": "テストチャーリー",
+              "recent_first_corner_zones": [
+                "中団",
+                "先頭",
+                "中団",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 4,
+              "frame": 4,
+              "name": "テストデルタ",
+              "recent_first_corner_zones": [
+                "好位",
+                "不明",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 5,
+              "frame": 5,
+              "name": "テストエコー",
+              "recent_first_corner_zones": [
+                "後方",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 7,
+              "frame": 7,
+              "name": "テストゴルフ",
+              "recent_first_corner_zones": [
+                "中団",
+                "好位",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 8,
+              "frame": 8,
+              "name": "テストホテル",
+              "recent_first_corner_zones": [
+                "好位",
+                "中団",
+                "中団",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            }
+          ]
+        },
+        "questions": {
+          "first_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          },
+          "last_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          }
+        }
+      },
+      {
+        "state": {
+          "race": {
+            "name": "第9回テストマイルステークスGⅢ",
+            "date": "2026-03-01",
+            "venue": "東京",
+            "course": "1600m（ダート・左）",
+            "conditions": "4歳以上 オープン （国際）（指定） 別定",
+            "field_size": 8
+          },
+          "track": {
+            "weather": null,
+            "turf_going": null,
+            "turf_condition_note": null,
+            "course_in_use": null,
+            "cushion_value": null,
+            "cushion_category": null,
+            "turf_moisture_pct": null
+          },
+          "race_outlook": {
+            "note": "STEP3でJevが推定した展開。確定した事実ではない",
+            "expected_leader": "1番 テストアルファ",
+            "early_lead_battle": "激しくなる",
+            "pace": "ミドル"
+          },
+          "target": {
+            "number": 7,
+            "frame": 7,
+            "name": "テストゴルフ",
+            "carried_kg": 58,
+            "jockey": "試験 七郎",
+            "jockey_changed_from_last_race": true,
+            "blinker": true,
+            "recent_races": [
+              {
+                "date": "2025-12-07",
+                "race": "テストCS GⅠ",
+                "course": "中京 1800ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 12,
+                "corner_positions": "8-9-10-11",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "中団",
+                "front_3f_sec": null,
+                "last_3f_sec": 38.5,
+                "notes": [
+                  "今回との距離差+200m"
+                ]
+              },
+              {
+                "date": "2025-11-15",
+                "race": "カモメS GⅢ",
+                "course": "東京 1600ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 9,
+                "corner_positions": "3-2",
+                "first_corner_zone": "好位",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 36.2
+              },
+              {
+                "date": "2025-10-13",
+                "race": "テスト盛岡 JpnⅠ",
+                "course": "盛岡 1600ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 3,
+                "corner_positions": null,
+                "first_corner_zone": null,
+                "last_corner_zone": null,
+                "front_3f_sec": null,
+                "last_3f_sec": null,
+                "notes": [
+                  "通過順なし"
+                ]
+              },
+              {
+                "date": "2025-04-05",
+                "race": "テストドバイ GⅡ",
+                "course": "ア首 1600ダ",
+                "going": "良",
+                "field_size": 14,
+                "finish": 11,
+                "corner_positions": null,
+                "first_corner_zone": null,
+                "last_corner_zone": null,
+                "front_3f_sec": null,
+                "last_3f_sec": null,
+                "notes": [
+                  "通過順なし"
+                ]
+              }
+            ],
+            "facts": {
+              "led_at_first_corner": 0,
+              "within_2nd_at_first_corner": 0,
+              "races_with_corner_data": 2,
+              "best_front_3f_turf1200_sec": null,
+              "days_since_last_race": 84
+            }
+          },
+          "others": [
+            {
+              "number": 1,
+              "frame": 1,
+              "name": "テストアルファ",
+              "recent_first_corner_zones": [
+                "先頭",
+                "中団",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 2,
+              "frame": 2,
+              "name": "テストブラボー",
+              "recent_first_corner_zones": [
+                "不明",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 3,
+              "frame": 3,
+              "name": "テストチャーリー",
+              "recent_first_corner_zones": [
+                "中団",
+                "先頭",
+                "中団",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 4,
+              "frame": 4,
+              "name": "テストデルタ",
+              "recent_first_corner_zones": [
+                "好位",
+                "不明",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 5,
+              "frame": 5,
+              "name": "テストエコー",
+              "recent_first_corner_zones": [
+                "後方",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 6,
+              "frame": 6,
+              "name": "テストフォックス",
+              "recent_first_corner_zones": [
+                "好位",
+                "後方",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 8,
+              "frame": 8,
+              "name": "テストホテル",
+              "recent_first_corner_zones": [
+                "好位",
+                "中団",
+                "中団",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            }
+          ]
+        },
+        "questions": {
+          "first_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          },
+          "last_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          }
+        }
+      },
+      {
+        "state": {
+          "race": {
+            "name": "第9回テストマイルステークスGⅢ",
+            "date": "2026-03-01",
+            "venue": "東京",
+            "course": "1600m（ダート・左）",
+            "conditions": "4歳以上 オープン （国際）（指定） 別定",
+            "field_size": 8
+          },
+          "track": {
+            "weather": null,
+            "turf_going": null,
+            "turf_condition_note": null,
+            "course_in_use": null,
+            "cushion_value": null,
+            "cushion_category": null,
+            "turf_moisture_pct": null
+          },
+          "race_outlook": {
+            "note": "STEP3でJevが推定した展開。確定した事実ではない",
+            "expected_leader": "1番 テストアルファ",
+            "early_lead_battle": "激しくなる",
+            "pace": "ミドル"
+          },
+          "target": {
+            "number": 8,
+            "frame": 8,
+            "name": "テストホテル",
+            "carried_kg": 58,
+            "jockey": "試験 八郎",
+            "jockey_changed_from_last_race": false,
+            "blinker": false,
+            "recent_races": [
+              {
+                "date": "2026-01-25",
+                "race": "キジS GⅡ",
+                "course": "京都 1800ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 9,
+                "corner_positions": "4-5-4-5",
+                "first_corner_zone": "好位",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 37.3,
+                "notes": [
+                  "今回との距離差+200m"
+                ]
+              },
+              {
+                "date": "2025-11-09",
+                "race": "トキS GⅢ",
+                "course": "京都 1800ダ",
+                "going": "不良",
+                "field_size": 15,
+                "finish": 2,
+                "corner_positions": "8-7-6-4",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 35.7,
+                "notes": [
+                  "今回との距離差+200m",
+                  "不良馬場"
+                ]
+              },
+              {
+                "date": "2025-09-27",
+                "race": "ヒワS GⅢ",
+                "course": "阪神 2000ダ",
+                "going": "良",
+                "field_size": 14,
+                "finish": 2,
+                "corner_positions": "8-8-5-5",
+                "first_corner_zone": "中団",
+                "last_corner_zone": "中団",
+                "front_3f_sec": null,
+                "last_3f_sec": 36.7,
+                "notes": [
+                  "今回との距離差+400m"
+                ]
+              },
+              {
+                "date": "2025-06-28",
+                "race": "テスト博多S 3勝ク",
+                "course": "小倉 1700ダ",
+                "going": "良",
+                "field_size": 16,
+                "finish": 1,
+                "corner_positions": "5-5-6-3",
+                "first_corner_zone": "好位",
+                "last_corner_zone": "好位",
+                "front_3f_sec": null,
+                "last_3f_sec": 36.8
+              }
+            ],
+            "facts": {
+              "led_at_first_corner": 0,
+              "within_2nd_at_first_corner": 0,
+              "races_with_corner_data": 4,
+              "best_front_3f_turf1200_sec": null,
+              "days_since_last_race": 35
+            }
+          },
+          "others": [
+            {
+              "number": 1,
+              "frame": 1,
+              "name": "テストアルファ",
+              "recent_first_corner_zones": [
+                "先頭",
+                "中団",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 2,
+              "frame": 2,
+              "name": "テストブラボー",
+              "recent_first_corner_zones": [
+                "不明",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 3,
+              "frame": 3,
+              "name": "テストチャーリー",
+              "recent_first_corner_zones": [
+                "中団",
+                "先頭",
+                "中団",
+                "中団"
+              ],
+              "led_at_first_corner": 1
+            },
+            {
+              "number": 4,
+              "frame": 4,
+              "name": "テストデルタ",
+              "recent_first_corner_zones": [
+                "好位",
+                "不明",
+                "好位"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 5,
+              "frame": 5,
+              "name": "テストエコー",
+              "recent_first_corner_zones": [
+                "後方",
+                "後方",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 6,
+              "frame": 6,
+              "name": "テストフォックス",
+              "recent_first_corner_zones": [
+                "好位",
+                "後方",
+                "好位",
+                "中団"
+              ],
+              "led_at_first_corner": 0
+            },
+            {
+              "number": 7,
+              "frame": 7,
+              "name": "テストゴルフ",
+              "recent_first_corner_zones": [
+                "中団",
+                "好位",
+                "不明",
+                "不明"
+              ],
+              "led_at_first_corner": 0
+            }
+          ]
+        },
+        "questions": {
+          "first_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          },
+          "last_corner": {
+            "type": "choice",
+            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "criteria": {
+              "front": "先頭：1番手で通過する",
+              "forward": "好位：2〜2番手で通過する",
+              "mid": "中団：3〜6番手で通過する",
+              "rear": "後方：7〜8番手で通過する"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
