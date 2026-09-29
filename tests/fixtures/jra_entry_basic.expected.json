@@ -2858,7 +2858,7 @@
           "unclear": "stateの情報からは、先頭で通過する馬を特定できない"
         }
       },
-      "contested_lead": {
+      "early_lead_battle": {
         "type": "noul",
         "instructions": "このレース 第9回テストマイルステークスGⅢ（1600m） では、序盤に2頭以上の馬が先頭を主張し、先行争いが激しくなる。stateの`race_facts.front_runners`と各馬の枠を根拠に判断し、それを示す根拠がstateにない場合は偽とする。"
       },

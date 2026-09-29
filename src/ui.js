@@ -1,6 +1,8 @@
 import { parse } from './parse/index.js';
 import { derive, zoneCut, cushionCat } from './derive.js';
 import { raceBlock, raceState, raceQuestions, horseRequest } from './requests.js';
+import { RACE_OUTLOOK, HORSE_POSITION } from './contracts.js';
+import { MODEL_ID, buildRequest, checkLimits } from './jev.js';
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -64,11 +66,21 @@ function renderS2(){
   });
   $('s2out').innerHTML=h+'</tbody></table></div>';
 }
+// State 欄の上に、契約・モデルの表示と、上限の目安を超えたときの警告を出す
+function showMeta(stateId,contract,req){
+  const grid=$(stateId).closest('.grid');
+  let box=document.getElementById(stateId+'-meta');
+  if(!box){box=document.createElement('div');box.id=stateId+'-meta';grid.before(box);}
+  const c=checkLimits(req),L=c.limits;
+  box.innerHTML=`<div class="lbl">契約：${esc(contract.label)} ／ モデル：${esc(MODEL_ID)}</div>`+(c.ok?'':
+    `<div class="warn">リクエストの大きさが上限の目安を超えています（全体 ${c.total}／${L.requestTokens}、state と最大の質問 ${c.stateAndLongest}／${L.stateAndLongestQuestionTokens}。1文字を1トークンとみなした目安）</div>`);
+}
 function renderS3(){
-  const st=raceState(D),q=raceQuestions(D);
+  const st=raceState(D),req=buildRequest(st,raceQuestions(D));
   $('r-state').value=JSON.stringify(st,null,2);
-  $('r-q').value=JSON.stringify(q,null,2);
-  $('r-body').value=JSON.stringify({model:'jev-latest',state:st,questions:q},null,2);
+  $('r-q').value=JSON.stringify(req.questions,null,2);
+  $('r-body').value=JSON.stringify(req,null,2);
+  showMeta('r-state',RACE_OUTLOOK,req);
   const s=$('o-lead'),cur=s.value;
   s.innerHTML='<option value="">ハナ：未入力</option>'+D.horses.map(h=>`<option value="${h.num}番 ${esc(h.name)}">${h.num}番 ${esc(h.name)}</option>`).join('')+'<option value="特定できない">特定できない</option>';
   if([...s.options].some(o=>o.value===cur)) s.value=cur;
@@ -79,15 +91,16 @@ function renderS4(){
   sel.innerHTML=D.horses.map(h=>`<option value="${h.num}">${h.num}番 ${esc(h.name)}</option>`).join('');
   if(D.horses.some(h=>String(h.num)===cur)) sel.value=cur;
   const h=D.horses.find(x=>String(x.num)===sel.value)||D.horses[0];
-  const r=horseRequest(D,h,outlook());
+  const r=horseRequest(D,h,outlook()),req=buildRequest(r.state,r.questions);
   $('h-state').value=JSON.stringify(r.state,null,2);
-  $('h-q').value=JSON.stringify(r.questions,null,2);
-  $('h-body').value=JSON.stringify({model:'jev-latest',state:r.state,questions:r.questions},null,2);
+  $('h-q').value=JSON.stringify(req.questions,null,2);
+  $('h-body').value=JSON.stringify(req,null,2);
+  showMeta('h-state',HORSE_POSITION,req);
 }
 function downloadAll(){
   const ol=outlook();
-  const reqs=D.horses.map(h=>{const r=horseRequest(D,h,ol);return {horse:`${h.num}番 ${h.name}`,request:{model:'jev-latest',state:r.state,questions:r.questions}};});
-  const blob=new Blob([JSON.stringify({race:raceBlock(D),step:'STEP4',requests:reqs},null,2)],{type:'application/json'});
+  const reqs=D.horses.map(h=>{const r=horseRequest(D,h,ol);return {horse:`${h.num}番 ${h.name}`,request:buildRequest(r.state,r.questions)};});
+  const blob=new Blob([JSON.stringify({race:raceBlock(D),step:'STEP4',contract:HORSE_POSITION.label,model:MODEL_ID,requests:reqs},null,2)],{type:'application/json'});
   const u=URL.createObjectURL(blob),a=document.createElement('a');
   a.href=u;a.download=`jev_step4_${D.race.date||'race'}.json`;document.body.appendChild(a);a.click();a.remove();
   setTimeout(()=>URL.revokeObjectURL(u),1000);
