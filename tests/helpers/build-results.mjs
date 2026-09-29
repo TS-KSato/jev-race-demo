@@ -1,5 +1,7 @@
 import { readFileSync } from 'node:fs';
-import { loadIndex } from './load-index.mjs';
+import { parse } from '../../src/parse/index.js';
+import { derive } from '../../src/derive.js';
+import { raceState, raceQuestions, horseRequest } from '../../src/requests.js';
 
 export const FIXTURE_TEXT_PATH = new URL('../fixtures/jra_entry_basic.txt', import.meta.url);
 export const EXPECTED_PATH = new URL('../fixtures/jra_entry_basic.expected.json', import.meta.url);
@@ -11,18 +13,17 @@ const OUTLOOK = {
   pace: 'ミドル',
 };
 
-export function buildResults(api = loadIndex()) {
+export function buildResults() {
   const text = readFileSync(FIXTURE_TEXT_PATH, 'utf8');
-  const P = api.parseAll(text);
-  const Dv = api.derive(P);
-  api.setD(Dv);
+  const P = parse(text);
+  const Dv = derive(P);
   return {
     parsed: P,
     derived: Dv,
-    raceRequest: { state: api.raceState(), questions: api.raceQuestions() },
+    raceRequest: { state: raceState(Dv), questions: raceQuestions(Dv) },
     horseRequests: {
-      noOutlook: Dv.horses.map(h => api.horseRequest(h, null)),
-      withOutlook: Dv.horses.map(h => api.horseRequest(h, OUTLOOK)),
+      noOutlook: Dv.horses.map(h => horseRequest(Dv, h, null)),
+      withOutlook: Dv.horses.map(h => horseRequest(Dv, h, OUTLOOK)),
     },
   };
 }

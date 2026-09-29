@@ -1,13 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { loadIndex } from './helpers/load-index.mjs';
+import { parse } from '../src/parse/index.js';
+import { derive, zoneCut } from '../src/derive.js';
 import { FIXTURE_TEXT_PATH } from './helpers/build-results.mjs';
 
-const api = loadIndex();
 const plain = v => JSON.parse(JSON.stringify(v));
-const P = plain(api.parseAll(readFileSync(FIXTURE_TEXT_PATH, 'utf8')));
-const D = plain(api.derive(P));
+const P = plain(parse(readFileSync(FIXTURE_TEXT_PATH, 'utf8')));
+const D = plain(derive(P));
 const horse = n => P.horses.find(h => h.num === n);
 const dhorse = n => D.horses.find(h => h.num === n);
 
@@ -81,6 +81,6 @@ test('導出：事実', () => {
 });
 
 test('位置の区分：zoneCut', () => {
-  assert.deepEqual(plain(api.zoneCut(16)), { a: 5, b: 11 });
-  assert.deepEqual(plain(api.zoneCut(8)), { a: 2, b: 6 });
+  assert.deepEqual(plain(zoneCut(16)), { a: 5, b: 11 });
+  assert.deepEqual(plain(zoneCut(8)), { a: 2, b: 6 });
 });
