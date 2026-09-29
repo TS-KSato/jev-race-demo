@@ -29,6 +29,8 @@ TypeSafe AI の判断専用モデル「Jev」のデモページ。Jev は文章�
 - リクエストの model には、版の ID（現在は jev-1.13.0）を固定して指定する。別名（jev-latest、jev-preview）は、新しい版が出ると指す版が変わるので使わない。
 - 記録には、送ったモデル名と、レスポンスの model 欄にある実際に答えた版を残す。
 - リクエストを送る前に、state と質問の大きさが上限を超えないかをコードで確かめる。
+- Playground では別名（jev-latest、jev-preview）しか選べない。Playground で実行する間（Phase 2）は jev-latest を使い、記録にはレスポンスの model 欄にある、実際に答えた版を残す。版の ID の固定は、API で実行する段階（Phase 3）から効く。
+- 同じ入力でも、実行ごとに確率が数ポイント揺れることがある。記録は実行ごとに残す。
 
 ## 秘密情報とホスティング
 - Phase 0〜2 は GitHub Pages だけで動かし、API キーは使わない。ページ自体は Jev を呼び出さない。Jev の実行は、利用者がページの出力を TypeSafe の Playground に貼り付けて行う。
@@ -51,38 +53,48 @@ TypeSafe AI の判断専用モデル「Jev」のデモページ。Jev は文章�
 ## 構成
 ```
 /
-├─ index.html          画面（STEPごとの区画）
+├─ index.html          画面（STEPごとの区画）。処理は src/ui.js を ES モジュールとして読み込む
+├─ package.json        {"private": true, "type": "module"} だけ。依存関係は書かない
 ├─ src/
+│  ├─ util.js          複数のファイルで使う小さな関数
 │  ├─ parse/
-│  │  ├─ index.js      形式の判別とアダプターへの振り分け
-│  │  └─ jra.js        JRA出馬表のアダプター
-│  ├─ derive.js        事実の導出（STEP2）
-│  ├─ contracts.js     判断契約（質問文・選択肢・版）
-│  ├─ jev.js           Jevとの境目
+│  │  ├─ index.js      形式の判別とアダプターへの振り分け。読み取り結果に警告を付けて返す
+│  │  ├─ jra.js        JRA出馬表のアダプター（形式の判別と読み取り）
+│  │  └─ validate.js   読み取り結果から警告を作る（最初の読み取りと再計算の両方で使う）
+│  ├─ derive.js        事実の導出（STEP2）と位置の区分
+│  ├─ contracts.js     判断契約（質問文・選択肢・版）。種類名は truth・select・grade で書く
+│  ├─ jev.js           Jevとの境目（型名への変換、リクエスト、レスポンスの変換、設定値）
 │  ├─ requests.js      判断契約と事実からリクエストの内容を組み立てる
-│  ├─ score.js         振り分けと採点（STEP5）
+│  ├─ score.js         振り分けと採点（STEP5。未作成）
 │  └─ ui.js            画面の描画
 ├─ tests/
-│  ├─ fixtures/        架空のテストデータ
-│  └─ *.test.js        Node標準のテストランナーで実行
+│  ├─ fixtures/        架空のテストデータと基準結果
+│  ├─ helpers/         テスト用の補助
+│  ├─ tools/           基準結果を作り直すスクリプト
+│  └─ *.test.mjs       Node標準のテストランナーで実行
 ├─ local/              実データ（.gitignoreで除外）
 ├─ .gitignore
-├─ .nojekyll           GitHub Pages で Jekyll の処理を行わせない
+├─ .nojekyll
 ├─ CLAUDE.md
 └─ README.md
 ```
-- 現在は index.html の単一ファイルで、順次この構成に分割する。
 - ブラウザの ES モジュールで動かす。ビルド工程、フレームワーク、実行時の外部ライブラリは使わない。package.json の依存も追加しない。
 - 位置の区分（先頭・好位・中団・後方）の計算は1つの関数にまとめ、STEP2 の表示、STEP4 の選択肢、STEP5 の採点のすべてで同じ関数を使う。
 
 ## テスト
 - Node 20 以上の標準テストランナーで実行する：`node --test`
+- 架空の出馬表（tests/fixtures/jra_entry_basic.txt）を、読み取り → 導出 → リクエストの組み立てまで通した結果を、基準結果（tests/fixtures/jra_entry_basic.expected.json）として保存している。
+- 処理の結果を変えない作業では、基準結果を変えずにテストが通ること。
+- 処理の結果を意図して変える作業では、tests/tools/make-expected.mjs で基準結果を作り直し、差分が意図した変更だけであることを確かめる。基準結果は手で編集しない。
+- 架空データの中身を実在の馬・騎手・レースに書き換えない。
+- 画面の確認は、リポジトリの直下で `python3 -m http.server` を起動し、ヘッドレスブラウザ等で行う。ES モジュールを使うため、index.html を直接開いても動かない。
 
 ## コミットとブランチ
 - 作業指示1つにつき1コミット以上。
 - メッセージは日本語で、変更内容を要約する。
 - 作業は作業用ブランチで行い、そのブランチにプッシュする。main への取り込みは、利用者がプルリクエストを確認して行う。
 - main への直接のプッシュ、force push はしない。
+- 作業を始める前と差分を比べる前に `git fetch origin main` を実行し、最新の main と比べる。
 
 ## 禁止事項
 - 秘密情報（API キー、トークン、パスワード）のコミット
