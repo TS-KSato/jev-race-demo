@@ -2,6 +2,9 @@ import { readFileSync } from 'node:fs';
 import { parse } from '../../src/parse/index.js';
 import { derive } from '../../src/derive.js';
 import { raceState, raceQuestions, horseRequest } from '../../src/requests.js';
+import { buildRequest } from '../../src/jev.js';
+
+const jevForm = ({ state, questions }) => ({ state, questions: buildRequest(state, questions).questions });
 
 export const FIXTURE_TEXT_PATH = new URL('../fixtures/jra_entry_basic.txt', import.meta.url);
 export const EXPECTED_PATH = new URL('../fixtures/jra_entry_basic.expected.json', import.meta.url);
@@ -20,10 +23,10 @@ export function buildResults() {
   return {
     parsed: P,
     derived: Dv,
-    raceRequest: { state: raceState(Dv), questions: raceQuestions(Dv) },
+    raceRequest: jevForm({ state: raceState(Dv), questions: raceQuestions(Dv) }),
     horseRequests: {
-      noOutlook: Dv.horses.map(h => horseRequest(Dv, h, null)),
-      withOutlook: Dv.horses.map(h => horseRequest(Dv, h, OUTLOOK)),
+      noOutlook: Dv.horses.map(h => jevForm(horseRequest(Dv, h, null))),
+      withOutlook: Dv.horses.map(h => jevForm(horseRequest(Dv, h, OUTLOOK))),
     },
   };
 }
