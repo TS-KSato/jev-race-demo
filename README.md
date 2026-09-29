@@ -14,6 +14,20 @@ https://ts-ksato.github.io/jev-race-demo/
 3. STEP3・4 の State と Questions を、TypeSafe の Playground に貼り付けて実行します。
 4. STEP3 の結果を選択欄に入れると、STEP4 の state に「推定」として渡ります。
 
+## 手元で確かめる方法
+ES モジュールを使うため、index.html をファイルとして直接開いても動きません。GitHub Pages で確かめるか、リポジトリの直下で簡単なサーバーを起動して http://localhost:8000/ を開きます。
+
+```
+python3 -m http.server
+```
+
+## テスト
+Node 20 以上で、リポジトリの直下から次を実行します。
+
+```
+node --test
+```
+
 ## データの扱い
 - 貼り付けたデータはブラウザの中だけで処理し、外部に送りません。
 - このリポジトリに実データ（JRA の出馬表・結果のテキスト）は含みません。
