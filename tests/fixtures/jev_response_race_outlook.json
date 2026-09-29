@@ -1,0 +1,49 @@
+{
+  "model": "jev-1.13.0",
+  "answers": {
+    "lead_horse": {
+      "type": "choice",
+      "choice": "h01",
+      "confidence": 0.57,
+      "probabilities": {
+        "h05": 0.03,
+        "h02": 0,
+        "h07": 0,
+        "h03": 0.3,
+        "unclear": 0.05,
+        "h08": 0,
+        "h04": 0,
+        "h01": 0.62,
+        "h06": 0
+      },
+      "stats": {}
+    },
+    "early_lead_battle": {
+      "type": "noul",
+      "noul": 0.41,
+      "stats": {}
+    },
+    "pace": {
+      "type": "score",
+      "score": 1.15,
+      "legend": {
+        "0": "スロー",
+        "1": "ミドル",
+        "2": "ハイ"
+      },
+      "confidence": 0.48,
+      "probabilities": {
+        "0": 0.1,
+        "1": 0.65,
+        "2": 0.25
+      },
+      "stats": {}
+    }
+  },
+  "usage": {
+    "input_tokens": 6021,
+    "output_tokens": 180
+  },
+  "request_id": "playground_test0001",
+  "evaluation_time_ms": 120.5
+}
