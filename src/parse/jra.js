@@ -2,20 +2,19 @@ import { pad, DATE_RE } from '../util.js';
 
 /* ---------- STEP1: 読み取り ---------- */
 export function parse(text){
-  const W=[];
   const src=text.replace(/\r\n?/g,'\n');
   const c=src.search(/^天候：/m);
   const body=c>=0?src.slice(0,c):src, tail=c>=0?src.slice(c):'';
   const re=/^枠(\d)[^\t\n]*\t\s*(\d+)/gm; const idx=[]; let m;
   while((m=re.exec(body))) idx.push({pos:m.index,frame:+m[1],num:+m[2]});
   if(!idx.length) throw new Error('出走馬の行（例：「枠1白」のあとにタブと馬番）が見つかりません。コピー元の形式を確認してください。');
-  const race=parseHeader(body.slice(0,idx[0].pos),W);
-  race.track=parseTrack(tail,W);
-  const horses=idx.map((h,i)=>parseHorse(body.slice(h.pos,i+1<idx.length?idx[i+1].pos:body.length),h,W));
-  return {race,horses,warnings:W};
+  const race=parseHeader(body.slice(0,idx[0].pos));
+  race.track=parseTrack(tail);
+  const horses=idx.map((h,i)=>parseHorse(body.slice(h.pos,i+1<idx.length?idx[i+1].pos:body.length),h));
+  return {race,horses};
 }
 
-function parseHeader(h,W){
+function parseHeader(h){
   const L=h.split('\n').map(s=>s.trim()).filter(Boolean); const r={}; let m, ri=null;
   L.forEach((l,i)=>{
     if(!r.date&&(m=l.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/))){
@@ -31,14 +30,12 @@ function parseHeader(h,W){
     }
   });
   r.name=L.find(l=>/^第\d+回/.test(l))||(ri!=null?L.slice(ri+1).find(l=>!/ウインファイヴ|WIN5|レース目|コース：|本賞金|付加賞|印刷|着\d/.test(l)):null)||'（レース名不明）';
-  if(!r.distance) W.push('レース：距離・コース（「コース：1,200メートル（芝…）」）が読み取れません');
-  if(!r.date) W.push('レース：開催日が読み取れません');
   return r;
 }
 
-function parseTrack(t,W){
+function parseTrack(t){
   const r={}; let m;
-  if(!t){W.push('馬場状態（「天候：」以降）が見つかりません。馬場の情報なしで進みます');return r;}
+  if(!t) return r;
   if((m=t.match(/天候：(\S+)/))) r.weather=m[1];
   if((m=t.match(/馬場状態：（芝）(\S+?)／（ダート）(\S+)/))){r.turfGoing=m[1];r.dirtGoing=m[2];}
   if((m=t.match(/（芝の状態）\s*\n([\s\S]*?)(?:\n\s*\n|\n（|$)/))) r.turfNote=m[1].replace(/\s+/g,' ').trim();
@@ -48,7 +45,7 @@ function parseTrack(t,W){
   return r;
 }
 
-function parseHorse(block,h,W){
+function parseHorse(block,h){
   const L=block.split('\n').map(s=>s.trim());
   const fp=L.findIndex(l=>DATE_RE.test(l));
   const prof=(fp>=0?L.slice(0,fp):L).filter(Boolean);
@@ -65,7 +62,7 @@ function parseHorse(block,h,W){
     else if((m=l.match(/^父：(.+)$/))) x.sire=m[1];
     else if((m=l.match(/^\(母の父：(.+)\)$/))) x.damSire=m[1];
     else if((m=l.match(/^母：(.+)$/))) x.dam=m[1];
-    else if((m=l.match(/^([牡牝セ])(\d+)\/(.+)$/))){x.sex=m[1];x.age=+m[2];}
+    else if((m=l.match(/^(牡|牝|セ|せん)(\d+)\/(.+)$/))){x.sex=m[1]==='せん'?'セ':m[1];x.age=+m[2];}
     else if(x.carried==null&&(m=l.match(/^(\d+(?:\.\d)?)kg$/))){x.carried=+m[1];ci=k;}
   });
   if(ci>=0){
@@ -76,13 +73,6 @@ function parseHorse(block,h,W){
     }
   }
   x.past=fp>=0?parsePast(L.slice(fp)):[];
-  const tag=`${x.num}番 ${x.name||'?'}`;
-  if(!x.name) W.push(`${tag}：馬名が読み取れません`);
-  if(x.carried==null) W.push(`${tag}：斤量が読み取れません`);
-  if(!x.jockey) W.push(`${tag}：騎手が読み取れません`);
-  if(x.odds==null) W.push(`${tag}：単勝オッズが読み取れません（発売前・取消の可能性）`);
-  if(x.past.length<4) W.push(`${tag}：過去走が${x.past.length}件です`);
-  x.past.forEach(p=>{if(!p.corners) W.push(`${tag}：${p.date} ${p.race} に通過順がありません（海外・地方・直線競馬など）`);});
   return x;
 }
 
@@ -129,5 +119,6 @@ function parseRace(r){
 }
 
 export function detect(text){
-  return /^枠\d[^\t\n]*\t\s*\d+/m.test(text.replace(/\r\n?/g,'\n'));
+  const src=text.replace(/\r\n?/g,'\n'),c=src.search(/^天候：/m);
+  return /^枠\d[^\t\n]*\t\s*\d+/m.test(c>=0?src.slice(0,c):src);
 }

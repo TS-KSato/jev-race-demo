@@ -1,5 +1,5 @@
 import { pad } from './util.js';
-import { zoneCut } from './derive.js';
+import { zoneRanges } from './derive.js';
 
 /* 判断契約：Jev に送る質問の文言・選択肢と版。質問の kind はデモ内部の名前（truth・select・grade）。 */
 export const RACE_OUTLOOK = { id: 'race-outlook', version: 1, label: 'race-outlook@1',
@@ -20,8 +20,8 @@ export const RACE_OUTLOOK = { id: 'race-outlook', version: 1, label: 'race-outlo
 
 export const HORSE_POSITION = { id: 'horse-position', version: 1, label: 'horse-position@1',
   questions(D,h,ol){
-    const n=D.horses.length,{a,b}=zoneCut(n);
-    const crit={front:'先頭：1番手で通過する',forward:`好位：2〜${a}番手で通過する`,mid:`中団：${a+1}〜${b}番手で通過する`,rear:`後方：${b+1}〜${n}番手で通過する`};
+    const n=D.horses.length,crit={};
+    zoneRanges(n).forEach(z=>{crit[z.key]=z.key==='front'?'先頭：1番手で通過する':`${z.label}：${z.from}〜${z.to}番手で通過する`;});
     const who=`\`target\`の馬（${h.num}番 ${h.name}）`;
     const basis=`\`target.recent_races\`の通過位置と枠${ol?'、`race_outlook`の想定展開':''}、\`others\`の先行しそうな馬との位置関係を根拠にする。`;
     return {
