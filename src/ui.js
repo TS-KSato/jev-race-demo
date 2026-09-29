@@ -1,5 +1,6 @@
 import { parse } from './parse/index.js';
-import { derive, zoneCut, cushionCat } from './derive.js';
+import { derive, zoneRanges, cushionCat } from './derive.js';
+import { validate } from './parse/validate.js';
 import { raceBlock, raceState, raceQuestions, horseRequest } from './requests.js';
 import { RACE_OUTLOOK, HORSE_POSITION } from './contracts.js';
 import { MODEL_ID, buildRequest, checkLimits } from './jev.js';
@@ -25,7 +26,8 @@ function run(){
 function rerun(){
   $('s1msg').innerHTML='';
   try{P=JSON.parse($('pjson').value);}catch(e){$('s1msg').innerHTML=`<div class="err">JSONの形式が正しくありません：${esc(e.message)}</div>`;return;}
-  P.warnings=P.warnings||[];
+  if(!P||typeof P!=='object'||!P.race||typeof P.race!=='object'||Array.isArray(P.race)||!Array.isArray(P.horses)){$('s1msg').innerHTML='<div class="err">JSONの形が正しくありません（race と horses が必要です）</div>';return;}
+  P.warnings=validate(P);
   afterParse();
 }
 function afterParse(){
@@ -51,11 +53,11 @@ function renderS1(){
 }
 function chip(z,title){return `<span class="z ${z?'z-'+z:'z-na'}" title="${esc(title)}">${z||'—'}</span>`;}
 function renderS2(){
-  const F=D.raceFacts,T=D.race.track||{},n=D.horses.length,{a,b}=zoneCut(n);
+  const F=D.raceFacts,T=D.race.track||{},n=D.horses.length;
   let h=`<div class="kv"><b>クッション値</b><span>${T.cushion??'—'}${T.cushion!=null?'（'+cushionCat(T.cushion)+'。JRAの参考表による区分。境界値の扱いは目安）':''}</span>
   <b>先頭で通過した経験</b><span>${F.frontRunners.length?F.frontRunners.map(r=>`${r.number}番 ${esc(r.name)}（${r.frame}枠・${r.led_count}回）`).join('、'):'該当なし'}</span>
   <b>芝1200m戦の前半3F</b><span>${F.front3fRanking.length?F.front3fRanking.slice(0,8).map(r=>`${r.number}番 ${esc(r.name)} ${r.best_front3f.toFixed(1)}`).join('、'):'該当なし'}</span></div>`;
-  h+=`<div class="lbl">位置の区分（今回${n}頭立て）：先頭＝1番手、好位＝2〜${a}番手、中団＝${a+1}〜${b}番手、後方＝${b+1}番手以降。過去走はそのレースの頭数で区分しています。区分にカーソルを合わせると詳細が出ます。</div>`;
+  h+=`<div class="lbl">位置の区分（今回${n}頭立て）：${zoneRanges(n).map(z=>z.key==='front'?'先頭＝1番手':z.key==='rear'?`${z.label}＝${z.from}番手以降`:`${z.label}＝${z.from}〜${z.to}番手`).join('、')}。過去走はそのレースの頭数で区分しています。区分にカーソルを合わせると詳細が出ます。</div>`;
   h+=`<div class="tbl"><table><thead><tr><th>馬番</th><th>枠</th><th>馬名</th><th>最初のコーナー（直近→）</th><th>最後のコーナー（直近→）</th><th>先頭回数</th><th>2番手以内</th><th>前半3F最速</th><th>乗り替わり</th><th>間隔</th></tr></thead><tbody>`;
   D.horses.forEach(x=>{
     const t=p=>`${p.date} ${p.race} ${p.dist||'?'}${p.surface||''} ${p.corners?p.corners.join('-'):'通過順なし'}/${p.field??'?'}頭${p.tags.length?' ・'+p.tags.join('・'):''}`;

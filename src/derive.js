@@ -1,6 +1,15 @@
 import { r1, normName, toSec, daysBetween } from './util.js';
 
-export function zoneCut(n){return {a:Math.max(2,Math.round(n*0.3)),b:Math.max(3,Math.round(n*0.7))};}
+export function zoneCut(n){return {a:Math.min(n,Math.max(2,Math.round(n*0.3))),b:Math.min(n,Math.max(3,Math.round(n*0.7)))};}
+/* 今回の頭数で使える位置の区分（範囲が空の区分は入れない） */
+export function zoneRanges(n){
+  const {a,b}=zoneCut(n),z=[];
+  if(n>=1) z.push({key:'front',label:'先頭',from:1,to:1});
+  if(a>=2) z.push({key:'forward',label:'好位',from:2,to:a});
+  if(b>=a+1) z.push({key:'mid',label:'中団',from:a+1,to:b});
+  if(n>=b+1) z.push({key:'rear',label:'後方',from:b+1,to:n});
+  return z;
+}
 export function zoneOf(pos,n){if(pos==null||!n)return null;const {a,b}=zoneCut(n);return pos===1?'先頭':pos<=a?'好位':pos<=b?'中団':'後方';}
 export function cushionCat(v){if(v==null)return null;return v>=12?'硬め':v>=10?'やや硬め':v>=8?'標準':v>7?'やや軟らかめ':'軟らかめ';}
 
