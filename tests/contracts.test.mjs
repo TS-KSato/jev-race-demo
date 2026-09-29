@@ -9,7 +9,7 @@ const D = derive(parse(readFileSync(new URL('./fixtures/jra_entry_basic.txt', im
 
 test('契約の label', () => {
   assert.equal(RACE_OUTLOOK.label, 'race-outlook@1');
-  assert.equal(HORSE_POSITION.label, 'horse-position@1');
+  assert.equal(HORSE_POSITION.label, 'horse-position@2');
 });
 test('RACE_OUTLOOK の質問', () => {
   const q = RACE_OUTLOOK.questions(D);

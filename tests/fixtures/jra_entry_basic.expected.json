@@ -3063,7 +3063,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -3073,7 +3073,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -3277,7 +3277,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -3287,7 +3287,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -3490,7 +3490,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -3500,7 +3500,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -3685,7 +3685,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -3695,7 +3695,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -3899,7 +3899,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -3909,7 +3909,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4112,7 +4112,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4122,7 +4122,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4319,7 +4319,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4329,7 +4329,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4527,7 +4527,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4537,7 +4537,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4739,7 +4739,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4749,7 +4749,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4959,7 +4959,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4969,7 +4969,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -5178,7 +5178,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -5188,7 +5188,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -5379,7 +5379,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -5389,7 +5389,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -5599,7 +5599,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -5609,7 +5609,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -5818,7 +5818,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -5828,7 +5828,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -6031,7 +6031,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -6041,7 +6041,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -6245,7 +6245,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -6255,7 +6255,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。",
+            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
