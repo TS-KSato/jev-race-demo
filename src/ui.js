@@ -3,6 +3,7 @@ import { derive, zoneRanges, cushionCat } from './derive.js';
 import { validate } from './parse/validate.js';
 import { raceBlock, raceState, raceQuestions, horseRequest } from './requests.js';
 import { RACE_OUTLOOK, HORSE_POSITION } from './contracts.js';
+import { outlookFromValues } from './score.js';
 import { MODEL_ID, buildRequest, checkLimits } from './jev.js';
 
 const $=id=>document.getElementById(id);
@@ -10,11 +11,11 @@ const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 let P=null,D=null;
 
 function outlook(){
-  const l=$('o-lead').value,c=$('o-cont').value,p=$('o-pace').value;
-  if(!l&&!c&&!p) return null;
-  const o={note:'STEP3でJevが推定した展開。確定した事実ではない'};
-  if(l) o.expected_leader=l; if(c) o.early_lead_battle=c; if(p) o.pace=p;
-  return o;
+  return outlookFromValues({leader:$('o-lead').value,battle:$('o-cont').value,pace:$('o-pace').value});
+}
+function addOption(id,label){
+  const s=$(id);
+  if(![...s.options].some(o=>o.value===label)) s.add(new Option(label,label));
 }
 /* ---------- 画面 ---------- */
 function run(){
@@ -84,6 +85,7 @@ function renderS3(){
   $('r-body').value=JSON.stringify(req,null,2);
   showMeta('r-state',RACE_OUTLOOK,req);
   const s=$('o-lead'),cur=s.value;
+  addOption('o-cont','どちらとも言えない'); addOption('o-pace','判断できない');
   s.innerHTML='<option value="">ハナ：未入力</option>'+D.horses.map(h=>`<option value="${h.num}番 ${esc(h.name)}">${h.num}番 ${esc(h.name)}</option>`).join('')+'<option value="特定できない">特定できない</option>';
   if([...s.options].some(o=>o.value===cur)) s.value=cur;
 }
