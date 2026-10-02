@@ -22,6 +22,7 @@ main{padding-bottom:60px}
 textarea{width:100%;background:var(--bg);color:var(--tx);border:1px solid var(--ln);border-radius:8px;padding:10px;font:12px/1.5 ui-monospace,Menlo,Consolas,monospace;resize:vertical}
 button{background:var(--ac);color:#04121f;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font-size:13px}
 button.sec{background:var(--pn2);color:var(--tx);border:1px solid var(--ln)}
+input{background:var(--bg);color:var(--tx);border:1px solid var(--ln);border-radius:8px;padding:7px 10px;font-size:13px}
 select{background:var(--bg);color:var(--tx);border:1px solid var(--ln);border-radius:8px;padding:7px 10px;font-size:13px}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}
 .tbl{overflow-x:auto;border:1px solid var(--ln);border-radius:10px;margin-top:6px}
@@ -87,6 +88,10 @@ code{background:var(--pn2);padding:0 4px;border-radius:4px}
 <textarea id="r-body" rows="10" readonly></textarea>
 <div class="row"><button class="sec" onclick="copy('r-body',this)">コピー</button></div>
 </details>
+<div class="lbl" style="margin-top:16px">STEP 3 を実行（中継関数）</div>
+<p class="desc">Netlify 上のページでのみ動きます。合言葉はこのタブの間だけ保持され、保存されません。</p>
+<div class="row"><input type="password" id="x-pass" autocomplete="off" placeholder="合言葉"><button id="x-run" onclick="runStep3()">STEP3 を実行</button><span id="x-status" class="muted" role="status"></span></div>
+<div id="x-note" class="muted"></div>
 <div class="lbl" style="margin-top:16px">Jevの答えを貼り付け</div>
 <p class="desc">Playground の JSON 表示のレスポンス全体を貼り付けてください。</p>
 <textarea id="j-src" rows="8" placeholder='{"model": "jev-latest", "answers": {…}}'></textarea>
