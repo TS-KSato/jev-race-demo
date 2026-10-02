@@ -44,7 +44,9 @@ test('STEP4 の評価時間の合計：一部にない場合は頭数を併記�
   const noEval = n => ok(n, raw4({ evaluation_time_ms: undefined }));
   const sum = rs => formatEvalTotal(rs);
   assert.equal(sum([ok(1), ok(2)]), '約400 ms');
-  assert.equal(sum([ok(1), noEval(2), ng(3, 'rate', 'm', 'a')]), '約200 ms（1頭分）');
+  assert.equal(sum([ok(1), noEval(2), ng(3, 'rate', 'm', 'a')]), '不明（取得できた分の合計：約200 ms、1頭分）');
+  // 不明な馬を 0 として足さない（合計は取得できた分だけ）
+  assert.ok(!sum([ok(1), noEval(2)]).includes('約200 ms）'));
   assert.equal(sum([noEval(1), noEval(2)]), '不明');
   assert.equal(sum([ng(1, 'rate', 'm', 'a'), sk(2)]), '不明');
 });
@@ -200,4 +202,16 @@ test('詳しいテキスト：結果なし・ありの両方で作れる', () =>
 test('記録のファイル名は jev_ で始まり /jev_*.json に合う', () => {
   const n = recordFileName(ctx({ s3: s3() }));
   assert.match(n, /^jev_record_2026-03-01_東京11R_\d{8}-\d{6}\.json$/);
+});
+
+test('記録：requestId と roundTripMs が各判定に入り、無ければ null（evaluationTimeMs とは別項目）', async () => {
+  const j = { ...J, requestId: 'req_x', roundTripMs: 700, evaluationTimeMs: null };
+  const r = await buildRecord(ctx({ s3: { ...s3(), parsed: j }, s4: s4([ok(1, raw4({ request_id: 'req_y', relay_round_trip_ms: 650 })), ok(2)]) }));
+  assert.equal(r.stage3.requestId, 'req_x');
+  assert.equal(r.stage3.roundTripMs, 700);
+  assert.equal(r.stage3.evaluationTimeMs, null);
+  assert.equal(r.stage4.results[0].requestId, 'req_y');
+  assert.equal(r.stage4.results[0].roundTripMs, 650);
+  assert.equal(r.stage4.results[1].requestId, null);
+  assert.equal(r.stage4.results[1].roundTripMs, null);
 });

@@ -137,6 +137,16 @@ test('onlyNums の再実行：指定した馬だけ呼ばれ、成功結果は�
   r.results.forEach((x, i) => { if (i !== 3) assert.equal(x, previous[x.num]); });
 });
 
+test('summarizeStage4：評価時間が不明な馬を 0 として足さない', () => {
+  const mk = (num, p) => ({ num, name: 'x', status: 'ok', parsed: { inputTokens: 1, outputTokens: 1, ...p } });
+  const some = summarizeStage4([mk(1, { evaluationTimeMs: 300 }), mk(2, { evaluationTimeMs: null })], t => t);
+  assert.equal(some.evaluationTimeMs, 300);
+  assert.equal(some.evaluationTimeKnownCount, 1);
+  const none = summarizeStage4([mk(1, { evaluationTimeMs: null })], t => t);
+  assert.equal(none.evaluationTimeMs, null);
+  assert.equal(none.evaluationTimeKnownCount, 0);
+});
+
 test('summarizeStage4：手計算の期待値', () => {
   const mk = (num, status, p) => ({ num, name: 'x', status, parsed: p ?? null });
   const results = [
@@ -146,7 +156,7 @@ test('summarizeStage4：手計算の期待値', () => {
     mk(4, 'failed'), mk(5, 'skipped'), mk(6, 'skipped'),
   ];
   const s = summarizeStage4(results, t => t * 2);
-  assert.deepEqual(s, { okCount: 3, failedCount: 1, skippedCount: 2, inputTokens: 4000, outputTokens: 60, evaluationTimeMs: 900, costUsd: 8000, excludedCount: 1 });
+  assert.deepEqual(s, { okCount: 3, failedCount: 1, skippedCount: 2, inputTokens: 4000, outputTokens: 60, evaluationTimeMs: 900, evaluationTimeKnownCount: 3, costUsd: 8000, excludedCount: 1 });
   const real = summarizeStage4(results, estimateCostUsd);
   assert.ok(Math.abs(real.costUsd - 4000 * 0.042 / 1e6) < 1e-12);
 });

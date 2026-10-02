@@ -59,14 +59,15 @@ export async function runStage4({ horses, buildFor, callOne, parse, previous, on
 
 /* 件数・トークン・評価時間・費用の集計。単価は持たず、estimateCost（jev.js の estimateCostUsd）を使う */
 export function summarizeStage4(results, estimateCost) {
-  const s = { okCount: 0, failedCount: 0, skippedCount: 0, inputTokens: 0, outputTokens: 0, evaluationTimeMs: 0, costUsd: 0, excludedCount: 0 };
+  const s = { okCount: 0, failedCount: 0, skippedCount: 0, inputTokens: 0, outputTokens: 0, evaluationTimeMs: null, evaluationTimeKnownCount: 0, costUsd: 0, excludedCount: 0 };
   for (const r of results) {
     if (r.status === 'ok') s.okCount++;
     else if (r.status === 'failed') s.failedCount++;
     else s.skippedCount++;
     if (r.status !== 'ok') continue;
     const p = r.parsed || {};
-    if (typeof p.evaluationTimeMs === 'number') s.evaluationTimeMs += p.evaluationTimeMs;
+    // 評価時間が不明な馬は 0 として足さない。取得できた分だけを合計し、その頭数を残す
+    if (typeof p.evaluationTimeMs === 'number') { s.evaluationTimeMs = (s.evaluationTimeMs ?? 0) + p.evaluationTimeMs; s.evaluationTimeKnownCount++; }
     if (typeof p.inputTokens !== 'number' || typeof p.outputTokens !== 'number') { s.excludedCount++; continue; }
     s.inputTokens += p.inputTokens;
     s.outputTokens += p.outputTokens;

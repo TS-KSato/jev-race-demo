@@ -8,7 +8,7 @@ import { MODEL_ID, PRICE, buildRequest, checkLimits, parseResponse, estimateCost
 import { paceLabels } from './contracts.js';
 import { callRelay, isRelayAvailable } from './client.js';
 import { runStage4, summarizeStage4, isStale } from './stage4.js';
-import { buildRecord, buildSummaryLine, buildDetailText, formatEvalTime, formatEvalTotal, recordFileName } from './record.js';
+import { buildRecord, buildSummaryLine, buildDetailText, formatEvalTime, formatEvalTotal, formatRoundTrip, recordFileName } from './record.js';
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -81,6 +81,8 @@ function renderJ(){
   const m=J.answeredModel;
   h+=`<div class="kv"><b>答えたモデルの版</b><span>${esc(m||'不明')} ／ 契約：${esc(RACE_OUTLOOK.label)}</span>
   <b>評価時間</b><span>${formatEvalTime(J.evaluationTimeMs)}</span>
+  <b>往復時間</b><span>${formatRoundTrip(J.roundTripMs)}</span>
+  <b>request_id</b><span>${esc(J.requestId||'不明')}</span>
   <b>実行方法</b><span>${JM&&JM.method==='api'?'中継関数（API）':'Playground（貼り付け）'}</span>
   ${JM&&JM.at?`<b>実行日時</b><span>${esc(JM.at)}</span>`:''}
   <b>トークン数</b><span>入力 ${J.inputTokens??'不明'} ／ 出力 ${J.outputTokens??'不明'}</span>
@@ -297,7 +299,7 @@ function renderStage4(){
   const m=summarizeStage4(S4.results,estimateCostUsd);
   h+=`<div class="kv"><b>件数</b><span>成功 ${m.okCount} ／ 失敗 ${m.failedCount} ／ 未実行 ${m.skippedCount}</span>
   <b>トークン数</b><span>入力 ${m.inputTokens} ／ 出力 ${m.outputTokens}</span>
-  <b>評価時間の合計</b><span>${formatEvalTotal(m)}</span>
+  <b>評価時間の合計</b><span>${formatEvalTotal(S4.results)}</span>
   <b>概算費用</b><span>${fmtCost(m.okCount-m.excludedCount>0?m.costUsd:null)}（単価の確認日：${esc(PRICE.checkedOn)}）</span></div>`;
   if(m.excludedCount) h+=`<p class="desc">トークン数がない ${m.excludedCount} 頭は、トークン数と費用の集計に含まれていません。</p>`;
   box.innerHTML=h;

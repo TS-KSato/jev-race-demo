@@ -36,13 +36,31 @@ async function relay(body, { method = 'POST', password = PASS, env = ENV, res = 
 test('STEP3 のリクエストが通り、固定の版・送信先・認証で転送される', async () => {
   const { out, calls } = await relay(outlookBody());
   assert.equal(out.status, 200);
-  assert.equal(out.body, UPSTREAM_BODY);
+  assert.equal(JSON.parse(out.body).secret_upstream_marker, 'UPSTREAM-ONLY-TEXT');
   assert.equal(calls.length, 1);
   assert.equal(calls[0].url, ENDPOINT);
   assert.equal(calls[0].init.headers.Authorization, `Bearer ${KEY}`);
   const sent = JSON.parse(calls[0].init.body);
   assert.equal(sent.model, MODEL_ID);
   assert.equal(sent.questions.pace.type, 'score');
+});
+
+test('上流の応答に evaluation_time_ms と request_id があれば、そのまま残り、往復時間が付く', async () => {
+  const up = { model: MODEL_ID, answers: { x: 1 }, usage: { input_tokens: 10, output_tokens: 2 }, request_id: 'req_test_0001', evaluation_time_ms: 123.4 };
+  const { out } = await relay(outlookBody(), { res: new Response(JSON.stringify(up), { status: 200 }) });
+  const j = JSON.parse(out.body);
+  const { relay_round_trip_ms: rt, ...rest } = j;
+  assert.deepEqual(rest, up);
+  assert.equal(typeof rt, 'number');
+  assert.ok(rt >= 0);
+});
+
+test('上流の応答に evaluation_time_ms と request_id が無ければ付け足さず、往復時間は数値で付く', async () => {
+  const up = { model: MODEL_ID, answers: {}, usage: { input_tokens: 10, output_tokens: 2 } };
+  const { out } = await relay(outlookBody(), { res: new Response(JSON.stringify(up), { status: 200 }) });
+  const j = JSON.parse(out.body);
+  assert.ok(!('evaluation_time_ms' in j) && !('request_id' in j));
+  assert.equal(typeof j.relay_round_trip_ms, 'number');
 });
 
 test('horse-position@2 のリクエスト（展開あり・なし）が通る', async () => {

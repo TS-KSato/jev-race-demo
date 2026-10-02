@@ -64,3 +64,12 @@ test('estimateCostUsd', () => {
   assert.ok(Math.abs(estimateCostUsd(13812) - 0.000580104) < 1e-12);
   assert.equal(estimateCostUsd(null), null);
 });
+
+test('relay_round_trip_ms は roundTripMs として読み、evaluation_time_ms・request_id が無ければ null のまま', () => {
+  const r = fresh(); delete r.evaluation_time_ms; delete r.request_id; r.relay_round_trip_ms = 850;
+  const p = parseResponse(r, Q);
+  assert.equal(p.evaluationTimeMs, null);
+  assert.equal(p.requestId, null);
+  assert.equal(p.roundTripMs, 850);
+  assert.equal(parseResponse(fresh(), Q).roundTripMs, null);
+});

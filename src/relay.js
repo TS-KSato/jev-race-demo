@@ -5,6 +5,7 @@ import { RACE_OUTLOOK, HORSE_POSITION } from './contracts.js';
 /*
  * Jev 中継の本体。環境変数 TYPESAFE_API_KEY・DEMO_PASSWORD は env 引数で受け取る（値はここに書かない）。
  * 汎用の中継ではなく、race-outlook@1 と horse-position@2 の形のリクエストだけを転送する。
+ * 上流の応答の項目（model・answers・usage・request_id・evaluation_time_ms など）はそのまま返し、relay_round_trip_ms だけを付ける。
  * ログには検査の失敗の種類と HTTP の status だけを出す。リクエスト・応答の内容や秘密情報は出さない。
  */
 
@@ -100,6 +101,7 @@ function checkQuestions(contract, questions, expected) {
 
 async function forward(request, apiKey, fetchImpl) {
   let res;
+  const startedAt = performance.now();
   try {
     res = await fetchImpl(ENDPOINT, {
       method: 'POST',
@@ -117,11 +119,21 @@ async function forward(request, apiKey, fetchImpl) {
   }
   if (res.status < 200 || res.status >= 300) throw new Reject(502, '上流のエラー', `Jev がエラーを返しました（status ${res.status}）`);
   try {
-    return await res.text();
+    const text = await res.text();
+    return { text, roundTripMs: performance.now() - startedAt };
   } catch (e) {
     if (e && (e.name === 'AbortError' || e.name === 'TimeoutError')) throw new Reject(504, 'タイムアウト', 'Jev の応答がタイムアウトしました');
     throw new Reject(502, '接続失敗', 'Jev に接続できませんでした');
   }
+}
+
+// 上流の応答の項目はそのまま残し、中継を含む往復時間を別の項目として付ける（Jev の evaluation_time_ms とは別物）。
+// 上流の本文がオブジェクトの JSON でなければ、加工せずそのまま返す（読み取りはページ側がエラーにする）。
+function withRoundTrip(text, roundTripMs) {
+  let j;
+  try { j = JSON.parse(text); } catch { return text; }
+  if (!isObj(j)) return text;
+  return JSON.stringify({ ...j, relay_round_trip_ms: Math.round(roundTripMs) });
 }
 
 export async function handleRelay({ method, headers, bodyText, env, fetchImpl }) {
@@ -146,8 +158,8 @@ export async function handleRelay({ method, headers, bodyText, env, fetchImpl })
     const request = buildRequest(body.state, body.questions);
     if (!checkLimits(request).ok) throw new Reject(413, 'Jevの上限超過', 'リクエストが Jev の上限を超えています');
 
-    const upstream = await forward(request, apiKey, fetchImpl);
-    return { status: 200, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' }, body: upstream };
+    const { text: upstream, roundTripMs } = await forward(request, apiKey, fetchImpl);
+    return { status: 200, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' }, body: withRoundTrip(upstream, roundTripMs) };
   } catch (e) {
     if (e instanceof Reject) return fail(e.status, e.kind, e.message, e.extraHeaders);
     return fail(500, '内部エラー', 'サーバーでエラーが発生しました');
