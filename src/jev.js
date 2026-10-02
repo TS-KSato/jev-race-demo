@@ -135,6 +135,7 @@ export function parseResponse(raw, questions) {
     answeredModel: orNull(r.model, 'string'),
     requestId: orNull(r.request_id, 'string'),
     evaluationTimeMs: orNull(r.evaluation_time_ms, 'number'),
+    roundTripMs: orNull(r.relay_round_trip_ms, 'number'), // 中継関数が測った往復時間。Jev の評価時間ではない
     inputTokens: orNull(usage.input_tokens, 'number'),
     outputTokens: orNull(usage.output_tokens, 'number'),
     answers,

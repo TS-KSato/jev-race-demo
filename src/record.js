@@ -27,7 +27,11 @@ export function formatEvalTotal(results) {
   const have = ok.map(r => r.parsed?.evaluationTimeMs).filter(v => typeof v === 'number' && Number.isFinite(v));
   if (!have.length) return '不明';
   const t = formatEvalTime(have.reduce((x, y) => x + y, 0));
-  return have.length < ok.length ? `${t}（${have.length}頭分）` : t;
+  return have.length < ok.length ? `不明（取得できた分の合計：${t}、${have.length}頭分）` : t;
+}
+/* 中継関数が測った往復時間。Jev の評価時間とは別物 */
+export function formatRoundTrip(ms) {
+  return typeof ms === 'number' && Number.isFinite(ms) ? `約${Math.round(ms)} ms（中継を含む往復時間）` : '不明';
 }
 export function hostKind(host) {
   const h = String(host ?? '').toLowerCase();
@@ -85,6 +89,8 @@ function s3Outlook(ctx) {
   catch (e) { return { outlook: null, overridden: [], error: e.message }; }
 }
 const usageOf = p => ({ inputTokens: p.inputTokens ?? null, outputTokens: p.outputTokens ?? null });
+const roundTripOf = p => (typeof p.roundTripMs === 'number' ? p.roundTripMs : null);
+const requestIdOf = p => (typeof p.requestId === 'string' ? p.requestId : null);
 const evalOf = p => (typeof p.evaluationTimeMs === 'number' ? p.evaluationTimeMs : null);
 
 /* ---------- 記録（JSON） ---------- */
@@ -100,7 +106,7 @@ export async function buildRecord(ctx) {
       contract: RACE_OUTLOOK.label, route: api ? 'api' : 'paste', executedAt: api ? meta.at ?? null : null,
       sentModel: api ? MODEL_ID : null, answeredModel: parsed.answeredModel ?? null,
       stateHash: await stateHash(state), outlook: ol.outlook, overridden: ol.overridden,
-      answers: s3Answers(ctx), usage: usageOf(parsed), evaluationTimeMs: evalOf(parsed), raw: ctx.s3.raw ?? null,
+      answers: s3Answers(ctx), usage: usageOf(parsed), evaluationTimeMs: evalOf(parsed), requestId: requestIdOf(parsed), roundTripMs: roundTripOf(parsed), raw: ctx.s3.raw ?? null,
     };
   }
   let stage4 = null;
@@ -114,6 +120,7 @@ export async function buildRecord(ctx) {
         stateHash: ok && st ? await stateHash(st) : null,
         ...(ok ? s4Corners(ctx, r) : { firstCorner: null, lastCorner: null }),
         usage: ok ? usageOf(r.parsed) : null, evaluationTimeMs: ok ? evalOf(r.parsed) : null,
+        requestId: ok ? requestIdOf(r.parsed) : null, roundTripMs: ok ? roundTripOf(r.parsed) : null,
         errorKind: r.errorKind ?? null, errorMessage: r.errorMessage ?? null, raw: r.raw ?? null,
       });
     }
@@ -222,7 +229,7 @@ export function buildDetailText(ctx) {
     L.push(`経路：${meta?.method === 'api' ? 'api' : 'paste'} ／ 実行日時：${meta?.at ?? '—'} ／ 契約：${RACE_OUTLOOK.label} ／ 答えた版：${parsed.answeredModel ?? '不明'}`,
       `ハナ：${answerText(A.lead_horse)}`, `先行争い：${answerText(A.early_lead_battle)}`, `ペース：${answerText(A.pace)}`,
       `STEP4 に渡す値：${ol.outlook ? ['expected_leader', 'early_lead_battle', 'pace'].filter(k => k in ol.outlook).map(k => `${k}=${oneLine(ol.outlook[k])}`).join(' ／ ') : 'なし'}${ol.overridden.length ? `（手で上書き：${ol.overridden.join('、')}）` : ''}`,
-      `評価時間：${formatEvalTime(parsed.evaluationTimeMs)} ／ トークン：入力 ${parsed.inputTokens ?? '不明'} 出力 ${parsed.outputTokens ?? '不明'}`);
+      `評価時間：${formatEvalTime(parsed.evaluationTimeMs)} ／ 往復時間：${formatRoundTrip(parsed.roundTripMs)} ／ トークン：入力 ${parsed.inputTokens ?? '不明'} 出力 ${parsed.outputTokens ?? '不明'}`);
   }
   L.push('', '【STEP4】');
   if (!ctx.s4) L.push('未実行');
