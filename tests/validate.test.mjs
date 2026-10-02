@@ -28,7 +28,7 @@ test('validate：1番の馬に odds を入れると警告が17件になる', () 
 
 test('validate：race.track に weather があれば馬場状態の警告が消える', () => {
   const { P } = roundTrip();
-  const has = w => w.startsWith('馬場状態');
+  const has = w => w.startsWith('馬場状態（「天候：」以降）');
   P.race.track = {};
   assert.ok(validate(P).some(has));
   P.race.track = { weather: '晴' };
@@ -41,7 +41,8 @@ test('せん馬：6番は sex が セ、age が 8', () => {
   assert.equal(h.age, 8);
 });
 
-test('detect：枠の行が「天候：」以降にしかなければ false', () => {
-  assert.equal(jra.detect('レース名\n天候：晴\n枠1白\t1\nテスト'), false);
+test('detect：枠の行の有無で判別する（「天候：」の位置は問わない）', () => {
+  assert.equal(jra.detect('レース名\n天候：晴\n枠1白\t1\nテスト'), true);
+  assert.equal(jra.detect('レース名\n天候：晴\nテスト'), false);
   assert.equal(jra.detect('レース名\n枠1白\t1\nテスト'), true);
 });

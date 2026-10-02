@@ -3,7 +3,7 @@ import { RACE_OUTLOOK, HORSE_POSITION } from './contracts.js';
 
 /* ---------- Jevリクエストの組み立て ---------- */
 export function raceBlock(D){const R=D.race;return {name:R.name,date:R.date||null,venue:R.venue||null,course:`${R.distance||'?'}m（${R.courseDesc||'?'}）`,conditions:R.conditions||null,field_size:D.horses.length};}
-export function trackBlock(D){const T=D.race.track||{};return {weather:T.weather||null,turf_going:T.turfGoing||null,turf_condition_note:T.turfNote||null,course_in_use:T.rail?`${T.rail}コース`:null,cushion_value:T.cushion??null,cushion_category:cushionCat(T.cushion),turf_moisture_pct:T.turfMoisture||null};}
+export function trackBlock(D){const T=D.race.track||{};return {weather:T.weather||null,turf_going:T.turfGoing||null,turf_condition_note:T.turfNote||null,course_in_use:T.rail?`${T.rail}コース`:null,cushion_value:T.cushion??null,cushion_category:cushionCat(T.cushion),turf_moisture_pct:T.turfMoisture||null,...(T.announcedAt?{announced_at:T.announcedAt}:{})};}
 export function horseBlock(h){
   return {number:h.num,frame:h.frame,name:h.name,carried_kg:h.carried??null,jockey:h.jockey||null,
     jockey_changed_from_last_race:h.facts.jockeyChange,blinker:h.blinker,
