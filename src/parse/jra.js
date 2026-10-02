@@ -1,12 +1,27 @@
 import { pad, DATE_RE } from '../util.js';
 
 /* ---------- STEP1: 読み取り ---------- */
+const ROW_RE=/^枠(\d)[^\t\n]*\t\s*(\d+)/gm;
+const WEATHER_LINE_RE=/^[ \t\u3000]*天候：/m;
+const ANNOUNCE_LINE_RE=/^[ \t\u3000]*馬場状態（.+）[ \t\u3000]*$/m;
+
+// 出走馬の行の位置と、本文（馬ごとの部分）・末尾（馬場状態）への分割。「天候：」の行は最後の出走馬の行より後ろでだけ探す
+function split(src){
+  const re=new RegExp(ROW_RE.source,'gm'); const idx=[]; let m;
+  while((m=re.exec(src))) idx.push({pos:m.index,frame:+m[1],num:+m[2]});
+  if(!idx.length) return {idx,body:src,tail:''};
+  const last=idx[idx.length-1].pos;
+  const rel=src.slice(last).search(WEATHER_LINE_RE);
+  if(rel<0) return {idx,body:src,tail:''};
+  let end=last+rel;
+  const h=src.slice(last,end).search(ANNOUNCE_LINE_RE); // 前日の形式：「馬場状態（…現在）」の行から末尾として扱う
+  if(h>=0) end=last+h;
+  return {idx,body:src.slice(0,end),tail:src.slice(end)};
+}
+
 export function parse(text){
   const src=text.replace(/\r\n?/g,'\n');
-  const c=src.search(/^天候：/m);
-  const body=c>=0?src.slice(0,c):src, tail=c>=0?src.slice(c):'';
-  const re=/^枠(\d)[^\t\n]*\t\s*(\d+)/gm; const idx=[]; let m;
-  while((m=re.exec(body))) idx.push({pos:m.index,frame:+m[1],num:+m[2]});
+  const {idx,body,tail}=split(src);
   if(!idx.length) throw new Error('出走馬の行（例：「枠1白」のあとにタブと馬番）が見つかりません。コピー元の形式を確認してください。');
   const race=parseHeader(body.slice(0,idx[0].pos));
   race.track=parseTrack(tail);
@@ -33,6 +48,12 @@ function parseHeader(h){
   return r;
 }
 
+// 見出しの行（前後の空白は除く）の次の非空行。見出しがなければ null
+function after(L,from,pred){
+  const i=L.findIndex((l,k)=>k>=from&&pred(l)); if(i<0) return null;
+  const j=L.findIndex((l,k)=>k>i&&l); return {at:i,val:j<0?null:L[j]};
+}
+
 function parseTrack(t){
   const r={}; let m;
   if(!t) return r;
@@ -42,7 +63,31 @@ function parseTrack(t){
   if(r.turfNote&&(m=r.turfNote.match(/([A-D])コース/))) r.rail=m[1];
   if((m=t.match(/（芝のクッション値）\s*([\d.]+)\s*（測定([^）]+)）/))){r.cushion=+m[1];r.cushionTime=m[2];}
   if((m=t.match(/芝コース：ゴール前([\d.]+)%、4コーナー([\d.]+)%/))) r.turfMoisture={goal:+m[1],corner4:+m[2]};
+  parseTrackBefore(t,r);
   return r;
+}
+
+// 前日の形式（見出しの行と値の行が分かれている）。当日の形式で読めた項目は上書きしない
+function parseTrackBefore(t,r){
+  const L=t.split('\n').map(s=>s.replace(/^[\s\u3000]+|[\s\u3000]+$/g,'')); let m,x;
+  if((m=t.match(/^[ \t\u3000]*馬場状態（(.+)）[ \t\u3000]*$/m))) r.announcedAt=m[1];
+  const going=/^(良|稍重|重|不良)$/;
+  if(r.turfGoing==null&&(x=after(L,0,l=>l==='芝'))&&going.test(x.val||'')) r.turfGoing=x.val;
+  if(r.dirtGoing==null&&(x=after(L,0,l=>l==='ダート'))&&going.test(x.val||'')) r.dirtGoing=x.val;
+  if(r.turfNote==null&&(x=after(L,0,l=>l==='芝の状態'))&&x.val){
+    r.turfNote=x.val.replace(/\s+/g,' ');
+  }
+  if(r.rail==null&&(x=after(L,0,l=>l==='使用コース'))&&(m=(x.val||'').match(/^([A-D])コース/))) r.rail=m[1];
+  if(r.rail==null&&r.turfNote&&(m=r.turfNote.match(/([A-D])コース/))) r.rail=m[1];
+  if(r.cushion==null){
+    const c=L.findIndex(l=>l==='芝のクッション値');
+    if(c>=0){
+      if((x=after(L,c,l=>l==='測定時刻'))&&x.val) r.cushionTime=x.val;
+      if((x=after(L,c,l=>l==='クッション値'))&&/^\d+(\.\d+)?$/.test(x.val||'')) r.cushion=+x.val;
+      if(r.cushion==null) delete r.cushionTime;
+    }
+  }
+  if(r.turfMoisture==null&&(m=t.match(/^[ \t\u3000]*芝[ \t]+([\d.]+)%[ \t]+([\d.]+)%/m))) r.turfMoisture={goal:+m[1],corner4:+m[2]};
 }
 
 function parseHorse(block,h){
@@ -119,6 +164,5 @@ function parseRace(r){
 }
 
 export function detect(text){
-  const src=text.replace(/\r\n?/g,'\n'),c=src.search(/^天候：/m);
-  return /^枠\d[^\t\n]*\t\s*\d+/m.test(c>=0?src.slice(0,c):src);
+  return split(text.replace(/\r\n?/g,'\n')).idx.length>0;
 }

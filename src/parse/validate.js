@@ -3,7 +3,15 @@ export function validate(P){
   const W=[],R=P.race||{};
   if(!R.distance) W.push('レース：距離・コース（「コース：1,200メートル（芝…）」）が読み取れません');
   if(!R.date) W.push('レース：開催日が読み取れません');
-  if(!R.track||!Object.keys(R.track).length) W.push('馬場状態（「天候：」以降）が見つかりません。馬場の情報なしで進みます');
+  const T=R.track||{};
+  if(T.weather==null&&T.turfGoing==null) W.push('馬場状態（「天候：」以降）が見つかりません。馬場の情報なしで進みます');
+  else{
+    if(T.weather==null) W.push('馬場状態：天候が読み取れません');
+    if(T.turfGoing==null) W.push('馬場状態：芝の状態が読み取れません');
+    if(T.dirtGoing==null) W.push('馬場状態：ダートの状態が読み取れません');
+    if(T.cushion==null) W.push('馬場状態：クッション値が読み取れません');
+    if(T.turfMoisture==null) W.push('馬場状態：芝の含水率が読み取れません');
+  }
   (P.horses||[]).forEach(x=>{
     const tag=`${x.num}番 ${x.name||'?'}`,past=x.past||[];
     if(!x.name) W.push(`${tag}：馬名が読み取れません`);

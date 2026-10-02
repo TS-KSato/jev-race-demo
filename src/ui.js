@@ -112,7 +112,7 @@ function renderS1(){
     :`<p class="ok">警告はありません。</p>`;
   h+=`<div class="kv"><b>レース</b><span>${esc(R.date||'')} ${esc(R.venue||'')} ${R.raceNo?R.raceNo+'R':''} ${esc(R.name)}</span>
   <b>条件</b><span>${R.distance?R.distance+'m':'?'}（${esc(R.courseDesc||'?')}） ${esc(R.conditions||'')}</span>
-  <b>馬場</b><span>${esc(T.weather||'')} 芝：${esc(T.turfGoing||'?')} ／ クッション値：${T.cushion??'?'}${T.cushion!=null?'（'+cushionCat(T.cushion)+'）':''}</span>
+  <b>馬場</b><span>${esc(T.weather||'')} 芝：${esc(T.turfGoing||'?')} ／ クッション値：${T.cushion??'?'}${T.cushion!=null?'（'+cushionCat(T.cushion)+'）':''}${T.announcedAt?' ／ '+esc(T.announcedAt):''}</span>
   <b>芝の状態</b><span>${esc(T.turfNote||'—')}</span></div>`;
   h+=`<div class="lbl">出走馬（${P.horses.length}頭）</div><div class="tbl"><table><thead><tr><th>枠</th><th>馬番</th><th>馬名</th><th>人気</th><th>単勝</th><th>斤量</th><th>騎手</th><th>馬体重</th><th>過去走（日付・レース・距離・着順/頭数・[通過順]・上がり3F）</th></tr></thead><tbody>`;
   P.horses.forEach(x=>{
