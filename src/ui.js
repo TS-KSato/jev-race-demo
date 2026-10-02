@@ -6,12 +6,16 @@ import { RACE_OUTLOOK, HORSE_POSITION } from './contracts.js';
 import { outlookFromValues, outlookFromAnswers, describeAnswer } from './score.js';
 import { MODEL_ID, PRICE, buildRequest, checkLimits, parseResponse, estimateCostUsd } from './jev.js';
 import { paceLabels } from './contracts.js';
+import { callRelay, isRelayAvailable } from './client.js';
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let P=null,D=null;
 
 let J=null; // 読み込んだ STEP3 の答え（parseResponse の結果）。メモリ上だけに持つ
+let JM=null; // J の実行方法。{method:'api',at:ISO文字列} または {method:'paste'}
+let S3=null; // 画面に出している STEP3 の state と questions（中継に渡す元データ）
+let gen=0,running=false; // 出馬表を読み取り直すたびに gen を進め、古い実行の応答を捨てる
 const OV_NAMES={leader:'ハナ',battle:'先行争い',pace:'ペース'};
 function overrides(){
   return {leader:$('o-lead').value||null,battle:$('o-cont').value||null,pace:$('o-pace').value||null};
@@ -69,19 +73,22 @@ function renderJ(){
   const m=J.answeredModel;
   h+=`<div class="kv"><b>答えたモデルの版</b><span>${esc(m||'不明')} ／ 契約：${esc(RACE_OUTLOOK.label)}</span>
   <b>評価時間</b><span>${J.evaluationTimeMs!=null?J.evaluationTimeMs+' ms':'不明'}</span>
+  <b>実行方法</b><span>${JM&&JM.method==='api'?'中継関数（API）':'Playground（貼り付け）'}</span>
+  ${JM&&JM.at?`<b>実行日時</b><span>${esc(JM.at)}</span>`:''}
   <b>トークン数</b><span>入力 ${J.inputTokens??'不明'} ／ 出力 ${J.outputTokens??'不明'}</span>
   <b>概算費用</b><span>${fmtCost(estimateCostUsd(J.inputTokens))}（単価の確認日：${esc(PRICE.checkedOn)}）</span></div>`;
   if(m&&m!==MODEL_ID) h+=`<div class="warn">Playground では別名（jev-latest など）で実行するため、答えた版が固定した版（${esc(MODEL_ID)}）と異なる場合があります。記録は答えた版で行います。</div>`;
   box.innerHTML=h;
 }
-function loadAnswers(){
+function loadAnswers(){loadAnswersFrom($('j-src').value,{method:'paste'});}
+function loadAnswersFrom(text,meta){
   const msg=$('j-msg');msg.innerHTML='';
   if(!D) return;
   try{
-    const parsed=parseResponse($('j-src').value,RACE_OUTLOOK.questions(D));
+    const parsed=parseResponse(text,RACE_OUTLOOK.questions(D));
     describeAll(parsed);
     outlookFromAnswers(parsed,D.horses,overrides());
-    J=parsed;
+    J=parsed;JM=meta;
   }catch(e){msg.innerHTML=`<div class="err">${esc(e.message)}</div>`;return;}
   renderJ();renderS4();
 }
@@ -101,7 +108,8 @@ function rerun(){
 }
 function afterParse(){
   D=derive(P);
-  J=null;$('j-src').value='';$('j-msg').innerHTML='';
+  J=null;JM=null;$('j-src').value='';$('j-msg').innerHTML='';
+  gen++;setRunning(false);$('x-status').textContent='';
   renderS1();renderS2();renderS3();renderS4();
   ['s2','s3','s4'].forEach(id=>$(id).classList.remove('dim'));
 }
@@ -149,6 +157,7 @@ function showMeta(stateId,contract,req){
 }
 function renderS3(){
   const st=raceState(D),req=buildRequest(st,raceQuestions(D));
+  S3={state:st,questions:raceQuestions(D)};
   $('r-state').value=JSON.stringify(st,null,2);
   $('r-q').value=JSON.stringify(req.questions,null,2);
   $('r-body').value=JSON.stringify(req,null,2);
@@ -157,6 +166,28 @@ function renderS3(){
   s.innerHTML=`<option value="">${blank('ハナ')}</option>`+D.horses.map(h=>`<option value="${h.num}番 ${esc(h.name)}">${h.num}番 ${esc(h.name)}</option>`).join('')+'<option value="特定できない">特定できない</option>';
   if([...s.options].some(o=>o.value===cur)) s.value=cur;
   renderJ();
+}
+function setRunning(on,text){
+  running=on;
+  const ok=isRelayAvailable(location);
+  $('x-pass').disabled=!ok||on;$('x-run').disabled=!ok||on;
+  $('x-status').textContent=on?(text||'実行中…'):'';
+}
+async function runStep3(){
+  if(!D||!S3||running) return;
+  const myGen=gen,msg=$('j-msg');msg.innerHTML='';
+  setRunning(true);
+  try{
+    const text=await callRelay({contract:RACE_OUTLOOK.label,state:S3.state,questions:S3.questions,password:$('x-pass').value,
+      onRetry:(n,max)=>{if(myGen===gen) setRunning(true,`実行中…（再試行 ${n}/${max}）`);}});
+    if(myGen!==gen) return;
+    $('j-src').value=text;
+    loadAnswersFrom(text,{method:'api',at:new Date().toISOString()});
+  }catch(e){
+    if(myGen===gen) msg.innerHTML=`<div class="err">${esc(e.message)}</div>`;
+  }finally{
+    if(myGen===gen) setRunning(false);
+  }
 }
 function renderS4(){
   if(!D) return;
@@ -185,5 +216,6 @@ function copy(id,btn){
   if(navigator.clipboard&&window.isSecureContext) navigator.clipboard.writeText(el.value).then(done).catch(fb); else fb();
 }
 
+if(!isRelayAvailable(location)){$('x-pass').disabled=true;$('x-run').disabled=true;$('x-note').textContent='このページでは実行できません。Netlify の URL を使うか、Playground に貼り付けてください。';}
 ['o-lead','o-cont','o-pace'].forEach(id=>$(id).addEventListener('change',renderJ));
-Object.assign(window,{run,rerun,loadAnswers,renderS4,downloadAll,copy,$});
+Object.assign(window,{runStep3,run,rerun,loadAnswers,renderS4,downloadAll,copy,$});
