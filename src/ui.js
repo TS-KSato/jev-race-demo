@@ -7,6 +7,7 @@ import { outlookFromValues, outlookFromAnswers, describeAnswer } from './score.j
 import { MODEL_ID, PRICE, buildRequest, checkLimits, parseResponse, estimateCostUsd } from './jev.js';
 import { paceLabels } from './contracts.js';
 import { callRelay, isRelayAvailable } from './client.js';
+import { runStage4, summarizeStage4, isStale } from './stage4.js';
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -15,7 +16,9 @@ let P=null,D=null;
 let J=null; // 読み込んだ STEP3 の答え（parseResponse の結果）。メモリ上だけに持つ
 let JM=null; // J の実行方法。{method:'api',at:ISO文字列} または {method:'paste'}
 let S3=null; // 画面に出している STEP3 の state と questions（中継に渡す元データ）
-let gen=0,running=false; // 出馬表を読み取り直すたびに gen を進め、古い実行の応答を捨てる
+let gen=0,running=false,running4=false; // 出馬表を読み取り直すたびに gen を進め、古い実行の応答を捨てる
+let S4=null; // STEP4 の全頭実行の結果 {results,usedOutlook,aborted,cancelled}。メモリ上だけに持つ
+let cancel4=false,progress4=''; // 中止の要求と、進捗の表示文
 const OV_NAMES={leader:'ハナ',battle:'先行争い',pace:'ペース'};
 function overrides(){
   return {leader:$('o-lead').value||null,battle:$('o-cont').value||null,pace:$('o-pace').value||null};
@@ -110,6 +113,7 @@ function afterParse(){
   D=derive(P);
   J=null;JM=null;$('j-src').value='';$('j-msg').innerHTML='';
   gen++;setRunning(false);$('x-status').textContent='';
+  S4=null;running4=false;cancel4=false;progress4='';
   renderS1();renderS2();renderS3();renderS4();
   ['s2','s3','s4'].forEach(id=>$(id).classList.remove('dim'));
 }
@@ -169,9 +173,17 @@ function renderS3(){
 }
 function setRunning(on,text){
   running=on;
-  const ok=isRelayAvailable(location);
-  $('x-pass').disabled=!ok||on;$('x-run').disabled=!ok||on;
   $('x-status').textContent=on?(text||'実行中…'):'';
+  refreshControls();
+}
+// 実行ボタンの有効・無効。STEP3 と STEP4 は同時に実行しない。合言葉欄は共通
+function refreshControls(){
+  const ok=isRelayAvailable(location),busy=running||running4,hasPw=$('x-pass').value!=='';
+  $('x-pass').disabled=!ok||busy;$('x-run').disabled=!ok||busy;
+  $('x4-run').disabled=!ok||busy||!hasPw||!D;
+  $('x4-retry').disabled=!ok||busy||!hasPw||!D;
+  $('x4-cancel').hidden=!running4;
+  $('x4-note').textContent=!ok?'このページでは実行できません。Netlify の URL を使うか、Playground に貼り付けてください。':!hasPw?'合言葉を入力してください（STEP3 の合言葉欄と共通です）。':'';
 }
 async function runStep3(){
   if(!D||!S3||running) return;
@@ -200,6 +212,89 @@ function renderS4(){
   $('h-q').value=JSON.stringify(req.questions,null,2);
   $('h-body').value=JSON.stringify(req,null,2);
   showMeta('h-state',HORSE_POSITION,req);
+  renderStage4();
+}
+
+/* ---------- STEP4 の全頭実行 ---------- */
+function failedNums(){return S4?S4.results.filter(r=>r.status!=='ok').map(r=>r.num):[];}
+async function runStep4(onlyFailed){
+  if(!D||running||running4) return;
+  if(!onlyFailed&&S4&&!confirm('前回の結果を破棄して全頭を実行し直します')) return;
+  const myGen=gen,used=onlyFailed&&S4?S4.usedOutlook:outlook();
+  const previous=onlyFailed&&S4?Object.fromEntries(S4.results.map(r=>[r.num,r])):undefined;
+  const onlyNums=onlyFailed&&S4?failedNums():undefined;
+  const zq=HORSE_POSITION.questions(D,D.horses[0],used); // 選択肢は馬によらず同じ
+  cancel4=false;running4=true;progress4='実行中…';
+  refreshControls();renderStage4();
+  let out=null;
+  try{
+    out=await runStage4({horses:D.horses,previous,onlyNums,
+      buildFor:h=>horseRequest(D,h,used),
+      callOne:({state,questions})=>callRelay({contract:HORSE_POSITION.label,state,questions,password:$('x-pass').value,
+        onRetry:(n,max)=>{if(myGen===gen){progress4=`${progress4.split('（再試行')[0]}（再試行 ${n}/${max}）`;renderProgress4();}}}),
+      parse:text=>parseResponse(text,zq),
+      shouldCancel:()=>cancel4||myGen!==gen,
+      onProgress:ev=>{
+        if(myGen!==gen) return;
+        if(ev.type==='start'){progress4=`実行中：${ev.index}／${ev.total}頭（${ev.num}番 ${ev.name}）`;renderProgress4();}
+      }});
+  }catch(e){
+    if(myGen===gen) $('x4-out').innerHTML=`<div class="err">${esc(e.message)}</div>`;
+  }
+  if(myGen!==gen) return;
+  running4=false;cancel4=false;progress4='';
+  if(out) S4={results:out.results,usedOutlook:used,aborted:out.aborted,cancelled:out.cancelled};
+  refreshControls();renderStage4();
+}
+function cancelStep4(){cancel4=true;progress4='中止しています…';renderProgress4();}
+function renderProgress4(){$('x4-status').textContent=progress4;}
+function ansCell(parsed,key,zl){
+  try{
+    const a=parsed.answers[key],d=describeAnswer('select',a,parsed.answeredModel,zl);
+    const top=d.rows.find(r=>r.key===a.selected);
+    return `<b>${esc(d.selected)}</b> ${pct(top.probability)} <span class="muted">conf ${d.confidence.toFixed(2)}</span> <span class="bdg bdg-${d.level}">${esc(d.levelLabel)}</span>`;
+  }catch(e){return `<span class="err">${esc(e.message)}</span>`;}
+}
+function allProbs(parsed,zl){
+  return [['first_corner','最初のコーナー'],['last_corner','4コーナー']].map(([k,t])=>{
+    try{return `<div><b>${t}</b><ul>${rowsHtml(describeAnswer('select',parsed.answers[k],parsed.answeredModel,zl).rows)}</ul></div>`;}
+    catch(e){return `<div class="err">${esc(e.message)}</div>`;}
+  }).join('');
+}
+function outlookText(ol){
+  if(!ol) return 'なし';
+  return ['expected_leader','early_lead_battle','pace'].filter(k=>k in ol).map(k=>`<code>${esc(ol[k])}</code>`).join(' ');
+}
+function renderStage4(){
+  renderProgress4();
+  const box=$('x4-out');
+  if(!D||!S4){
+    box.innerHTML=''; $('x4-retry').hidden=true;
+    return;
+  }
+  const zl={};zoneRanges(D.horses.length).forEach(z=>{zl[z.key]=z.label;});
+  let h='';
+  if(S4.aborted) h+=`<div class="err">実行を中止しました（${esc(S4.aborted.kind)}）：${esc(S4.aborted.message)}</div>`;
+  else if(S4.cancelled) h+='<div class="warn">中止しました。未実行の馬があります。</div>';
+  if(isStale(S4.usedOutlook,outlook())) h+='<div class="warn stale"><b>この結果は、変更前の展開（race_outlook）で実行されました。今の展開で実行し直す場合は、全頭を実行し直してください。</b></div>';
+  h+=`<p class="desc">実行に使った race_outlook：${outlookText(S4.usedOutlook)}</p>`;
+  h+='<p class="desc">振り分けは確率の集中度による目安です。答えの正しさを保証するものではありません。</p>';
+  h+='<div class="tbl"><table><thead><tr><th>馬番</th><th>馬名</th><th>最初のコーナー</th><th>4コーナー</th><th>状態</th></tr></thead><tbody>';
+  S4.results.forEach(r=>{
+    const ok=r.status==='ok';
+    h+=`<tr><td>${r.num}</td><td>${esc(r.name)}</td><td>${ok?ansCell(r.parsed,'first_corner',zl):'—'}</td><td>${ok?ansCell(r.parsed,'last_corner',zl):'—'}</td>
+    <td>${ok?'成功':r.status==='failed'?`<span class="err-text">失敗（${esc(r.errorKind)}：${esc(r.errorMessage)}）</span>`:'未実行'}</td></tr>`;
+    if(ok) h+=`<tr><td></td><td colspan="4"><details><summary>確率をすべて見る</summary>${allProbs(r.parsed,zl)}</details></td></tr>`;
+  });
+  h+='</tbody></table></div>';
+  const m=summarizeStage4(S4.results,estimateCostUsd);
+  h+=`<div class="kv"><b>件数</b><span>成功 ${m.okCount} ／ 失敗 ${m.failedCount} ／ 未実行 ${m.skippedCount}</span>
+  <b>トークン数</b><span>入力 ${m.inputTokens} ／ 出力 ${m.outputTokens}</span>
+  <b>評価時間の合計</b><span>${m.evaluationTimeMs} ms</span>
+  <b>概算費用</b><span>${fmtCost(m.okCount-m.excludedCount>0?m.costUsd:null)}（単価の確認日：${esc(PRICE.checkedOn)}）</span></div>`;
+  if(m.excludedCount) h+=`<p class="desc">トークン数がない ${m.excludedCount} 頭は、トークン数と費用の集計に含まれていません。</p>`;
+  box.innerHTML=h;
+  $('x4-retry').hidden=failedNums().length===0;
 }
 function downloadAll(){
   const ol=outlook();
@@ -216,6 +311,7 @@ function copy(id,btn){
   if(navigator.clipboard&&window.isSecureContext) navigator.clipboard.writeText(el.value).then(done).catch(fb); else fb();
 }
 
-if(!isRelayAvailable(location)){$('x-pass').disabled=true;$('x-run').disabled=true;$('x-note').textContent='このページでは実行できません。Netlify の URL を使うか、Playground に貼り付けてください。';}
+$('x-pass').addEventListener('input',refreshControls);
+refreshControls();
 ['o-lead','o-cont','o-pace'].forEach(id=>$(id).addEventListener('change',renderJ));
-Object.assign(window,{runStep3,run,rerun,loadAnswers,renderS4,downloadAll,copy,$});
+Object.assign(window,{runStep3,runStep4,cancelStep4,run,rerun,loadAnswers,renderS4,downloadAll,copy,$});
