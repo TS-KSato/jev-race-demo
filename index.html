@@ -42,6 +42,11 @@ tr:last-child td{border-bottom:0}
 .lbl{font-size:12px;color:var(--mu);margin:10px 0 4px}
 .muted{color:var(--mu)}
 details summary{cursor:pointer;color:var(--mu);font-size:12.5px;margin-top:12px}
+.jcard{background:var(--pn2);border:1px solid var(--ln);border-radius:10px;padding:10px 14px;margin:8px 0}
+.jcard .jt{font-weight:600;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.jcard ul{margin:6px 0 0;padding-left:18px}
+.bdg{border-radius:999px;padding:0 10px;font-size:12px;font-weight:700}
+.bdg-high{background:var(--ok);color:#04121f}.bdg-middle{background:#ffb54733;color:#ffd79a;border:1px solid #ffb54755}.bdg-unclear{background:var(--pn);color:var(--mu);border:1px solid var(--ln)}
 code{background:var(--pn2);padding:0 4px;border-radius:4px}
 </style>
 </head>
@@ -82,11 +87,17 @@ code{background:var(--pn2);padding:0 4px;border-radius:4px}
 <textarea id="r-body" rows="10" readonly></textarea>
 <div class="row"><button class="sec" onclick="copy('r-body',this)">コピー</button></div>
 </details>
+<div class="lbl" style="margin-top:16px">Jevの答えを貼り付け</div>
+<p class="desc">Playground の JSON 表示のレスポンス全体を貼り付けてください。</p>
+<textarea id="j-src" rows="8" placeholder='{"model": "jev-latest", "answers": {…}}'></textarea>
+<div class="row"><button onclick="loadAnswers()">答えを読み込む</button></div>
+<div id="j-msg"></div>
+<div id="j-out"></div>
 <div class="lbl" style="margin-top:16px">Jevの判定結果を入力（STEP4のstateに「推定」として渡します）</div>
 <div class="row">
 <select id="o-lead" onchange="renderS4()"></select>
-<select id="o-cont" onchange="renderS4()"><option value="">先行争い：未入力</option><option value="激しくなる">激しくなる</option><option value="激しくならない">激しくならない</option></select>
-<select id="o-pace" onchange="renderS4()"><option value="">ペース：未入力</option><option value="スロー">スロー</option><option value="ミドル">ミドル</option><option value="ハイ">ハイ</option></select>
+<select id="o-cont" onchange="renderS4()"><option value="">先行争い：未入力</option><option value="激しくなる">激しくなる</option><option value="激しくならない">激しくならない</option><option value="どちらとも言えない">どちらとも言えない</option></select>
+<select id="o-pace" onchange="renderS4()"><option value="">ペース：未入力</option><option value="スロー">スロー</option><option value="ミドル">ミドル</option><option value="ハイ">ハイ</option><option value="判断できない">判断できない</option></select>
 </div>
 </section>
 

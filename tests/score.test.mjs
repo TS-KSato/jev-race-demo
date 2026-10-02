@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { classify, levelLabel, outlookFromAnswers, outlookFromValues, OUTLOOK_NOTE } from '../src/score.js';
+import { classify, levelLabel, describeAnswer, outlookFromAnswers, outlookFromValues, OUTLOOK_NOTE } from '../src/score.js';
 import { parseResponse } from '../src/jev.js';
 import { RACE_OUTLOOK } from '../src/contracts.js';
 import { parse } from '../src/parse/index.js';
@@ -89,4 +89,77 @@ test('フィクスチャの STEP3 レスポンスから展開を作る', () => {
   assert.equal(r.outlook.early_lead_battle, 'どちらとも言えない');
   assert.equal(r.outlook.pace, '判断できない');
   assert.deepEqual(r.overridden, []);
+});
+
+const labelsH = { h01: '1番 アルファ', h03: '3番 ガンマ', h05: '5番 イプシロン', unclear: '特定できない' };
+const selAns = (selected, confidence, pairs) => ({ kind: 'select', selected, confidence, probabilities: pairs.map(([option, p]) => ({ option, p })) });
+
+test('describeAnswer：select', () => {
+  const d = describeAnswer('select', selAns('h03', 0.95, [['h01', 0.2], ['h03', 0.6], ['h05', 0.1], ['unclear', 0.1]]), M, labelsH);
+  assert.equal(d.selected, '3番 ガンマ');
+  assert.equal(d.level, 'high');
+  assert.equal(d.levelLabel, '高確信');
+  assert.equal(d.confidence, 0.95);
+  // 降順。同率（h05 と unclear の 0.1）は元の順
+  assert.deepEqual(d.rows, [
+    { key: 'h03', label: '3番 ガンマ', probability: 0.6 },
+    { key: 'h01', label: '1番 アルファ', probability: 0.2 },
+    { key: 'h05', label: '5番 イプシロン', probability: 0.1 },
+    { key: 'unclear', label: '特定できない', probability: 0.1 },
+  ]);
+  const u = describeAnswer('select', selAns('unclear', 0.3, [['h01', 0.3], ['unclear', 0.7]]), M, labelsH);
+  assert.equal(u.selected, '特定できない');
+  assert.equal(u.level, 'unclear');
+  assert.equal(u.levelLabel, '判別不能');
+  assert.throws(() => describeAnswer('select', selAns('h09', 0.9, [['h09', 1]]), M, labelsH));
+  assert.throws(() => describeAnswer('select', selAns('h01', 0.9, [['h01', 0.5], ['h09', 0.5]]), M, labelsH));
+  assert.throws(() => describeAnswer('select', { kind: 'select', selected: 'h01', probabilities: [] }, M, labelsH));
+});
+test('describeAnswer：truth', () => {
+  const d = describeAnswer('truth', truth(0.67), M);
+  assert.equal(d.confidence, null);
+  assert.equal(d.level, 'middle');
+  assert.equal(d.selected, 'どちらとも言えない');
+  assert.deepEqual(d.rows, [{ key: 'true', label: '真', probability: 0.67 }, { key: 'false', label: '偽', probability: 0.33 }]);
+  const h = describeAnswer('truth', truth(0.95), M);
+  assert.equal(h.level, 'high');
+  assert.equal(h.selected, '激しくなる');
+  assert.equal(h.rows[1].probability, 0.05);
+  assert.equal(describeAnswer('truth', truth(0.05), M).selected, '激しくならない');
+  assert.throws(() => describeAnswer('truth', {}, M));
+});
+test('describeAnswer：grade', () => {
+  const L = ['スロー', 'ミドル', 'ハイ'];
+  const d = describeAnswer('grade', grade([0.2, 0.3, 0.5], 0.7), M, L);
+  assert.equal(d.selected, 'ハイ');
+  assert.equal(d.level, 'middle');
+  assert.equal(d.confidence, 0.7);
+  assert.deepEqual(d.rows.map(r => [r.label, r.probability]), [['ハイ', 0.5], ['ミドル', 0.3], ['スロー', 0.2]]);
+  assert.equal(describeAnswer('grade', grade([0.45, 0.1, 0.45], 0.9), M, L).selected, '判断できない');
+  const u = describeAnswer('grade', grade([0.1, 0.65, 0.25], 0.49), M, L);
+  assert.equal(u.level, 'unclear');
+  assert.equal(u.selected, 'ミドル');
+  assert.throws(() => describeAnswer('grade', grade([0.5, 0.5], 0.9), M, L));
+  assert.throws(() => describeAnswer('grade', grade([0.1, 0.65, 0.25], 0.9), M, undefined));
+});
+test('フィクスチャの STEP3 レスポンスの表示内容', () => {
+  const raw = readFileSync(new URL('./fixtures/jev_response_race_outlook.json', import.meta.url), 'utf8');
+  const D = derive(parse(readFileSync(new URL('./fixtures/jra_entry_basic.txt', import.meta.url), 'utf8')));
+  const parsed = parseResponse(raw, RACE_OUTLOOK.questions(D));
+  const labels = { unclear: '特定できない' };
+  D.horses.forEach(h => { labels['h' + String(h.num).padStart(2, '0')] = `${h.num}番 ${h.name}`; });
+  const name1 = labels.h01;
+  const lead = describeAnswer('select', parsed.answers.lead_horse, M, labels);
+  assert.equal(lead.selected, name1);
+  assert.equal(lead.level, 'middle');
+  assert.deepEqual(lead.rows.slice(0, 2).map(r => [r.label, r.probability]), [[name1, 0.62], [labels.h03, 0.3]]);
+  const battle = describeAnswer('truth', parsed.answers.early_lead_battle, M);
+  assert.equal(battle.selected, 'どちらとも言えない');
+  assert.equal(battle.level, 'middle');
+  assert.deepEqual(battle.rows[0], { key: 'true', label: '真', probability: 0.41 });
+  assert.equal(battle.rows[1].probability, 0.59);
+  const pace = describeAnswer('grade', parsed.answers.pace, M, ['スロー', 'ミドル', 'ハイ']);
+  assert.equal(pace.selected, 'ミドル');
+  assert.equal(pace.level, 'unclear');
+  assert.deepEqual(pace.rows[0], { key: '1', label: 'ミドル', probability: 0.65 });
 });
