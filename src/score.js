@@ -53,8 +53,8 @@ function battleText(a, model) {
   return 'どちらとも言えない';
 }
 
-function paceText(a, model) {
-  const labels = paceLabels();
+/* grade の probabilities を検証し、確率が最大の段階のラベルを返す（同点なら null） */
+function topGrade(a, labels) {
   const ps = a.probabilities;
   if (!Array.isArray(ps) || ps.length !== labels.length) throw new Error('pace の段階の数が契約と一致しません');
   const seen = new Set();
@@ -64,12 +64,52 @@ function paceText(a, model) {
     }
     seen.add(x.level);
   }
-  const level = classify('grade', a, model);
-  if (level === 'unclear') return '判断できない';
   const max = Math.max(...ps.map(x => x.p));
   const top = ps.filter(x => x.p === max);
-  if (top.length > 1) return '判断できない';
-  return `${labels[top[0].level]}${suffix(level)}`;
+  return top.length > 1 ? null : labels[top[0].level];
+}
+
+function paceText(a, model) {
+  const top = topGrade(a, paceLabels());
+  const level = classify('grade', a, model);
+  if (level === 'unclear' || top === null) return '判断できない';
+  return `${top}${suffix(level)}`;
+}
+
+const byProbabilityDesc = rows => rows
+  .map((r, i) => ({ r, i }))
+  .sort((x, y) => y.r.probability - x.r.probability || x.i - y.i) // 同率は元の順
+  .map(x => x.r);
+
+/* 1つの質問の表示内容。labels は select：キー→表示名のオブジェクト、grade：段階のラベルの配列 */
+export function describeAnswer(kind, answer, model, labels) {
+  const level = classify(kind, answer, model);
+  const base = { kind, level, levelLabel: levelLabel(level) };
+  if (kind === 'truth') {
+    const p = answer.probability;
+    return { ...base, selected: battleText(answer, model), confidence: null,
+      rows: [{ key: 'true', label: '真', probability: p }, { key: 'false', label: '偽', probability: Math.round((1 - p) * 1e10) / 1e10 }] };
+  }
+  if (kind === 'select') {
+    const ps = answer.probabilities;
+    if (!Array.isArray(ps) || !ps.length) throw new Error('select の probabilities がありません');
+    const name = key => {
+      if (!labels || !Object.hasOwn(labels, key)) throw new Error(`選択肢 ${key} の表示名がありません`);
+      return labels[key];
+    };
+    const rows = byProbabilityDesc(ps.map(x => {
+      if (!isNum(x.p)) throw new Error(`選択肢 ${x.option} の確率が数ではありません`);
+      return { key: x.option, label: name(x.option), probability: x.p };
+    }));
+    return { ...base, selected: name(answer.selected), confidence: answer.confidence, rows };
+  }
+  if (kind === 'grade') {
+    if (!Array.isArray(labels)) throw new Error('grade には段階のラベルの配列が必要です');
+    const top = topGrade(answer, labels);
+    const rows = byProbabilityDesc(answer.probabilities.map(x => ({ key: String(x.level), label: labels[x.level], probability: x.p })));
+    return { ...base, selected: top === null ? '判断できない' : top, confidence: answer.confidence, rows };
+  }
+  throw new Error(`未知の質問の種類です：${kind}`);
 }
 
 /* STEP3 の答え（parseResponse の結果）から STEP4 の race_outlook を作る。overrides は利用者が手で選んだ値 */

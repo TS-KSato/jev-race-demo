@@ -3,19 +3,87 @@ import { derive, zoneRanges, cushionCat } from './derive.js';
 import { validate } from './parse/validate.js';
 import { raceBlock, raceState, raceQuestions, horseRequest } from './requests.js';
 import { RACE_OUTLOOK, HORSE_POSITION } from './contracts.js';
-import { outlookFromValues } from './score.js';
-import { MODEL_ID, buildRequest, checkLimits } from './jev.js';
+import { outlookFromValues, outlookFromAnswers, describeAnswer } from './score.js';
+import { MODEL_ID, PRICE, buildRequest, checkLimits, parseResponse, estimateCostUsd } from './jev.js';
+import { paceLabels } from './contracts.js';
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let P=null,D=null;
 
-function outlook(){
-  return outlookFromValues({leader:$('o-lead').value,battle:$('o-cont').value,pace:$('o-pace').value});
+let J=null; // 読み込んだ STEP3 の答え（parseResponse の結果）。メモリ上だけに持つ
+const OV_NAMES={leader:'ハナ',battle:'先行争い',pace:'ペース'};
+function overrides(){
+  return {leader:$('o-lead').value||null,battle:$('o-cont').value||null,pace:$('o-pace').value||null};
 }
-function addOption(id,label){
-  const s=$(id);
-  if(![...s.options].some(o=>o.value===label)) s.add(new Option(label,label));
+function outlook(){
+  return J?outlookFromAnswers(J,D.horses,overrides()).outlook:outlookFromValues(overrides());
+}
+const blank=name=>`${name}：${J?'Jevの答えを使う':'未入力'}`;
+function setBlankLabels(){
+  $('o-lead').options[0].textContent=blank('ハナ');
+  $('o-cont').options[0].textContent=blank('先行争い');
+  $('o-pace').options[0].textContent=blank('ペース');
+}
+const pct=p=>`${Math.round(p*100)}%`;
+function fmtCost(v){
+  if(v==null) return '不明';
+  const t=v.toPrecision(2);
+  return `約 $${t.includes('e')?v.toFixed(8):t}`;
+}
+function leaderLabels(){
+  const m={unclear:'特定できない'};
+  D.horses.forEach(h=>{m['h'+String(h.num).padStart(2,'0')]=`${h.num}番 ${h.name}`;});
+  return m;
+}
+function describeAll(parsed){
+  const A=parsed.answers,M=parsed.answeredModel;
+  return [
+    {ov:'leader',title:'最初のコーナーを先頭で通過する馬',d:describeAnswer('select',A.lead_horse,M,leaderLabels())},
+    {ov:'battle',title:'先行争いが激しくなる',d:describeAnswer('truth',A.early_lead_battle,M)},
+    {ov:'pace',title:'前半のペース',d:describeAnswer('grade',A.pace,M,paceLabels())},
+  ];
+}
+function rowsHtml(rows){return rows.map(r=>`<li>${esc(r.label)}：${pct(r.probability)}</li>`).join('');}
+function cardHtml(c,ovVal){
+  const d=c.d;
+  let h=`<div class="jcard"><div class="jt">${esc(c.title)}<span class="bdg bdg-${d.level}">${esc(d.levelLabel)}</span></div>`;
+  h+=`<div>${d.kind==='truth'?`${esc(d.selected)}相当（激しくなる確率 ${pct(d.rows[0].probability)}）`:`答え：<b>${esc(d.selected)}</b>`}</div>`;
+  if(d.confidence!=null) h+=`<div class="muted">confidence：${d.confidence.toFixed(2)}</div>`;
+  if(d.kind==='select'){
+    const top=d.rows.filter(r=>r.probability>0).slice(0,3);
+    h+=`<ul>${rowsHtml(top)}</ul><details><summary>すべての選択肢の確率を見る</summary><ul>${rowsHtml(d.rows)}</ul></details>`;
+  } else h+=`<ul>${rowsHtml(d.rows)}</ul>`;
+  if(ovVal) h+=`<div class="warn">手で上書きしています：${esc(ovVal)}</div>`;
+  return h+'</div>';
+}
+function renderJ(){
+  setBlankLabels();
+  const box=$('j-out');
+  if(!J){box.innerHTML='';return;}
+  const ov=overrides(),res=outlookFromAnswers(J,D.horses,ov);
+  let h=describeAll(J).map(c=>cardHtml(c,res.overridden.includes(c.ov)?ov[c.ov]:null)).join('');
+  h+='<p class="desc">振り分けは確率の集中度による目安です。答えの正しさを保証するものではありません。</p>';
+  h+=`<p class="desc">STEP4 には確率の数値ではなく、コードで言葉にした値を渡します：${res.outlook?['expected_leader','early_lead_battle','pace'].filter(k=>k in res.outlook).map(k=>`<code>${esc(res.outlook[k])}</code>`).join(' '):'なし'}</p>`;
+  if(res.overridden.length) h+=`<div class="warn">STEP4 には、手で上書きした項目（${res.overridden.map(k=>OV_NAMES[k]).join('／')}）が使われています。</div>`;
+  const m=J.answeredModel;
+  h+=`<div class="kv"><b>答えたモデルの版</b><span>${esc(m||'不明')} ／ 契約：${esc(RACE_OUTLOOK.label)}</span>
+  <b>評価時間</b><span>${J.evaluationTimeMs!=null?J.evaluationTimeMs+' ms':'不明'}</span>
+  <b>トークン数</b><span>入力 ${J.inputTokens??'不明'} ／ 出力 ${J.outputTokens??'不明'}</span>
+  <b>概算費用</b><span>${fmtCost(estimateCostUsd(J.inputTokens))}（単価の確認日：${esc(PRICE.checkedOn)}）</span></div>`;
+  if(m&&m!==MODEL_ID) h+=`<div class="warn">Playground では別名（jev-latest など）で実行するため、答えた版が固定した版（${esc(MODEL_ID)}）と異なる場合があります。記録は答えた版で行います。</div>`;
+  box.innerHTML=h;
+}
+function loadAnswers(){
+  const msg=$('j-msg');msg.innerHTML='';
+  if(!D) return;
+  try{
+    const parsed=parseResponse($('j-src').value,RACE_OUTLOOK.questions(D));
+    describeAll(parsed);
+    outlookFromAnswers(parsed,D.horses,overrides());
+    J=parsed;
+  }catch(e){msg.innerHTML=`<div class="err">${esc(e.message)}</div>`;return;}
+  renderJ();renderS4();
 }
 /* ---------- 画面 ---------- */
 function run(){
@@ -33,6 +101,7 @@ function rerun(){
 }
 function afterParse(){
   D=derive(P);
+  J=null;$('j-src').value='';$('j-msg').innerHTML='';
   renderS1();renderS2();renderS3();renderS4();
   ['s2','s3','s4'].forEach(id=>$(id).classList.remove('dim'));
 }
@@ -85,9 +154,9 @@ function renderS3(){
   $('r-body').value=JSON.stringify(req,null,2);
   showMeta('r-state',RACE_OUTLOOK,req);
   const s=$('o-lead'),cur=s.value;
-  addOption('o-cont','どちらとも言えない'); addOption('o-pace','判断できない');
-  s.innerHTML='<option value="">ハナ：未入力</option>'+D.horses.map(h=>`<option value="${h.num}番 ${esc(h.name)}">${h.num}番 ${esc(h.name)}</option>`).join('')+'<option value="特定できない">特定できない</option>';
+  s.innerHTML=`<option value="">${blank('ハナ')}</option>`+D.horses.map(h=>`<option value="${h.num}番 ${esc(h.name)}">${h.num}番 ${esc(h.name)}</option>`).join('')+'<option value="特定できない">特定できない</option>';
   if([...s.options].some(o=>o.value===cur)) s.value=cur;
+  renderJ();
 }
 function renderS4(){
   if(!D) return;
@@ -116,4 +185,5 @@ function copy(id,btn){
   if(navigator.clipboard&&window.isSecureContext) navigator.clipboard.writeText(el.value).then(done).catch(fb); else fb();
 }
 
-Object.assign(window,{run,rerun,renderS4,downloadAll,copy,$});
+['o-lead','o-cont','o-pace'].forEach(id=>$(id).addEventListener('change',renderJ));
+Object.assign(window,{run,rerun,loadAnswers,renderS4,downloadAll,copy,$});
