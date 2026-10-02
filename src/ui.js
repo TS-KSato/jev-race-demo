@@ -8,11 +8,13 @@ import { MODEL_ID, PRICE, buildRequest, checkLimits, parseResponse, estimateCost
 import { paceLabels } from './contracts.js';
 import { callRelay, isRelayAvailable } from './client.js';
 import { runStage4, summarizeStage4, isStale } from './stage4.js';
+import { buildRecord, buildSummaryLine, buildDetailText, formatEvalTime, formatEvalTotal, recordFileName } from './record.js';
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let P=null,D=null;
 
+let E3=null; // STEP3 の直近のエラー {kind,message,at}。要約の err に使う
 let J=null; // 読み込んだ STEP3 の答え（parseResponse の結果）。メモリ上だけに持つ
 let JM=null; // J の実行方法。{method:'api',at:ISO文字列} または {method:'paste'}
 let S3=null; // 画面に出している STEP3 の state と questions（中継に渡す元データ）
@@ -22,6 +24,9 @@ let cancel4=false,progress4=''; // 中止の要求と、進捗の表示文
 const OV_NAMES={leader:'ハナ',battle:'先行争い',pace:'ペース'};
 function overrides(){
   return {leader:$('o-lead').value||null,battle:$('o-cont').value||null,pace:$('o-pace').value||null};
+}
+function overriddenKeys(){
+  return J?outlookFromAnswers(J,D.horses,overrides()).overridden:Object.entries(overrides()).filter(([,v])=>v).map(([k])=>k);
 }
 function outlook(){
   return J?outlookFromAnswers(J,D.horses,overrides()).outlook:outlookFromValues(overrides());
@@ -67,7 +72,7 @@ function cardHtml(c,ovVal){
 function renderJ(){
   setBlankLabels();
   const box=$('j-out');
-  if(!J){box.innerHTML='';return;}
+  if(!J){box.innerHTML='';refreshFeedback();return;}
   const ov=overrides(),res=outlookFromAnswers(J,D.horses,ov);
   let h=describeAll(J).map(c=>cardHtml(c,res.overridden.includes(c.ov)?ov[c.ov]:null)).join('');
   h+='<p class="desc">振り分けは確率の集中度による目安です。答えの正しさを保証するものではありません。</p>';
@@ -75,13 +80,14 @@ function renderJ(){
   if(res.overridden.length) h+=`<div class="warn">STEP4 には、手で上書きした項目（${res.overridden.map(k=>OV_NAMES[k]).join('／')}）が使われています。</div>`;
   const m=J.answeredModel;
   h+=`<div class="kv"><b>答えたモデルの版</b><span>${esc(m||'不明')} ／ 契約：${esc(RACE_OUTLOOK.label)}</span>
-  <b>評価時間</b><span>${J.evaluationTimeMs!=null?J.evaluationTimeMs+' ms':'不明'}</span>
+  <b>評価時間</b><span>${formatEvalTime(J.evaluationTimeMs)}</span>
   <b>実行方法</b><span>${JM&&JM.method==='api'?'中継関数（API）':'Playground（貼り付け）'}</span>
   ${JM&&JM.at?`<b>実行日時</b><span>${esc(JM.at)}</span>`:''}
   <b>トークン数</b><span>入力 ${J.inputTokens??'不明'} ／ 出力 ${J.outputTokens??'不明'}</span>
   <b>概算費用</b><span>${fmtCost(estimateCostUsd(J.inputTokens))}（単価の確認日：${esc(PRICE.checkedOn)}）</span></div>`;
   if(m&&m!==MODEL_ID) h+=`<div class="warn">Playground では別名（jev-latest など）で実行するため、答えた版が固定した版（${esc(MODEL_ID)}）と異なる場合があります。記録は答えた版で行います。</div>`;
   box.innerHTML=h;
+  refreshFeedback();
 }
 function loadAnswers(){loadAnswersFrom($('j-src').value,{method:'paste'});}
 function loadAnswersFrom(text,meta){
@@ -91,8 +97,8 @@ function loadAnswersFrom(text,meta){
     const parsed=parseResponse(text,RACE_OUTLOOK.questions(D));
     describeAll(parsed);
     outlookFromAnswers(parsed,D.horses,overrides());
-    J=parsed;JM=meta;
-  }catch(e){msg.innerHTML=`<div class="err">${esc(e.message)}</div>`;return;}
+    J=parsed;JM={...meta,raw:text};E3=null;
+  }catch(e){msg.innerHTML=`<div class="err">${esc(e.message)}</div>`;E3={kind:'parse',message:e.message,at:new Date().toISOString()};refreshFeedback();return;}
   renderJ();renderS4();
 }
 /* ---------- 画面 ---------- */
@@ -111,11 +117,11 @@ function rerun(){
 }
 function afterParse(){
   D=derive(P);
-  J=null;JM=null;$('j-src').value='';$('j-msg').innerHTML='';
+  J=null;JM=null;E3=null;$('j-src').value='';$('j-msg').innerHTML='';
   gen++;setRunning(false);$('x-status').textContent='';
   S4=null;running4=false;cancel4=false;progress4='';
   renderS1();renderS2();renderS3();renderS4();
-  ['s2','s3','s4'].forEach(id=>$(id).classList.remove('dim'));
+  ['s2','s3','s4','sfb'].forEach(id=>$(id).classList.remove('dim'));
 }
 function renderS1(){
   const R=P.race,T=R.track||{};
@@ -196,7 +202,7 @@ async function runStep3(){
     $('j-src').value=text;
     loadAnswersFrom(text,{method:'api',at:new Date().toISOString()});
   }catch(e){
-    if(myGen===gen) msg.innerHTML=`<div class="err">${esc(e.message)}</div>`;
+    if(myGen===gen){msg.innerHTML=`<div class="err">${esc(e.message)}</div>`;E3={kind:typeof e.kind==='string'?e.kind:'other',message:e.message,at:new Date().toISOString()};refreshFeedback();}
   }finally{
     if(myGen===gen) setRunning(false);
   }
@@ -220,7 +226,7 @@ function failedNums(){return S4?S4.results.filter(r=>r.status!=='ok').map(r=>r.n
 async function runStep4(onlyFailed){
   if(!D||running||running4) return;
   if(!onlyFailed&&S4&&!confirm('前回の結果を破棄して全頭を実行し直します')) return;
-  const myGen=gen,used=onlyFailed&&S4?S4.usedOutlook:outlook();
+  const myGen=gen,used=onlyFailed&&S4?S4.usedOutlook:outlook(),usedOv=onlyFailed&&S4?S4.usedOverridden:overriddenKeys();
   const previous=onlyFailed&&S4?Object.fromEntries(S4.results.map(r=>[r.num,r])):undefined;
   const onlyNums=onlyFailed&&S4?failedNums():undefined;
   const zq=HORSE_POSITION.questions(D,D.horses[0],used); // 選択肢は馬によらず同じ
@@ -243,7 +249,7 @@ async function runStep4(onlyFailed){
   }
   if(myGen!==gen) return;
   running4=false;cancel4=false;progress4='';
-  if(out) S4={results:out.results,usedOutlook:used,aborted:out.aborted,cancelled:out.cancelled};
+  if(out) S4={results:out.results,usedOutlook:used,usedOverridden:usedOv,aborted:out.aborted,cancelled:out.cancelled};
   refreshControls();renderStage4();
 }
 function cancelStep4(){cancel4=true;progress4='中止しています…';renderProgress4();}
@@ -270,6 +276,7 @@ function renderStage4(){
   const box=$('x4-out');
   if(!D||!S4){
     box.innerHTML=''; $('x4-retry').hidden=true;
+    refreshFeedback();
     return;
   }
   const zl={};zoneRanges(D.horses.length).forEach(z=>{zl[z.key]=z.label;});
@@ -290,11 +297,12 @@ function renderStage4(){
   const m=summarizeStage4(S4.results,estimateCostUsd);
   h+=`<div class="kv"><b>件数</b><span>成功 ${m.okCount} ／ 失敗 ${m.failedCount} ／ 未実行 ${m.skippedCount}</span>
   <b>トークン数</b><span>入力 ${m.inputTokens} ／ 出力 ${m.outputTokens}</span>
-  <b>評価時間の合計</b><span>${m.evaluationTimeMs} ms</span>
+  <b>評価時間の合計</b><span>${formatEvalTotal(m)}</span>
   <b>概算費用</b><span>${fmtCost(m.okCount-m.excludedCount>0?m.costUsd:null)}（単価の確認日：${esc(PRICE.checkedOn)}）</span></div>`;
   if(m.excludedCount) h+=`<p class="desc">トークン数がない ${m.excludedCount} 頭は、トークン数と費用の集計に含まれていません。</p>`;
   box.innerHTML=h;
   $('x4-retry').hidden=failedNums().length===0;
+  refreshFeedback();
 }
 function downloadAll(){
   const ol=outlook();
@@ -302,6 +310,30 @@ function downloadAll(){
   const blob=new Blob([JSON.stringify({race:raceBlock(D),step:'STEP4',contract:HORSE_POSITION.label,model:MODEL_ID,requests:reqs},null,2)],{type:'application/json'});
   const u=URL.createObjectURL(blob),a=document.createElement('a');
   a.href=u;a.download=`jev_step4_${D.race.date||'race'}.json`;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(u),1000);
+}
+/* ---------- フィードバック用のコピーと記録のダウンロード ---------- */
+function feedbackCtx(){
+  const f=$('fb-blind').value;
+  return {now:new Date(),host:location.hostname,userAgent:navigator.userAgent,race:D.race,horses:D.horses,warnings:P.warnings,
+    userInput:{blind:f,memo:$('fb-memo').value},
+    s3:J?{parsed:J,meta:JM,state:S3.state,overrides:overrides(),raw:JM.raw}:null,s3Error:J?null:E3,
+    s4:S4?{results:S4.results,usedOutlook:S4.usedOutlook,usedOverridden:S4.usedOverridden,aborted:S4.aborted,cancelled:S4.cancelled,
+      states:Object.fromEntries(D.horses.map(h=>[h.num,horseRequest(D,h,S4.usedOutlook).state]))}:null};
+}
+function refreshFeedback(){
+  if(!D||!P) return;
+  const ctx=feedbackCtx();
+  $('fb-line').value=buildSummaryLine(ctx);
+  $('fb-detail').value=buildDetailText(ctx);
+  $('fb-dl').disabled=!(J||S4);
+}
+async function downloadRecord(){
+  if(!D||!(J||S4)) return;
+  const ctx=feedbackCtx(),rec=await buildRecord(ctx);
+  const blob=new Blob([JSON.stringify(rec,null,2)],{type:'application/json'});
+  const u=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=u;a.download=recordFileName(ctx);document.body.appendChild(a);a.click();a.remove();
   setTimeout(()=>URL.revokeObjectURL(u),1000);
 }
 function copy(id,btn){
@@ -314,4 +346,5 @@ function copy(id,btn){
 $('x-pass').addEventListener('input',refreshControls);
 refreshControls();
 ['o-lead','o-cont','o-pace'].forEach(id=>$(id).addEventListener('change',renderJ));
-Object.assign(window,{runStep3,runStep4,cancelStep4,run,rerun,loadAnswers,renderS4,downloadAll,copy,$});
+['fb-blind','fb-memo'].forEach(id=>{$(id).addEventListener('input',refreshFeedback);$(id).addEventListener('change',refreshFeedback);});
+Object.assign(window,{runStep3,runStep4,cancelStep4,run,rerun,loadAnswers,renderS4,downloadAll,downloadRecord,copy,$});
