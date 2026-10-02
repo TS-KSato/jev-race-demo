@@ -128,6 +128,16 @@ code{background:var(--pn2);padding:0 4px;border-radius:4px}
 <div id="x4-out"></div>
 </section>
 
+<section class="step dim" id="sfb">
+<h2><span class="badge">記録</span>フィードバック用のコピーと記録のダウンロード<span class="who">コード</span></h2>
+<p class="desc">STEP3・STEP4 の状況を、AI（Claude）に貼って伝えるためのテキストと、記録の JSON ファイルを作ります。合言葉と応答本文は、コピー用のテキストに含まれません。記録のファイルには応答本文が含まれます。</p>
+<div class="row"><select id="fb-blind"><option value="unspecified">未指定</option><option value="blind">ブラインド（レース前に実行）</option><option value="non-blind">非ブラインド（結果を知ったあとに実行）</option></select></div>
+<textarea id="fb-memo" rows="2" placeholder="メモ（任意）"></textarea>
+<div class="row"><button class="sec" onclick="copy('fb-line',this)">フィードバック用にコピー（1行）</button><button class="sec" onclick="copy('fb-detail',this)">詳しくコピー</button><button id="fb-dl" disabled onclick="downloadRecord()">記録をダウンロード（JSON）</button></div>
+<div class="lbl">要約（1行）</div><textarea id="fb-line" rows="3" readonly></textarea>
+<div class="lbl">詳しいテキスト</div><textarea id="fb-detail" rows="14" readonly></textarea>
+</section>
+
 <section class="step dim" id="s5">
 <h2><span class="badge">STEP 5</span>結果の表示と採点<span class="who">次の段階で追加</span></h2>
 <p class="desc">APIでの自動実行、確率と確信度の表示、自動処理と要確認の振り分け、実際の通過順との照合による一致率を、次の段階で追加します。</p>
