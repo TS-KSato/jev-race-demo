@@ -48,6 +48,9 @@ details summary{cursor:pointer;color:var(--mu);font-size:12.5px;margin-top:12px}
 .jcard ul{margin:6px 0 0;padding-left:18px}
 .bdg{border-radius:999px;padding:0 10px;font-size:12px;font-weight:700}
 .bdg-high{background:var(--ok);color:#04121f}.bdg-middle{background:#ffb54733;color:#ffd79a;border:1px solid #ffb54755}.bdg-unclear{background:var(--pn);color:var(--mu);border:1px solid var(--ln)}
+button[hidden]{display:none}
+.err-text{color:#ffb3b3;white-space:normal}
+.warn.stale{font-size:13.5px}
 code{background:var(--pn2);padding:0 4px;border-radius:4px}
 </style>
 </head>
@@ -118,6 +121,11 @@ code{background:var(--pn2);padding:0 4px;border-radius:4px}
 <textarea id="h-body" rows="10" readonly></textarea>
 <div class="row"><button class="sec" onclick="copy('h-body',this)">コピー</button></div>
 </details>
+<div class="lbl" style="margin-top:16px">STEP 4 を全頭実行（中継関数）</div>
+<p class="desc">全頭を1頭ずつ順番に実行します。合言葉は STEP 3 の欄と共通です。</p>
+<div class="row"><button id="x4-run" onclick="runStep4(false)">STEP4 を全頭実行</button><button id="x4-cancel" class="sec" hidden onclick="cancelStep4()">中止</button><button id="x4-retry" class="sec" hidden onclick="runStep4(true)">失敗した馬だけ再実行</button><span id="x4-status" class="muted" role="status"></span></div>
+<div id="x4-note" class="muted"></div>
+<div id="x4-out"></div>
 </section>
 
 <section class="step dim" id="s5">
