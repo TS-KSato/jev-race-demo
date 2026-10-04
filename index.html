@@ -134,6 +134,7 @@ code{background:var(--pn2);padding:0 4px;border-radius:4px}
 <div class="row"><select id="fb-blind"><option value="unspecified">未指定</option><option value="blind">ブラインド（レース前に実行）</option><option value="non-blind">非ブラインド（結果を知ったあとに実行）</option></select></div>
 <textarea id="fb-memo" rows="2" placeholder="メモ（任意）"></textarea>
 <div class="row"><button class="sec" onclick="copy('fb-line',this)">フィードバック用にコピー（1行）</button><button class="sec" onclick="copy('fb-detail',this)">詳しくコピー</button><button id="fb-dl" disabled onclick="downloadRecord()">記録をダウンロード（JSON）</button></div>
+<p class="desc">記録には、Jev に送った state と質問の本文が入ります。ファイルは公開しないでください。</p>
 <div class="lbl">要約（1行）</div><textarea id="fb-line" rows="3" readonly></textarea>
 <div class="lbl">詳しいテキスト</div><textarea id="fb-detail" rows="14" readonly></textarea>
 </section>
