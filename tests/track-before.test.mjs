@@ -55,7 +55,7 @@ test('馬場状態がない出馬表では既存の警告が出る', () => {
 test('一部の項目がない末尾：個別の警告が出て、読み取れた項目は残る', () => {
   const cut = text.replace('クッション値\n10.1\n', '');
   const P = parse(cut);
-  assert.ok(P.warnings.includes('馬場状態：クッション値が読み取れません'));
+  assert.ok(!P.warnings.includes('馬場状態：クッション値が読み取れません')); // ダートのレースでは出さない
   assert.ok(!P.warnings.some(w => w.startsWith('馬場状態（')));
   const T = P.race.track;
   assert.equal(T.weather, '雨');
