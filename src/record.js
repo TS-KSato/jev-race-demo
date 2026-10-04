@@ -2,7 +2,7 @@
  * 記録（JSON）と、フィードバック用の要約・詳しいテキストを作る。DOM・ネットワーク・保存領域には触れない。
  * ctx から読むのは下の項目だけ。合言葉・API キーは受け取らない。
  *   now（Date）, host（ホスト名）, userAgent, race, horses, warnings, userInput{blind,memo},
- *   s3: null | {parsed, meta{method,at}, state, overrides, error?}   s3Error: null | {kind,message,at}
+ *   s3: null | {parsed, meta{method,at,request?{state,questions}}, state, overrides, error?}   s3Error: null | {kind,message,at}
  *   s4: null | {results, usedOutlook, usedOverridden, aborted, cancelled, states{馬番:state}}
  */
 import { describeAnswer, outlookFromAnswers, levelLabel } from './score.js';
@@ -88,6 +88,8 @@ function s3Outlook(ctx) {
   try { return outlookFromAnswers(ctx.s3.parsed, ctx.horses, ctx.s3.overrides || {}); }
   catch (e) { return { outlook: null, overridden: [], error: e.message }; }
 }
+/* 実行時に送った state と questions だけを取り出す（認証情報を含みうるリクエスト本文全体は入れない） */
+const requestOf = q => (q && q.state !== undefined && q.questions !== undefined ? { state: q.state, questions: q.questions } : null);
 const usageOf = p => ({ inputTokens: p.inputTokens ?? null, outputTokens: p.outputTokens ?? null });
 const roundTripOf = p => (typeof p.roundTripMs === 'number' ? p.roundTripMs : null);
 const requestIdOf = p => (typeof p.requestId === 'string' ? p.requestId : null);
@@ -102,18 +104,20 @@ export async function buildRecord(ctx) {
   let stage3 = null;
   if (ctx.s3) {
     const { parsed, meta, state } = ctx.s3, ol = s3Outlook(ctx), api = meta?.method === 'api';
+    const request = api ? requestOf(meta.request) : null;
     stage3 = {
       contract: RACE_OUTLOOK.label, route: api ? 'api' : 'paste', executedAt: api ? meta.at ?? null : null,
       sentModel: api ? MODEL_ID : null, answeredModel: parsed.answeredModel ?? null,
-      stateHash: await stateHash(state), outlook: ol.outlook, overridden: ol.overridden,
+      stateHash: await stateHash(request ? request.state : state), outlook: ol.outlook, overridden: ol.overridden,
       answers: s3Answers(ctx), usage: usageOf(parsed), evaluationTimeMs: evalOf(parsed), requestId: requestIdOf(parsed), roundTripMs: roundTripOf(parsed), raw: ctx.s3.raw ?? null,
+      request,
     };
   }
   let stage4 = null;
   if (ctx.s4) {
     const results = [];
     for (const r of ctx.s4.results) {
-      const ok = r.status === 'ok', st = ctx.s4.states?.[r.num];
+      const ok = r.status === 'ok', request = requestOf(r.request), st = request ? request.state : ctx.s4.states?.[r.num];
       results.push({
         num: r.num, name: r.name, status: r.status, executedAt: r.at ?? null,
         answeredModel: ok ? r.parsed.answeredModel ?? null : null,
@@ -122,6 +126,7 @@ export async function buildRecord(ctx) {
         usage: ok ? usageOf(r.parsed) : null, evaluationTimeMs: ok ? evalOf(r.parsed) : null,
         requestId: ok ? requestIdOf(r.parsed) : null, roundTripMs: ok ? roundTripOf(r.parsed) : null,
         errorKind: r.errorKind ?? null, errorMessage: r.errorMessage ?? null, raw: r.raw ?? null,
+        request,
       });
     }
     stage4 = { contract: HORSE_POSITION.label, sentModel: MODEL_ID, usedOutlook: ctx.s4.usedOutlook ?? null,

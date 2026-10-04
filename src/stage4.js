@@ -6,7 +6,7 @@ const FATAL_KINDS = ['auth', 'config', 'contract', 'size', 'rate'];
 const REQUIRED_ANSWERS = ['first_corner', 'last_corner'];
 const MAX_MESSAGE = 200;
 
-const skippedRecord = h => ({ num: h.num, name: h.name, status: 'skipped', raw: null, parsed: null, at: null, errorKind: null, errorMessage: null });
+const skippedRecord = h => ({ num: h.num, name: h.name, status: 'skipped', raw: null, parsed: null, at: null, errorKind: null, errorMessage: null, request: null });
 
 function failedRecord(h, kind, message, at) {
   return { num: h.num, name: h.name, status: 'failed', raw: null, parsed: null, at, errorKind: kind, errorMessage: String(message ?? '').slice(0, MAX_MESSAGE) };
@@ -29,9 +29,12 @@ export async function runStage4({ horses, buildFor, callOne, parse, previous, on
     const { h, i } = targets[k];
     if (shouldCancel && shouldCancel()) { cancelled = true; break; }
     emit({ type: 'start', num: h.num, name: h.name, index: k + 1, total });
-    let rec;
+    let rec, request = null;
     try {
-      const raw = await callOne(buildFor(h));
+      const built = buildFor(h);
+      // 実行時に送る state と questions だけを控える（あとで画面から作り直さない）
+      request = { state: structuredClone(built.state), questions: structuredClone(built.questions) };
+      const raw = await callOne(built);
       let parsed;
       try {
         parsed = parse(raw);
@@ -43,10 +46,10 @@ export async function runStage4({ horses, buildFor, callOne, parse, previous, on
         err.kind = 'other';
         throw err;
       }
-      rec = { num: h.num, name: h.name, status: 'ok', raw, parsed, at: new Date().toISOString(), errorKind: null, errorMessage: null };
+      rec = { num: h.num, name: h.name, status: 'ok', raw, parsed, at: new Date().toISOString(), errorKind: null, errorMessage: null, request };
     } catch (e) {
       const kind = e && typeof e.kind === 'string' ? e.kind : 'other';
-      rec = failedRecord(h, kind, e && e.message, new Date().toISOString());
+      rec = { ...failedRecord(h, kind, e && e.message, new Date().toISOString()), request };
       if (FATAL_KINDS.includes(kind)) aborted = { kind, message: rec.errorMessage };
     }
     results[i] = rec;

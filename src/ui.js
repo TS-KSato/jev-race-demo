@@ -195,14 +195,14 @@ function refreshControls(){
 }
 async function runStep3(){
   if(!D||!S3||running) return;
-  const myGen=gen,msg=$('j-msg');msg.innerHTML='';
+  const myGen=gen,msg=$('j-msg'),sent=S3;msg.innerHTML='';
   setRunning(true);
   try{
-    const text=await callRelay({contract:RACE_OUTLOOK.label,state:S3.state,questions:S3.questions,password:$('x-pass').value,
+    const text=await callRelay({contract:RACE_OUTLOOK.label,state:sent.state,questions:sent.questions,password:$('x-pass').value,
       onRetry:(n,max)=>{if(myGen===gen) setRunning(true,`実行中…（再試行 ${n}/${max}）`);}});
     if(myGen!==gen) return;
     $('j-src').value=text;
-    loadAnswersFrom(text,{method:'api',at:new Date().toISOString()});
+    loadAnswersFrom(text,{method:'api',at:new Date().toISOString(),request:{state:structuredClone(sent.state),questions:structuredClone(sent.questions)}});
   }catch(e){
     if(myGen===gen){msg.innerHTML=`<div class="err">${esc(e.message)}</div>`;E3={kind:typeof e.kind==='string'?e.kind:'other',message:e.message,at:new Date().toISOString()};refreshFeedback();}
   }finally{

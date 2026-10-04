@@ -215,3 +215,70 @@ test('記録：requestId と roundTripMs が各判定に入り、無ければ nu
   assert.equal(r.stage4.results[1].requestId, null);
   assert.equal(r.stage4.results[1].roundTripMs, null);
 });
+
+/* ---------- 記録に入れる、送った state と questions ---------- */
+import { runStage4 } from '../src/stage4.js';
+import { callRelay } from '../src/client.js';
+
+const PASS = 'test-passphrase-xyz-1234';
+const sentOf = (state, questions) => ({ state, questions });
+async function runWithRelay(used) {
+  const fetchImpl = async () => ({ status: 200, headers: { get: () => null }, text: async () => raw4() });
+  return runStage4({ horses: D.horses, buildFor: h => horseRequest(D, h, used),
+    callOne: ({ state, questions }) => callRelay({ contract: HORSE_POSITION.label, state, questions, password: PASS, fetchImpl }),
+    parse: t => parseResponse(t, zq) });
+}
+
+test('request (a)：API 経由の STEP3 の記録に、送った state と questions が入る', async () => {
+  const sent = sentOf(raceState(D), raceQuestions(D));
+  const meta = { method: 'api', at: '2026-03-01T10:00:00.000Z', request: structuredClone(sent) };
+  const r = await buildRecord(ctx({ s3: s3(meta) }));
+  assert.deepEqual(r.stage3.request, sent);
+  assert.deepEqual(Object.keys(r.stage3.request), ['state', 'questions']);
+});
+
+test('request (b)：STEP4 の各馬に実行時の state と questions が入り、あとで STEP3 を上書きしても変わらない', async () => {
+  const out = await runWithRelay(OL);
+  const c = ctx({ s3: s3({ method: 'paste' }, { pace: 'ハイ' }), s4: s4(out.results, { usedOutlook: OL }) });
+  const r = await buildRecord(c);
+  assert.equal(r.stage4.results.length, D.horses.length);
+  for (const [i, h] of D.horses.entries()) {
+    const x = horseRequest(D, h, OL);
+    assert.deepEqual(r.stage4.results[i].request, { state: x.state, questions: x.questions });
+  }
+  // 上書き後の outlook で作り直した state とは違う（記録は実行時のまま）
+  const changed = horseRequest(D, D.horses[0], { ...OL, pace: 'ハイ' });
+  assert.notDeepEqual(r.stage4.results[0].request.state, changed.state);
+});
+
+test('request (c)：貼り付け経由の STEP3 は request が null', async () => {
+  const r = await buildRecord(ctx({ s3: s3({ method: 'paste' }) }));
+  assert.equal(r.stage3.request, null);
+});
+
+test('request (d)：合言葉と Authorization が記録のどこにも入らない', async () => {
+  const out = await runWithRelay(OL);
+  const meta = { method: 'api', at: 'a', request: sentOf(raceState(D), raceQuestions(D)) };
+  const json = JSON.stringify(await buildRecord(ctx({ s3: s3(meta), s4: s4(out.results) })));
+  assert.ok(!json.includes(PASS) && !json.includes(SECRET) && !json.includes('Authorization'));
+});
+
+test('request (e)：request.state から再計算したハッシュが stateHash と一致する', async () => {
+  const out = await runWithRelay(OL);
+  const meta = { method: 'api', at: 'a', request: sentOf(raceState(D), raceQuestions(D)) };
+  const r = await buildRecord(ctx({ s3: s3(meta), s4: s4(out.results) }));
+  assert.equal(await stateHash(r.stage3.request.state), r.stage3.stateHash);
+  for (const x of r.stage4.results) assert.equal(await stateHash(x.request.state), x.stateHash);
+});
+
+test('request (f)：既存のキーは変わらず、request が追加されるだけ', async () => {
+  const out = await runWithRelay(OL);
+  const meta = { method: 'api', at: 'a', request: sentOf(raceState(D), raceQuestions(D)) };
+  const r = await buildRecord(ctx({ s3: s3(meta), s4: s4(out.results) }));
+  const b = await buildRecord(ctx({ s3: s3(), s4: s4([ok(1)]) }));
+  assert.equal(r.schema, 'jev-demo-record@1');
+  const without = o => Object.keys(o).filter(k => k !== 'request');
+  assert.deepEqual(without(r.stage3), Object.keys(b.stage3).filter(k => k !== 'request'));
+  assert.deepEqual(without(r.stage4.results[0]), Object.keys(b.stage4.results[0]).filter(k => k !== 'request'));
+  assert.deepEqual(without(r.stage3), ['contract', 'route', 'executedAt', 'sentModel', 'answeredModel', 'stateHash', 'outlook', 'overridden', 'answers', 'usage', 'evaluationTimeMs', 'requestId', 'roundTripMs', 'raw']);
+});
