@@ -24,9 +24,18 @@ export function parse(text){
   const {idx,body,tail}=split(src);
   if(!idx.length) throw new Error('出走馬の行（例：「枠1白」のあとにタブと馬番）が見つかりません。コピー元の形式を確認してください。');
   const race=parseHeader(body.slice(0,idx[0].pos));
+  if(race.surface==='障') throw new Error('障害レースは対象外です。平地の競走の出馬表を貼り付けてください');
   race.track=parseTrack(tail);
   const horses=idx.map((h,i)=>parseHorse(body.slice(h.pos,i+1<idx.length?idx[i+1].pos:body.length),h));
   return {race,horses};
+}
+
+// 今回のレースの馬場種別。「障害」を最優先し、判別できなければ null（芝とみなさない）
+function detectSurface(desc){
+  if(desc.includes('障害')) return '障';
+  if(desc.startsWith('ダ')||desc.includes('ダート')) return 'ダ';
+  if(desc.includes('芝')) return '芝';
+  return null;
 }
 
 function parseHeader(h){
@@ -40,7 +49,7 @@ function parseHeader(h){
     if(ri==null&&(m=l.match(/^(\d{1,2})レース$/))){r.raceNo=+m[1];ri=i;}
     if((m=l.match(/コース：([\d,]+)メートル（([^）]+)）/))){
       r.distance=+m[1].replace(/,/g,''); r.courseDesc=m[2];
-      r.surface=m[2].startsWith('ダ')?'ダ':m[2].startsWith('障')?'障':'芝';
+      r.surface=detectSurface(m[2]);
       r.conditions=l.slice(0,l.indexOf('コース：')).split('\t').map(s=>s.trim()).filter(Boolean).join(' ');
     }
   });
