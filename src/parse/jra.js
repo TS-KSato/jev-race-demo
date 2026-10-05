@@ -7,26 +7,47 @@ const WEATHER_LINE_RE=/^[ \t\u3000]*天候：/m;
 const ANNOUNCE_LINE_RE=/^[ \t\u3000]*馬場状態（.+）[ \t\u3000]*$/m;
 
 // 出走馬の行の位置と、本文（馬ごとの部分）・末尾（馬場状態）への分割。「天候：」の行は最後の出走馬の行より後ろでだけ探す
+const TAIL_HEAD_RE=/^(芝のクッション値|ゴール前と4コーナーの含水率|使用コース|芝の状態|馬場状態（.*)$/;
+const TITLE_LINE_RE=/^第\d+回.+第\d+日/;
+
+// 「天候：」の行がないときの末尾（馬場情報のページ）の始まり。見出しの行、または直前のページの題名の行の位置（見つからなければ -1）
+function findTrackPage(text){
+  const lines=text.split('\n'); const pos=[]; let p=0;
+  lines.forEach(l=>{pos.push(p);p+=l.length+1;});
+  const trim=l=>l.replace(/^[\s\u3000]+|[\s\u3000]+$/g,'');
+  const h=lines.findIndex(l=>TAIL_HEAD_RE.test(trim(l)));
+  if(h<0) return -1;
+  let k=h-1; while(k>=0&&!trim(lines[k])) k--;
+  return pos[k>=0&&TITLE_LINE_RE.test(trim(lines[k]))?k:h];
+}
+
 function split(src){
   const re=new RegExp(ROW_RE.source,'gm'); const idx=[]; let m;
   while((m=re.exec(src))) idx.push({pos:m.index,frame:+m[1],num:+m[2]});
   if(!idx.length) return {idx,body:src,tail:''};
   const last=idx[idx.length-1].pos;
   const rel=src.slice(last).search(WEATHER_LINE_RE);
-  if(rel<0) return {idx,body:src,tail:''};
+  if(rel<0){
+    const t=findTrackPage(src.slice(last));
+    if(t<0) return {idx,body:src,tail:'',after:src.slice(last)};
+    return {idx,body:src.slice(0,last+t),tail:src.slice(last+t),after:src.slice(last)};
+  }
   let end=last+rel;
   const h=src.slice(last,end).search(ANNOUNCE_LINE_RE); // 前日の形式：「馬場状態（…現在）」の行から末尾として扱う
   if(h>=0) end=last+h;
-  return {idx,body:src.slice(0,end),tail:src.slice(end)};
+  return {idx,body:src.slice(0,end),tail:src.slice(end),after:src.slice(last)};
 }
 
 export function parse(text){
   const src=text.replace(/\r\n?/g,'\n');
-  const {idx,body,tail}=split(src);
+  const {idx,body,tail,after}=split(src);
   if(!idx.length) throw new Error('出走馬の行（例：「枠1白」のあとにタブと馬番）が見つかりません。コピー元の形式を確認してください。');
   const race=parseHeader(body.slice(0,idx[0].pos));
   if(race.surface==='障') throw new Error('障害レースは対象外です。平地の競走の出馬表を貼り付けてください');
   race.track=parseTrack(tail);
+  const T=race.track;
+  if(/クッション値|含水率|馬場状態/.test(after)&&T.weather==null&&T.turfGoing==null&&T.dirtGoing==null&&T.cushion==null&&T.turfMoisture==null) race.trackTextIgnored=true;
+  if(/^[ \t\u3000]*週間情報[ \t\u3000]*$/m.test(tail)) race.weeklyInfoIgnored=true; // 週間情報の天候・雨量・散水は読み取らない
   const horses=idx.map((h,i)=>parseHorse(body.slice(h.pos,i+1<idx.length?idx[i+1].pos:body.length),h));
   return {race,horses};
 }
@@ -147,7 +168,7 @@ function parseRace(r){
   const o={date:r.date,venue:r.venue}; const ne=r.lines;
   const parts=(ne[0]||'').split('\t').map(s=>s.trim()).filter(Boolean);
   o.race=parts[0]||''; o.grade=parts[1]||'';
-  let afterBw=false, m;
+  let afterBw=false, m, cornersRaw=null;
   for(let j=1;j<ne.length;j++){
     const l=ne[j];
     if(o.field===undefined&&(m=l.match(/^(\S+?)\t(\d+)頭(?:(\d+)番)?$/))){
@@ -165,13 +186,15 @@ function parseRace(r){
       if(f){
         o.last3f=+f[1];
         const rest=l.replace(/3F\s*\d+\.\d/,'').trim();
-        if(rest&&/^\d+(\s+\d+)*$/.test(rest)) o.corners=rest.split(/\s+/).map(Number);
+        if(rest&&/^\d+(\s+\d+)*$/.test(rest)){o.corners=rest.split(/\s+/).map(Number);cornersRaw=rest;}
         continue;
       }
-      if(/^\d+(\s+\d+)*$/.test(l)){o.corners=l.split(/\s+/).map(Number);continue;}
-      if((m=l.match(/^(.+)\((-?\d+\.\d)\)$/))){o.vs=m[1];o.margin=+m[2];continue;}
+      if(/^\d+(\s+\d+)*$/.test(l)){o.corners=l.split(/\s+/).map(Number);cornersRaw=l;continue;}
+      if((m=l.match(/^(.+)\((-?\d+\.\d)\)$/))){o.vs=m[1];o.margin=+m[2];break;} // 1着馬と着差の行で、その過去走のブロックは終わり
     }
   }
+  // 通過順は頭数（分からなければ99）以内の正の値だけ読む。合わないものは元の文字列を残して読み取らない
+  if(o.corners&&o.corners.some(c=>c<1||c>(o.field??99))){o.cornersRaw=cornersRaw;delete o.corners;}
   return o;
 }
 
