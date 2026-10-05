@@ -98,7 +98,7 @@ test('壊れた JSON・項目欠落・未知の契約は 400', async () => {
     r = await relay(b);
     assert.equal(r.out.status, 400, k); assert.equal(r.calls.length, 0);
   }
-  r = await relay({ ...outlookBody(), contract: 'race-outlook@2' });
+  r = await relay({ ...outlookBody(), contract: 'race-outlook@3' });
   assert.equal(r.out.status, 400); assert.equal(r.calls.length, 0);
 });
 

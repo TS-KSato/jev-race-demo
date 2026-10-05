@@ -16,6 +16,12 @@ export function cushionCat(v){if(v==null)return null;return v>=12?'硬め':v>=10
 /* 取消・除外の過去走（走っていないので前走として数えない。中止・失格は走っている） */
 export function didNotRun(p){return !!p&&(p.finish==='取消'||p.finish==='除外');}
 
+/* 馬番の内外（馬番を頭数で3等分する。値が不正なら null） */
+export function gatePosition(num,field){
+  if(!Number.isInteger(num)||!Number.isInteger(field)||num<1||field<1||num>field) return null;
+  return 3*num<=field?'内':3*num<=2*field?'中':'外';
+}
+
 /* ---------- STEP2: 事実の導出 ---------- */
 export function derive(P){
   const R=P.race;
@@ -34,7 +40,12 @@ export function derive(P){
       if(didNotRun(p)) tags.push(`出走せず（${p.finish}）`);
       else if(!p.corners) tags.push('通過順なし');
       if(p.going&&p.going!=='良') tags.push(`${p.going}馬場`);
-      q.tags=tags; return q;
+      q.tags=tags;
+      const dnr=didNotRun(p);
+      q.gatePos=dnr?null:gatePosition(p.gate,p.field);
+      q.jockeySame=dnr?null:((p.jockey&&x.jockey)?normName(p.jockey)===normName(x.jockey):null);
+      q.daysBefore=(R.date&&p.date)?daysBetween(R.date,p.date):null;
+      return q;
     });
     const last=past.find(p=>!didNotRun(p));
     const withC=past.filter(p=>p.first!=null);
@@ -45,7 +56,9 @@ export function derive(P){
       racesWithCorners:withC.length,
       bestFront3f:f3.length?Math.min(...f3):null,
       jockeyChange:last&&last.jockey&&x.jockey?normName(last.jockey)!==normName(x.jockey):null,
-      daysSinceLast:last&&R.date?daysBetween(R.date,last.date):null
+      daysSinceLast:last&&R.date?daysBetween(R.date,last.date):null,
+      gatePos:gatePosition(x.num,P.horses.length),
+      ranCount:past.filter(p=>!didNotRun(p)).length
     }};
   });
   const frontRunners=horses.filter(h=>h.facts.led>0).sort((a,b)=>b.facts.led-a.facts.led||a.num-b.num)

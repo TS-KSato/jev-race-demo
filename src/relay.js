@@ -1,16 +1,19 @@
 import { createHash, timingSafeEqual } from 'node:crypto';
 import { ENDPOINT, buildRequest, checkLimits } from './jev.js';
-import { RACE_OUTLOOK, HORSE_POSITION } from './contracts.js';
+import { CONTRACT_SETS } from './contracts.js';
 
 /*
  * Jev 中継の本体。環境変数 TYPESAFE_API_KEY・DEMO_PASSWORD は env 引数で受け取る（値はここに書かない）。
- * 汎用の中継ではなく、race-outlook@1 と horse-position@2 の形のリクエストだけを転送する。
+ * 汎用の中継ではなく、race-outlook@1・@2 と horse-position@2・@3 の形のリクエストだけを転送する。
  * 上流の応答の項目（model・answers・usage・request_id・evaluation_time_ms など）はそのまま返し、relay_round_trip_ms だけを付ける。
  * ログには検査の失敗の種類と HTTP の status だけを出す。リクエスト・応答の内容や秘密情報は出さない。
  */
 
 const MAX_BODY_BYTES = 512 * 1024;
 const TIMEOUT_MS = 30000;
+
+// ラベル → 契約と種類（STEP3 か STEP4 か）
+const CONTRACT_BY_LABEL = new Map(Object.values(CONTRACT_SETS).flatMap(({ outlook, position }) => [[outlook.label, { contract: outlook, step: 3 }], [position.label, { contract: position, step: 4 }]]));
 
 const OUTLOOK_KEYS = ['lead_horse', 'early_lead_battle', 'pace'];
 const POSITION_KEYS = ['first_corner', 'last_corner'];
@@ -64,14 +67,15 @@ function horsesFromState(horses) {
   });
 }
 
-function expectedQuestions(contract, state) {
+function expectedQuestions(label, state) {
+  const { contract, step } = CONTRACT_BY_LABEL.get(label);
   if (!isObj(state) || !isObj(state.race) || typeof state.race.name !== 'string') throw bad('state の race が契約の形ではありません');
-  if (contract === RACE_OUTLOOK.label) {
+  if (step === 3) {
     if (!sameSet(Object.keys(state), OUTLOOK_STATE_KEYS)) throw bad('state の項目が契約と一致しません');
     const m = /^(\d+|\?)m（/.exec(String(state.race.course));
     if (!m) throw bad('state の race.course が契約の形ではありません');
     const D = { race: { name: state.race.name, distance: m[1] === '?' ? null : Number(m[1]) }, horses: horsesFromState(state.horses) };
-    return RACE_OUTLOOK.questions(D);
+    return contract.questions(D);
   }
   const keys = Object.keys(state);
   const allowed = 'race_outlook' in state ? [...POSITION_STATE_KEYS, 'race_outlook'] : POSITION_STATE_KEYS;
@@ -79,11 +83,11 @@ function expectedQuestions(contract, state) {
   const n = state.race.field_size, t = state.target;
   if (!Number.isInteger(n) || n < 1 || !isObj(t) || t.number == null || typeof t.name !== 'string' || !Array.isArray(state.others)) throw bad('state が契約の形ではありません');
   const D = { horses: { length: n } };
-  return HORSE_POSITION.questions(D, { num: t.number, name: t.name }, state.race_outlook ? state.race_outlook : null);
+  return contract.questions(D, { num: t.number, name: t.name }, state.race_outlook ? state.race_outlook : null);
 }
 
-function checkQuestions(contract, questions, expected) {
-  const wantKeys = contract === RACE_OUTLOOK.label ? OUTLOOK_KEYS : POSITION_KEYS;
+function checkQuestions(label, questions, expected) {
+  const wantKeys = CONTRACT_BY_LABEL.get(label).step === 3 ? OUTLOOK_KEYS : POSITION_KEYS;
   if (!isObj(questions)) throw bad('questions がオブジェクトではありません');
   const have = Object.keys(questions);
   const missing = wantKeys.filter(k => !have.includes(k)), extra = have.filter(k => !wantKeys.includes(k));
@@ -150,7 +154,7 @@ export async function handleRelay({ method, headers, bodyText, env, fetchImpl })
     try { body = JSON.parse(text); } catch { throw new Reject(400, 'JSON不正', '本文が JSON として読めません'); }
     if (!isObj(body) || !('contract' in body) || !('state' in body) || !('questions' in body)) throw new Reject(400, '項目欠落', 'contract・state・questions が必要です');
     const contract = body.contract;
-    if (contract !== RACE_OUTLOOK.label && contract !== HORSE_POSITION.label) throw new Reject(400, '未知の契約', '未知の contract です');
+    if (typeof contract !== 'string' || !CONTRACT_BY_LABEL.has(contract)) throw new Reject(400, '未知の契約', '未知の contract です');
 
     checkQuestions(contract, body.questions, expectedQuestions(contract, body.state));
 
