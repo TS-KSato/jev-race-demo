@@ -15,6 +15,15 @@ const COURSE_A_RE=/コース：([\d,]+)メートル（([^）]*)）/;
 const GRADES={'Ⅰ':'G1','I':'G1','1':'G1','Ⅱ':'G2','II':'G2','2':'G2','Ⅲ':'G3','III':'G3','3':'G3'};
 const GRADE_RE=/[(（]?G(III|II|I|Ⅰ|Ⅱ|Ⅲ|[123])[)）]?\s*$/;
 
+/* 馬名に付く付記（確認済み：末尾「ブリンカー着用」、先頭「マル外」。ほかは推測。語はここに足すだけで除去される） */
+export const NAME_MARKERS={
+  prefix:['マル外','カク外','マル地','カク地'],
+  suffix:['ブリンカー着用','メンコ着用','シャドーロール着用','チークピーシーズ着用','チークピース着用'],
+};
+/* 騎手名に付く減量の記号 */
+export const JOCKEY_MARKS=['★','▲','△','☆','◇'];
+const NAME_OK_RE=/^[\u30A0-\u30FFA-Za-z0-9Ａ-Ｚａ-ｚ０-９]*$/;
+
 const W=(code,message)=>({code,message});
 const tenths=t=>{const v=toSec(t);return v==null?null:Math.round(v*10);};
 const sec=t=>t==null?null:r1(t/10);
@@ -23,14 +32,36 @@ const intOrNull=s=>{const m=String(s==null?'':s).trim().match(/^([+-]?)(\d+)$/);
 
 function isHorseRow(line){
   const f=line.split('\t');
-  if(f.length<4) return false;
+  if(f.length<3) return false;
   const t=f[0].trim();
-  const tokenOk=FINISH_RE.test(t)||STATUS_WORDS.includes(t)||(t&&t.length<=4&&!/^枠|[\s\d]/.test(t));
-  return tokenOk&&FRAME_RE.test(f[1].trim())&&/^\d+$/.test(f[2].trim())&&f[3].trim()!=='';
+  const named=f.length>=4&&f[3].trim()!=='';
+  // 馬名の項目は空でもよい（形式 A で馬名の行が分かれる馬）。着順が未知の語のときだけ馬名を求める
+  const tokenOk=FINISH_RE.test(t)||STATUS_WORDS.includes(t)||(named&&t&&t.length<=4&&!/^枠|[\s\d]/.test(t));
+  return tokenOk&&FRAME_RE.test(f[1].trim())&&/^\d+$/.test(f[2].trim());
 }
 
-function baseHorse(f0,fr,no,name){
-  const t=f0.trim(),m=t.match(FINISH_RE),h={finish:null,status:null,finish_note:null,frame:null,number:+no.trim(),name:name.trim()};
+/* 馬名から、一覧にある付記を先頭・末尾から取り除く。取り除くと空になるときは取り除かない */
+function splitName(raw){
+  const byLen=a=>[...a].sort((x,y)=>y.length-x.length);
+  let name=raw;const markers=[];
+  for(let again=true;again;){
+    again=false;
+    const p=byLen(NAME_MARKERS.prefix).find(w=>w&&name.startsWith(w)&&name.length>w.length);
+    if(p){name=name.slice(p.length);markers.push(p);again=true;continue;}
+    const q=byLen(NAME_MARKERS.suffix).find(w=>w&&name.endsWith(w)&&name.length>w.length);
+    if(q){name=name.slice(0,-q.length);markers.push(q);again=true;}
+  }
+  return {name,markers};
+}
+function splitJockey(raw){
+  let j=raw;const removed=[];
+  while(j.length>1&&JOCKEY_MARKS.includes(j[0])){removed.push(j[0]);j=j.slice(1);}
+  while(j.length>1&&JOCKEY_MARKS.includes(j[j.length-1])){removed.push(j[j.length-1]);j=j.slice(0,-1);}
+  return j.trim()===''?{jockey:raw,mark:null}:{jockey:j.trim(),mark:removed.length?removed.join(''):null};
+}
+
+function baseHorse(f0,fr,no,nameRaw){
+  const t=f0.trim(),m=t.match(FINISH_RE),raw=nameRaw.trim(),sn=splitName(raw),h={finish:null,status:null,finish_note:null,frame:null,number:+no.trim(),name:sn.name,name_raw:raw,markers:sn.markers};
   if(m){h.finish=+m[1];if(m[2]!=null&&m[2]!=='') h.finish_note=m[2];}
   else h.status=t;
   const fm=fr.trim().match(/^(?:枠)?(\d+)/);h.frame=fm?+fm[1]:null;
@@ -43,17 +74,30 @@ function readHorses(lines,rowIdx,fmt,warnings){
   const horses=[];
   rowIdx.forEach(i=>{
     const f=lines[i].split('\t');
-    const h=baseHorse(f[0],f[1],f[2],f[3]);
+    let b=null,j=i+1,nameRaw=f[3]||'';
     if(fmt==='A'){
-      Object.assign(h,{sex_age:f[4]||'',weight_carried:f[5]||'',jockey:(f[6]||'').trim(),time:null,margin:'',last_3f_est:null,body_weight:null,body_weight_diff:null,trainer:'',popularity:null,corner_positions:[]});
-      let j=i+1;
+      b=f.slice(4);
+      if(emptyStr(f[3])){ // 馬名が別の行にある：次の空でない行が馬名、その次の行から性齢以降
+        let k=i+1;while(k<lines.length&&emptyStr(lines[k])) k++;
+        const bad=l=>l==null||emptyStr(l)||POS_LINE_RE.test(l)||isHorseRow(l);
+        if(k>=lines.length||bad(lines[k])||/\t/.test(lines[k].trim())||bad(lines[k+1])){
+          warnings.push(W('row_unparsed',`${i+1}行目：馬の行として読めませんでした`));
+          return;
+        }
+        nameRaw=lines[k];b=lines[k+1].split('\t');j=k+2;
+      }
+    }
+    const h=baseHorse(f[0],f[1],f[2],nameRaw);
+    if(!NAME_OK_RE.test(h.name)) warnings.push(W('name_unusual',`${h.number}番：馬名に、カタカナ以外の文字が含まれています（馬具や区分の表記が付いている可能性があります）：${h.name_raw}`));
+    if(fmt==='A'){
+      Object.assign(h,{sex_age:b[0]||'',weight_carried:b[1]||'',jockey:(b[2]||'').trim(),time:null,margin:'',last_3f_est:null,body_weight:null,body_weight_diff:null,trainer:'',popularity:null,corner_positions:[]});
       const notRan=STATUS_WORDS.includes(h.status);
       if(j<lines.length&&emptyStr(lines[j])&&!isHorseRow(lines[j])) j++; // 空白だけの行
       let pos=null;
       if(!notRan&&j<=lines.length&&POS_LINE_RE.test(lines[j]||'')){pos=lines[j].trim().split(' ').map(Number);j++;}
       else if(notRan&&POS_LINE_RE.test(lines[j]||'')){pos=lines[j].trim().split(' ').map(Number);j++;}
       const g=(lines[j]||'').split('\t');
-      h.time=tenths(f[7]);h.margin=emptyStr(f[8])?'':f[8];
+      h.time=tenths(b[3]);h.margin=emptyStr(b[4])?'':b[4];
       if(notRan&&!pos){h.trainer=(g[0]||'').trim();}
       else{
         h.last_3f_est=emptyStr(g[0])?null:(tenths(g[0].trim())); // 秒（小数1桁）に直すため仮に0.1秒単位
@@ -66,6 +110,8 @@ function readHorses(lines,rowIdx,fmt,warnings){
       const g=f;
       Object.assign(h,{sex_age:g[4]||'',weight_carried:g[5]||'',jockey:(g[7]||'').trim(),time:tenths(g[8]),margin:emptyStr(g[9])?'':g[9],last_3f_est:emptyStr(g[10])?null:tenths(g[10].trim()),body_weight:intOrNull(g[11]),body_weight_diff:intOrNull(g[12]),trainer:(g[13]||'').trim(),popularity:intOrNull(g[14]),corner_positions:null});
     }
+    h.jockey_raw=h.jockey;
+    const sj=splitJockey(h.jockey_raw);h.jockey=sj.jockey;h.jockey_mark=sj.mark;
     horses.push(h);
   });
   return horses;
@@ -147,7 +193,11 @@ export function parseResult(text){
   const fail=()=>{throw new Error('結果ページの形式を判別できません');};
   if(!rowIdx.length) fail();
   // 形式の判別：馬の行の次の行（空白だけの行は飛ばす）が番手の行なら A
-  const isA=rowIdx.some(i=>POS_LINE_RE.test(lines[i+1]||''));
+  const isA=rowIdx.some(i=>{
+    if(!emptyStr(lines[i].split('\t')[3])) return POS_LINE_RE.test(lines[i+1]||'');
+    let k=i+1;while(k<lines.length&&emptyStr(lines[k])) k++;
+    return POS_LINE_RE.test(lines[i+1]||'')||POS_LINE_RE.test(lines[k+2]||'');
+  });
   const fmt=isA?'A':lines[rowIdx[0]].split('\t').length===15?(/^枠/.test(lines[rowIdx[0]].split('\t')[1].trim())?'B':'C'):null;
   if(!fmt) fail();
   if(lines.filter(l=>DATE_LINE_RE.test(l)).length>=2) throw new Error('複数のレースが含まれています。1レースずつ貼り付けてください');
@@ -161,6 +211,7 @@ export function parseResult(text){
     good=rowIdx.filter(i=>{const ok=lines[i].split('\t').length===15;if(!ok) warnings.push(W('row_field_count',`${i+1}行目：馬の行の項目数が15ではないため読み飛ばしました`));return ok;});
   }
   const horses=readHorses(lines,good,fmt,warnings);
+  if(!horses.length) fail();
 
   // 末尾（ハロンタイム・コーナー通過順位）。払戻金より後ろは読まない
   const lastRow=good[good.length-1];
