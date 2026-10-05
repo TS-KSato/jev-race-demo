@@ -137,3 +137,18 @@ test('前走との一致の区画：悪意のある契約ラベルをエスケ�
   assert.ok(!h.includes('<img') && !h.includes('<script>'));
   assert.ok(h.includes('&lt;img'));
 });
+
+test('ハナの表示：abstain は「特定できないと回答」、ほかの表示は変わらない', () => {
+  const sc = scoreRace({ entry: entryA(), stage3: lead('unclear'), stage4: stage4A(), result: resultA });
+  const h = scoreHtml(sc, { stage3: lead('unclear'), result: resultA });
+  assert.ok(h.includes('特定できないと回答（採点しません）'));
+  const leaderPart = h.slice(h.indexOf('ハナを切った馬'));
+  assert.ok(!leaderPart.slice(0, leaderPart.indexOf('</div></div>')).includes('答えなし'));
+  assert.ok(h.includes('<span class="') && h.includes('特定できないと回答</span>'));
+  const ok = htmlA();
+  assert.ok(ok.includes('確率') && !ok.includes('特定できないと回答'));
+  const mk = (ps, st) => scoreView({ ...scoringA(), leader: { ...scoringA().leader, predicted_status: ps, status: st } });
+  function scoreView(s) { return scoreHtml(s, { stage3: stage3(), result: resultA }); }
+  assert.ok(mk('unscorable_predicted', 'unscorable').includes('採点不能'));
+  assert.ok(mk('missing', 'missing').includes('未実行'));
+});

@@ -82,9 +82,9 @@ export function leaderHtml(scoring, result) {
   const actual = L.actual != null ? nameOf(L.actual, scoring, result)
     : `${L.candidates?.length ? `候補：${L.candidates.map(num).join('、')}（` : '（'}確定できません）`;
   const pred = L.predicted_status === 'predicted' ? `${nameOf(L.predicted, scoring, result)}（確率 ${pct(L.probability)}、${esc(level(L.level))}）`
-    : L.predicted_status === 'abstain' ? '答えなし（採点しません）'
+    : L.predicted_status === 'abstain' ? '特定できないと回答（採点しません）'
     : L.predicted_status === 'unscorable_predicted' ? '採点不能' : '未実行';
-  const res = L.status === 'scored' ? (L.correct ? '○' : '×') : L.status === 'abstain' ? '答えなし' : L.status === 'missing' ? '未実行' : '採点不能';
+  const res = L.status === 'scored' ? (L.correct ? '○' : '×') : L.status === 'abstain' ? '特定できないと回答' : L.status === 'missing' ? '未実行' : '採点不能';
   return `<div class="lbl">ハナを切った馬</div><div class="kv"><b>実際</b><span>${actual}</span><b>STEP3 の予測</b><span>${pred}</span>
 <b>結果</b><span class="${markClass(res)}">${res}</span></div>`;
 }
