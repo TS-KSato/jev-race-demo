@@ -4,6 +4,8 @@
  *   now（Date）, host（ホスト名）, userAgent, race, horses, warnings, userInput{blind,memo},
  *   s3: null | {parsed, meta{method,at,request?{state,questions}}, state, overrides, error?}   s3Error: null | {kind,message,at}
  *   s4: null | {results, usedOutlook, usedOverridden, aborted, cancelled, states{馬番:state}}
+ *   result（任意）: parseResult の返り値（race-result@1。警告を含む。結果ページの本文は含まない）
+ *   scoring（任意）: scoreRace の返り値（scoring@1）   scoredAt（任意）: 採点した日時
  */
 import { describeAnswer, outlookFromAnswers, levelLabel } from './score.js';
 import { zoneRanges } from './derive.js';
@@ -140,6 +142,9 @@ export async function buildRecord(ctx) {
     track, warnings: [...(ctx.warnings || [])].map(String),
     userInput: { blind, memo: String(ctx.userInput?.memo ?? '') },
     stage3, stage4,
+    result: ctx.result ? structuredClone(ctx.result) : null,
+    scoring: ctx.result && ctx.scoring ? structuredClone(ctx.scoring) : null,
+    scoredAt: ctx.result && ctx.scoring ? isoWithOffset(ctx.scoredAt ?? ctx.now) : null,
   };
 }
 
@@ -150,6 +155,40 @@ export function recordFileName(ctx) {
   const last = times.length ? new Date(Math.max(...times)) : toDate(ctx.now);
   const safe = s => String(s ?? '').replace(/[^\p{L}\p{N}-]/gu, '');
   return `jev_record_${safe(R.date) || 'race'}_${safe(R.venue)}${R.raceNo ? safe(R.raceNo) + 'R' : ''}_${stamp(last)}.json`;
+}
+
+/* ---------- 採点の要約項目 ---------- */
+const rate = (c, n) => `${c}/${n}`;
+const LEADER_MARK = { scored: null, abstain: '答えなし', missing: '未実行' };
+function leaderMark(L) {
+  if (!L) return '採点不能';
+  if (L.status === 'scored') return L.correct ? '○' : '×';
+  return LEADER_MARK[L.status] ?? '採点不能';
+}
+function scoringItems(ctx) {
+  const fmt = `res=format${ctx.result.source_format ?? '?'}`, W = (ctx.result.warnings || []).length, S = ctx.scoring;
+  if (!S.ok) return [fmt, '採点なし(race_mismatch)', `警告=${W}`];
+  const T = S.summary.total, C = S.summary.by_corner, H = S.summary.by_level.high;
+  return [fmt, `最初=${rate(C.first_corner.correct, C.first_corner.scored)}`, `最後=${rate(C.last_corner.correct, C.last_corner.scored)}`,
+    `高確信=${rate(H.correct, H.scored)}`, `ハナ=${leaderMark(S.leader)}`, `採点不能=${T.unscorable}`, `警告=${W}`];
+}
+const ZL = { front: '先頭', forward: '好位', mid: '中団', rear: '後方' };
+const CL = { first_corner: '最初のコーナー', last_corner: '最後のコーナー' };
+const itemText = it => {
+  if (!it) return '—';
+  if (it.status === 'missing') return '未実行';
+  const m = it.status === 'scored' ? (it.correct ? '○' : '×') : '採点不能';
+  return `${ZL[it.predicted] ?? '—'}→${ZL[it.actual] ?? '不明'} ${m}`;
+};
+function scoringDetail(ctx) {
+  const S = ctx.scoring, L = ['', '【結果と採点】'];
+  if (!S.ok) { L.push(`採点なし：${(S.reasons || []).map(r => oneLine(r.message)).join(' ／ ')}`); return L; }
+  L.push(scoringItems(ctx).join(' '));
+  for (const h of S.horses) L.push(`${h.number}番 ${h.name}：最初のコーナー ${itemText(h.first_corner)} ／ 最後のコーナー ${itemText(h.last_corner)}`);
+  const ms = S.summary.high_confidence_misses;
+  L.push(`高確信で外れた馬：${ms.length ? '' : 'なし'}`);
+  for (const m of ms) L.push(`- ${m.number}番 ${m.name} ${CL[m.corner] ?? m.corner} 予測 ${ZL[m.predicted] ?? '—'} 実際 ${ZL[m.actual] ?? '—'} confidence ${m.confidence ?? '—'}`);
+  return L;
 }
 
 /* ---------- 要約の1行 ---------- */
@@ -205,6 +244,7 @@ export function buildSummaryLine(ctx) {
   } else parts.push('S4=未実行');
   const errs = errorsOf(ctx);
   parts.push(`err=${errs.length ? errs.join(';') : 'なし'}`);
+  if (ctx.result && ctx.scoring) parts.push(scoringItems(ctx).join(' '));
   return oneLine(parts.join(' | '));
 }
 
@@ -250,5 +290,6 @@ export function buildDetailText(ctx) {
       else L.push(`${r.num}番 ${r.name}：未実行`);
     }
   }
+  if (ctx.result && ctx.scoring) L.push(...scoringDetail(ctx));
   return L.join('\n');
 }
