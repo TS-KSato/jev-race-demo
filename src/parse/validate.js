@@ -1,4 +1,5 @@
 import { didNotRun } from '../derive.js';
+import { NAME_OK_RE } from './markers.js';
 
 /* ---------- STEP1: 読み取り結果の検査（警告の作成） ---------- */
 export function validate(P){
@@ -18,6 +19,7 @@ export function validate(P){
   (P.horses||[]).forEach(x=>{
     const tag=`${x.num}番 ${x.name||'?'}`,past=x.past||[];
     if(!x.name) W.push(`${tag}：馬名が読み取れません`);
+    if(x.name&&!NAME_OK_RE.test(x.name)) W.push(`${x.num}番 ${x.name_raw}：馬名に、カタカナ以外の文字が含まれています（未知の付記の可能性）`);
     if(x.carried==null) W.push(`${tag}：斤量が読み取れません`);
     if(!x.jockey) W.push(`${tag}：騎手が読み取れません`);
     if(x.odds==null) W.push(`${tag}：単勝オッズが読み取れません（発売前・取消の可能性）`);

@@ -1,7 +1,7 @@
 import { r1, toSec } from '../util.js';
 import { zoneOf } from '../derive.js';
 import { parseCornerLine } from './corners.js';
-import { NAME_MARKERS, splitName } from './markers.js';
+import { NAME_MARKERS, NAME_OK_RE, splitName } from './markers.js';
 
 export { NAME_MARKERS, splitName };
 
@@ -20,7 +20,6 @@ const GRADE_RE=/[(（]?G(III|II|I|Ⅰ|Ⅱ|Ⅲ|[123])[)）]?\s*$/;
 
 /* 騎手名に付く減量の記号 */
 export const JOCKEY_MARKS=['★','▲','△','☆','◇'];
-const NAME_OK_RE=/^[\u30A0-\u30FFA-Za-z0-9Ａ-Ｚａ-ｚ０-９]*$/;
 
 const W=(code,message)=>({code,message});
 const tenths=t=>{const v=toSec(t);return v==null?null:Math.round(v*10);};
