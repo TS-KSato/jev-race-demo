@@ -1,4 +1,5 @@
 import { pad, DATE_RE } from '../util.js';
+import { splitName } from './markers.js';
 
 /* ---------- STEP1: 読み取り ---------- */
 const ROW_RE=/^枠(\d)[^\t\n]*\t\s*(\d+)/gm;
@@ -105,7 +106,9 @@ function parseHorse(block,h){
   const prof=(fp>=0?L.slice(0,fp):L).filter(Boolean);
   const x={num:h.num,frame:h.frame,blinker:prof.some(l=>/ブリンカー/.test(l))};
   const ni=prof.findIndex((l,k)=>k>0&&!/ブリンカー/.test(l));
-  x.name=ni>0?prof[ni].replace(/\t.*$/,''):null;
+  const rawName=ni>0?prof[ni].replace(/\t.*$/,''):null;
+  const sn=rawName==null?null:splitName(rawName);
+  x.name=sn?sn.name:null; x.markers=sn?sn.markers:[]; x.name_raw=rawName;
   let m, ci=-1;
   prof.forEach((l,k)=>{
     if(k<=ni) return;
