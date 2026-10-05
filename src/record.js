@@ -5,7 +5,7 @@
  *   s3: null | {parsed, meta{method,at,request?{state,questions}}, state, overrides, error?}   s3Error: null | {kind,message,at}
  *   s4: null | {results, usedOutlook, usedOverridden, aborted, cancelled, states{馬番:state}}
  *   result（任意）: parseResult の返り値（race-result@1。警告を含む。結果ページの本文は含まない）
- *   scoring（任意）: scoreRace の返り値（scoring@1）   scoredAt（任意）: 採点した日時
+ *   scoring（任意）: scoreRace の返り値（scoring@2）   scoredAt（任意）: 採点した日時
  */
 import { describeAnswer, outlookFromAnswers, levelLabel } from './score.js';
 import { zoneRanges } from './derive.js';
@@ -174,6 +174,31 @@ function baselineItem(S) {
   if (!B || !B.always_largest.total.scored) return []; // 採点した項目がなければ足さない
   return [`基準=${ZL[B.always_largest.zone] ?? B.always_largest.zone}${rate(B.always_largest.total.correct, B.always_largest.total.scored)} 前走${rate(B.last_run.total.correct, B.last_run.total.scored)}`];
 }
+function agreementItem(S) {
+  const A = S.strata?.agreement?.total;
+  if (!A || !S.baselines?.always_largest.total.scored) return []; // 基準と同じ扱い
+  return [`一致=${rate(A.agree.correct, A.agree.items)} 違い=${rate(A.deviate.jev_correct, A.deviate.items)}`];
+}
+function strataText(S) {
+  const X = S.strata;
+  if (!X) return [];
+  const A = X.agreement.total, r = (c, n) => (n ? `${c}/${n}（${Math.round(c / n * 100)}%）` : '—');
+  const L = ['前走との一致と層ごとの正答率（件数は少なく、判定は互いに独立でないため、差の有無は判定できません。件数が少ない層は参考値です）',
+    `- 前走と同じ区分：${A.agree.items}件、Jev 正解 ${r(A.agree.correct, A.agree.items)}`,
+    `- 前走と違う区分：${A.deviate.items}件、Jev 正解 ${r(A.deviate.jev_correct, A.deviate.items)}、前走の区分の正解 ${r(A.deviate.last_run_correct, A.deviate.items)}`,
+    `- 前走の区分なし：${A.no_last_run.items}件`];
+  const tbl = (title, labels, group) => {
+    L.push(`${title}`);
+    for (const k of Object.keys(group)) {
+      const g = group[k], w = g.with_last_run;
+      L.push(`- ${labels[k] ?? k}：馬${g.horses}頭 項目${g.items} Jev ${r(g.jev_correct, g.items)} 常に最も広い区分 ${r(g.always_largest_correct, g.items)} 前走ありのJev ${r(w.jev_correct, w.items)} 前走 ${r(w.last_run_correct, w.items)}`);
+    }
+  };
+  tbl('実質走数別', { '0-2': '0〜2走', '3': '3走', '4+': '4走以上' }, X.by_run_count);
+  tbl('通過順のばらつき別', { same: '区分が1種類', varied: '区分が2種類以上', na: '対象外（3走未満）' }, X.by_variety);
+  L.push(`契約：${S.contracts?.outlook ?? '不明'} / ${S.contracts?.position ?? '不明'}`);
+  return L;
+}
 function scoringItems(ctx) {
   const fmt = `res=format${ctx.result.source_format ?? '?'}`, W = (ctx.result.warnings || []).length, S = ctx.scoring;
   if (!S.ok) return [fmt, '採点なし(race_mismatch)', `警告=${W}`];
@@ -197,6 +222,7 @@ function scoringDetail(ctx) {
   const ms = S.summary.high_confidence_misses;
   L.push(`高確信で外れた馬：${ms.length ? '' : 'なし'}`);
   for (const m of ms) L.push(`- ${m.number}番 ${m.name} ${CL[m.corner] ?? m.corner} 予測 ${ZL[m.predicted] ?? '—'} 実際 ${ZL[m.actual] ?? '—'} confidence ${m.confidence ?? '—'}`);
+  L.push(...strataText(S));
   return L;
 }
 
@@ -253,7 +279,7 @@ export function buildSummaryLine(ctx) {
   } else parts.push('S4=未実行');
   const errs = errorsOf(ctx);
   parts.push(`err=${errs.length ? errs.join(';') : 'なし'}`);
-  if (ctx.result && ctx.scoring) parts.push([...scoringItems(ctx), ...baselineItem(ctx.scoring)].join(' '));
+  if (ctx.result && ctx.scoring) parts.push([...scoringItems(ctx), ...baselineItem(ctx.scoring), ...agreementItem(ctx.scoring)].join(' '));
   return oneLine(parts.join(' | '));
 }
 

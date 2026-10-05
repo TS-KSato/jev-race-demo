@@ -306,7 +306,7 @@ test('buildRecord：結果と採点を渡すと result・scoring・scoredAt が�
   const rec = await buildRecord(ctx({ result, scoring, scoredAt: NOW }));
   assert.equal(rec.result.schema, 'race-result@1');
   assert.deepEqual(rec.result.warnings, result.warnings);
-  assert.equal(rec.scoring.schema, 'scoring@1');
+  assert.equal(rec.scoring.schema, 'scoring@2');
   assert.equal(rec.scoredAt, rec.createdAt);
   assert.equal((await buildRecord(ctx({ result, scoring, scoredAt: new Date(NOW.getTime() + 60000) }))).scoredAt.slice(14, 16), '21');
   assert.equal(rec.schema, 'jev-demo-record@1');
@@ -350,6 +350,12 @@ test('baselines：記録の scoring に入り、要約の1行の末尾に 基準
   assert.notEqual(rec.scoring.baselines, scoring.baselines);
   const B = scoring.baselines;
   const line = buildSummaryLine(ctx({ result, scoring }));
-  assert.ok(line.endsWith(` 基準=中団${B.always_largest.total.correct}/${B.always_largest.total.scored} 前走${B.last_run.total.correct}/${B.last_run.total.scored}`));
+  const A = scoring.strata.agreement.total;
+  assert.ok(line.endsWith(` 基準=中団${B.always_largest.total.correct}/${B.always_largest.total.scored} 前走${B.last_run.total.correct}/${B.last_run.total.scored} 一致=${A.agree.correct}/${A.agree.items} 違い=${A.deviate.jev_correct}/${A.deviate.items}`));
+  assert.deepEqual(rec.scoring.strata, scoring.strata);
+  assert.deepEqual(rec.scoring.contracts, scoring.contracts);
+  assert.ok(buildDetailText(ctx({ result, scoring })).includes('前走との一致と層ごとの正答率'));
+  assert.ok(!buildSummaryLine(ctx({ result, scoring: { ...scoring, strata: null } })).includes('一致='));
   assert.ok(!buildSummaryLine(ctx({ result, scoring: { ...scoring, baselines: null } })).includes('基準='));
+  assert.ok(!buildSummaryLine(ctx({ result, scoring: { ...scoring, baselines: null } })).includes('一致='));
 });
