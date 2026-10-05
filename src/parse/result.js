@@ -1,6 +1,9 @@
 import { r1, toSec } from '../util.js';
 import { zoneOf } from '../derive.js';
 import { parseCornerLine } from './corners.js';
+import { NAME_MARKERS, splitName } from './markers.js';
+
+export { NAME_MARKERS, splitName };
 
 /* ---------- レース結果ページの読み取り（race-result@1） ---------- */
 const SCHEMA='race-result@1';
@@ -15,11 +18,6 @@ const COURSE_A_RE=/コース：([\d,]+)メートル（([^）]*)）/;
 const GRADES={'Ⅰ':'G1','I':'G1','1':'G1','Ⅱ':'G2','II':'G2','2':'G2','Ⅲ':'G3','III':'G3','3':'G3'};
 const GRADE_RE=/[(（]?G(III|II|I|Ⅰ|Ⅱ|Ⅲ|[123])[)）]?\s*$/;
 
-/* 馬名に付く付記（確認済み：末尾「ブリンカー着用」、先頭「マル外」。ほかは推測。語はここに足すだけで除去される） */
-export const NAME_MARKERS={
-  prefix:['マル外','カク外','マル地','カク地'],
-  suffix:['ブリンカー着用','メンコ着用','シャドーロール着用','チークピーシーズ着用','チークピース着用'],
-};
 /* 騎手名に付く減量の記号 */
 export const JOCKEY_MARKS=['★','▲','△','☆','◇'];
 const NAME_OK_RE=/^[\u30A0-\u30FFA-Za-z0-9Ａ-Ｚａ-ｚ０-９]*$/;
@@ -40,19 +38,6 @@ function isHorseRow(line){
   return tokenOk&&FRAME_RE.test(f[1].trim())&&/^\d+$/.test(f[2].trim());
 }
 
-/* 馬名から、一覧にある付記を先頭・末尾から取り除く。取り除くと空になるときは取り除かない */
-function splitName(raw){
-  const byLen=a=>[...a].sort((x,y)=>y.length-x.length);
-  let name=raw;const markers=[];
-  for(let again=true;again;){
-    again=false;
-    const p=byLen(NAME_MARKERS.prefix).find(w=>w&&name.startsWith(w)&&name.length>w.length);
-    if(p){name=name.slice(p.length);markers.push(p);again=true;continue;}
-    const q=byLen(NAME_MARKERS.suffix).find(w=>w&&name.endsWith(w)&&name.length>w.length);
-    if(q){name=name.slice(0,-q.length);markers.push(q);again=true;}
-  }
-  return {name,markers};
-}
 function splitJockey(raw){
   let j=raw;const removed=[];
   while(j.length>1&&JOCKEY_MARKS.includes(j[0])){removed.push(j[0]);j=j.slice(1);}

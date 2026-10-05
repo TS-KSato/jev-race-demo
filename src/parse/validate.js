@@ -1,3 +1,5 @@
+import { didNotRun } from '../derive.js';
+
 /* ---------- STEP1: 読み取り結果の検査（警告の作成） ---------- */
 export function validate(P){
   const W=[],R=P.race||{};
@@ -20,7 +22,10 @@ export function validate(P){
     if(!x.jockey) W.push(`${tag}：騎手が読み取れません`);
     if(x.odds==null) W.push(`${tag}：単勝オッズが読み取れません（発売前・取消の可能性）`);
     if(past.length<4) W.push(`${tag}：過去走が${past.length}件です`);
-    past.forEach(p=>{if(!p.corners) W.push(`${tag}：${p.date} ${p.race} に通過順がありません（海外・地方・直線競馬など）`);});
+    past.forEach(p=>{
+      if(didNotRun(p)) W.push(`${tag}：${p.date} ${p.race} は出走せず（${p.finish}）のため、前走として数えません`);
+      else if(!p.corners) W.push(`${tag}：${p.date} ${p.race} に通過順がありません（海外・地方・直線競馬など）`);
+    });
   });
   return W;
 }
