@@ -11,6 +11,7 @@ import { runStage4, summarizeStage4, isStale } from './stage4.js';
 import { parseResult } from './parse/result.js';
 import { scoreRace } from './score.js';
 import { scoreHtml, warningsHtml } from './scoreview.js';
+import { recordStatus } from './record-status.js';
 import { buildRecord, buildSummaryLine, buildDetailText, formatEvalTime, formatEvalTotal, formatRoundTrip, recordFileName } from './record.js';
 
 const $=id=>document.getElementById(id);
@@ -365,6 +366,7 @@ function refreshFeedback(){
   $('fb-line').value=buildSummaryLine(ctx);
   $('fb-detail').value=buildDetailText(ctx);
   $('fb-dl').disabled=!(J||S4);
+  $('fb-status').innerHTML=esc(recordStatus({hasRecord:!!(J||S4),hasResult:!!RES,scoring:SC}).text);
 }
 async function downloadRecord(){
   if(!D||!(J||S4)) return;

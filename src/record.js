@@ -158,7 +158,7 @@ export function recordFileName(ctx) {
   const times = [ctx.s3?.meta?.at, ...(ctx.s4?.results || []).map(r => r.at)].filter(Boolean).map(t => new Date(t)).filter(d => !isNaN(d));
   const last = times.length ? new Date(Math.max(...times)) : toDate(ctx.now);
   const safe = s => String(s ?? '').replace(/[^\p{L}\p{N}-]/gu, '');
-  return `jev_record_${safe(R.date) || 'race'}_${safe(R.venue)}${R.raceNo ? safe(R.raceNo) + 'R' : ''}_${stamp(last)}.json`;
+  return `jev_record_${safe(R.date) || 'race'}_${safe(R.venue)}${R.raceNo ? safe(R.raceNo) + 'R' : ''}_${stamp(last)}${ctx.result && ctx.scoring && ctx.scoring.ok ? '_scored' : ''}.json`;
 }
 
 /* ---------- 採点の要約項目 ---------- */

@@ -359,3 +359,12 @@ test('baselines：記録の scoring に入り、要約の1行の末尾に 基準
   assert.ok(!buildSummaryLine(ctx({ result, scoring: { ...scoring, baselines: null } })).includes('基準='));
   assert.ok(!buildSummaryLine(ctx({ result, scoring: { ...scoring, baselines: null } })).includes('一致='));
 });
+
+test('記録のファイル名：採点が成功しているときだけ _scored が付く', () => {
+  const base = { s3: s3() };
+  const res = { horses: [] };
+  assert.match(recordFileName(ctx({ ...base, result: res, scoring: { ok: true } })), /^jev_record_2026-03-01_東京11R_\d{8}-\d{6}_scored\.json$/);
+  assert.match(recordFileName(ctx(base)), /\d{6}\.json$/);
+  assert.match(recordFileName(ctx({ ...base, result: res, scoring: { ok: false, reasons: [] } })), /\d{6}\.json$/);
+  assert.match(recordFileName(ctx({ ...base, result: null, scoring: { ok: true } })), /\d{6}\.json$/);
+});
