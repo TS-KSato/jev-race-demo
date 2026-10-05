@@ -7,6 +7,8 @@ import { horseRequest, raceState, raceQuestions } from '../src/requests.js';
 import { RACE_OUTLOOK, HORSE_POSITION } from '../src/contracts.js';
 import { parseResponse } from '../src/jev.js';
 import { outlookFromAnswers } from '../src/score.js';
+import { parseResult } from '../src/parse/result.js';
+import { scoreRace } from '../src/score.js';
 import { buildRecord, buildSummaryLine, buildDetailText, formatEvalTime, formatEvalTotal, stateHash, recordFileName } from '../src/record.js';
 
 const SECRET = 'dummy-pass-not-real-9999';
@@ -281,4 +283,55 @@ test('request (f)：既存のキーは変わらず、request が追加される�
   assert.deepEqual(without(r.stage3), Object.keys(b.stage3).filter(k => k !== 'request'));
   assert.deepEqual(without(r.stage4.results[0]), Object.keys(b.stage4.results[0]).filter(k => k !== 'request'));
   assert.deepEqual(without(r.stage3), ['contract', 'route', 'executedAt', 'sentModel', 'answeredModel', 'stateHash', 'outlook', 'overridden', 'answers', 'usage', 'evaluationTimeMs', 'requestId', 'roundTripMs', 'raw']);
+});
+
+/* ---------- 結果と採点 ---------- */
+const RESULT_TEXT = readFileSync(new URL('./fixtures/result_a.txt', import.meta.url), 'utf8');
+function scored() {
+  const result = parseResult(RESULT_TEXT);
+  const entry = { race: { ...D.race, date: '2031-11-02', venue: '東京', raceNo: 11, distance: 1600, surface: '芝' }, horses: D.horses };
+  const scoring = scoreRace({ entry, stage3: null, stage4: null, result });
+  return { result, scoring };
+}
+const matched = () => {
+  const { result } = scored();
+  const horses = [1, 2, 4, 5, 6, 7].map(n => ({ num: n, name: `馬${n}` }));
+  const scoring = scoreRace({ entry: { race: { date: '2031-11-02', venue: '東京', raceNo: 11, distance: 1600, surface: '芝' }, horses }, result });
+  return { result, scoring };
+};
+
+test('buildRecord：結果と採点を渡すと result・scoring・scoredAt が入る', async () => {
+  const { result, scoring } = matched();
+  assert.equal(scoring.ok, true);
+  const rec = await buildRecord(ctx({ result, scoring, scoredAt: NOW }));
+  assert.equal(rec.result.schema, 'race-result@1');
+  assert.deepEqual(rec.result.warnings, result.warnings);
+  assert.equal(rec.scoring.schema, 'scoring@1');
+  assert.equal(rec.scoredAt, rec.createdAt);
+  assert.equal((await buildRecord(ctx({ result, scoring, scoredAt: new Date(NOW.getTime() + 60000) }))).scoredAt.slice(14, 16), '21');
+  assert.equal(rec.schema, 'jev-demo-record@1');
+});
+
+test('buildRecord：記録に結果ページの本文は入らない', async () => {
+  const { result, scoring } = matched();
+  assert.ok(RESULT_TEXT.includes('発走時刻'));
+  const json = JSON.stringify(await buildRecord(ctx({ result, scoring })));
+  assert.ok(!json.includes('発走時刻'));
+});
+
+test('buildRecord：結果なしでは result・scoring・scoredAt が null で、他のキーは従来どおり', async () => {
+  const rec = await buildRecord(ctx());
+  assert.deepEqual([rec.result, rec.scoring, rec.scoredAt], [null, null, null]);
+  assert.deepEqual(Object.keys(rec), ['schema', 'createdAt', 'page', 'race', 'track', 'warnings', 'userInput', 'stage3', 'stage4', 'result', 'scoring', 'scoredAt']);
+});
+
+test('要約・詳しいテキスト：採点なしは従来どおり、ありは末尾に res= の項目', () => {
+  const base = buildSummaryLine(ctx());
+  assert.ok(!base.includes('res='));
+  const { result, scoring } = matched();
+  const line = buildSummaryLine(ctx({ result, scoring }));
+  assert.ok(line.startsWith(base));
+  assert.match(line.slice(base.length), /^ \| res=formatA 最初=0\/0 最後=0\/0 高確信=0\/0 ハナ=未実行 採点不能=0 警告=\d+$/);
+  assert.ok(!buildDetailText(ctx()).includes('結果と採点'));
+  assert.ok(buildDetailText(ctx({ result, scoring })).includes('【結果と採点】'));
 });

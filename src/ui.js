@@ -8,6 +8,9 @@ import { MODEL_ID, PRICE, buildRequest, checkLimits, parseResponse, estimateCost
 import { paceLabels } from './contracts.js';
 import { callRelay, isRelayAvailable } from './client.js';
 import { runStage4, summarizeStage4, isStale } from './stage4.js';
+import { parseResult } from './parse/result.js';
+import { scoreRace } from './score.js';
+import { scoreHtml, warningsHtml } from './scoreview.js';
 import { buildRecord, buildSummaryLine, buildDetailText, formatEvalTime, formatEvalTotal, formatRoundTrip, recordFileName } from './record.js';
 
 const $=id=>document.getElementById(id);
@@ -20,6 +23,7 @@ let JM=null; // J の実行方法。{method:'api',at:ISO文字列} または {me
 let S3=null; // 画面に出している STEP3 の state と questions（中継に渡す元データ）
 let gen=0,running=false,running4=false; // 出馬表を読み取り直すたびに gen を進め、古い実行の応答を捨てる
 let S4=null; // STEP4 の全頭実行の結果 {results,usedOutlook,aborted,cancelled}。メモリ上だけに持つ
+let RES=null,SC=null,SCAT=null,scGen=0; // 結果ページの読み取り結果・採点・採点日時。メモリ上だけに持つ
 let cancel4=false,progress4=''; // 中止の要求と、進捗の表示文
 const OV_NAMES={leader:'ハナ',battle:'先行争い',pace:'ペース'};
 function overrides(){
@@ -72,7 +76,7 @@ function cardHtml(c,ovVal){
 function renderJ(){
   setBlankLabels();
   const box=$('j-out');
-  if(!J){box.innerHTML='';refreshFeedback();return;}
+  if(!J){box.innerHTML='';rescore();refreshFeedback();return;}
   const ov=overrides(),res=outlookFromAnswers(J,D.horses,ov);
   let h=describeAll(J).map(c=>cardHtml(c,res.overridden.includes(c.ov)?ov[c.ov]:null)).join('');
   h+='<p class="desc">振り分けは確率の集中度による目安です。答えの正しさを保証するものではありません。</p>';
@@ -89,6 +93,7 @@ function renderJ(){
   <b>概算費用</b><span>${fmtCost(estimateCostUsd(J.inputTokens))}（単価の確認日：${esc(PRICE.checkedOn)}）</span></div>`;
   if(m&&m!==MODEL_ID) h+=`<div class="warn">Playground では別名（jev-latest など）で実行するため、答えた版が固定した版（${esc(MODEL_ID)}）と異なる場合があります。記録は答えた版で行います。</div>`;
   box.innerHTML=h;
+  rescore();
   refreshFeedback();
 }
 function loadAnswers(){loadAnswersFrom($('j-src').value,{method:'paste'});}
@@ -122,8 +127,9 @@ function afterParse(){
   J=null;JM=null;E3=null;$('j-src').value='';$('j-msg').innerHTML='';
   gen++;setRunning(false);$('x-status').textContent='';
   S4=null;running4=false;cancel4=false;progress4='';
+  RES=null;SC=null;SCAT=null;scGen++;$('res-msg').innerHTML='';$('res-out').innerHTML='';
   renderS1();renderS2();renderS3();renderS4();
-  ['s2','s3','s4','sfb'].forEach(id=>$(id).classList.remove('dim'));
+  ['s2','s3','s4','sfb','s5'].forEach(id=>$(id).classList.remove('dim'));
 }
 function renderS1(){
   const R=P.race,T=R.track||{};
@@ -190,6 +196,7 @@ function refreshControls(){
   $('x-pass').disabled=!ok||busy;$('x-run').disabled=!ok||busy;
   $('x4-run').disabled=!ok||busy||!hasPw||!D;
   $('x4-retry').disabled=!ok||busy||!hasPw||!D;
+  $('res-run').disabled=!D;
   $('x4-cancel').hidden=!running4;
   $('x4-note').textContent=!ok?'このページでは実行できません。Netlify の URL を使うか、Playground に貼り付けてください。':!hasPw?'合言葉を入力してください（STEP3 の合言葉欄と共通です）。':'';
 }
@@ -278,6 +285,7 @@ function renderStage4(){
   const box=$('x4-out');
   if(!D||!S4){
     box.innerHTML=''; $('x4-retry').hidden=true;
+    rescore();
     refreshFeedback();
     return;
   }
@@ -304,6 +312,7 @@ function renderStage4(){
   if(m.excludedCount) h+=`<p class="desc">トークン数がない ${m.excludedCount} 頭は、トークン数と費用の集計に含まれていません。</p>`;
   box.innerHTML=h;
   $('x4-retry').hidden=failedNums().length===0;
+  rescore();
   refreshFeedback();
 }
 function downloadAll(){
@@ -314,12 +323,35 @@ function downloadAll(){
   a.href=u;a.download=`jev_step4_${D.race.date||'race'}.json`;document.body.appendChild(a);a.click();a.remove();
   setTimeout(()=>URL.revokeObjectURL(u),1000);
 }
+/* ---------- STEP5：結果の読み取りと採点 ---------- */
+function runResult(){
+  if(!D) return;
+  const msg=$('res-msg');msg.innerHTML='';
+  let r;
+  try{r=parseResult($('res-src').value);}
+  catch(e){RES=null;SC=null;SCAT=null;scGen++;msg.innerHTML=`<div class="err">${esc(e.message)}</div>`;$('res-out').innerHTML='';refreshFeedback();return;}
+  RES=r;msg.innerHTML=warningsHtml(r.warnings);
+  rescore();
+}
+// RES があるとき、記録と同じ stage3・stage4 で採点をやり直して表示を更新する
+async function rescore(){
+  if(!RES||!D||!P) return;
+  const my=++scGen,res=RES;
+  const base={...feedbackCtx(),result:null,scoring:null,scoredAt:null};
+  const rec=await buildRecord(base);
+  if(my!==scGen) return;
+  SC=scoreRace({entry:{race:D.race,horses:D.horses},stage3:rec.stage3,stage4:rec.stage4,result:res});
+  SCAT=new Date();
+  $('res-out').innerHTML=scoreHtml(SC,{stage3:rec.stage3,result:res});
+  refreshFeedback();
+}
 /* ---------- フィードバック用のコピーと記録のダウンロード ---------- */
 function feedbackCtx(){
   const f=$('fb-blind').value;
   return {now:new Date(),host:location.hostname,userAgent:navigator.userAgent,race:D.race,horses:D.horses,warnings:P.warnings,
     userInput:{blind:f,memo:$('fb-memo').value},
     s3:J?{parsed:J,meta:JM,state:S3.state,overrides:overrides(),raw:JM.raw}:null,s3Error:J?null:E3,
+    result:RES,scoring:SC,scoredAt:SCAT,
     s4:S4?{results:S4.results,usedOutlook:S4.usedOutlook,usedOverridden:S4.usedOverridden,aborted:S4.aborted,cancelled:S4.cancelled,
       states:Object.fromEntries(D.horses.map(h=>[h.num,horseRequest(D,h,S4.usedOutlook).state]))}:null};
 }
@@ -349,4 +381,4 @@ $('x-pass').addEventListener('input',refreshControls);
 refreshControls();
 ['o-lead','o-cont','o-pace'].forEach(id=>$(id).addEventListener('change',renderJ));
 ['fb-blind','fb-memo'].forEach(id=>{$(id).addEventListener('input',refreshFeedback);$(id).addEventListener('change',refreshFeedback);});
-Object.assign(window,{runStep3,runStep4,cancelStep4,run,rerun,loadAnswers,renderS4,downloadAll,downloadRecord,copy,$});
+Object.assign(window,{runResult,runStep3,runStep4,cancelStep4,run,rerun,loadAnswers,renderS4,downloadAll,downloadRecord,copy,$});

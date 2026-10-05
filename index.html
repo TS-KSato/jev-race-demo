@@ -140,8 +140,12 @@ code{background:var(--pn2);padding:0 4px;border-radius:4px}
 </section>
 
 <section class="step dim" id="s5">
-<h2><span class="badge">STEP 5</span>結果の表示と採点<span class="who">次の段階で追加</span></h2>
-<p class="desc">APIでの自動実行、確率と確信度の表示、自動処理と要確認の振り分け、実際の通過順との照合による一致率を、次の段階で追加します。</p>
+<h2><span class="badge">STEP 5</span>結果の表示と採点<span class="who">コード</span></h2>
+<p class="desc">レース後に、JRA の結果ページのテキストを貼り付けると、各馬の最初・最後のコーナーの位置と、ハナを切った馬を、STEP3・STEP4 の答えと照らして採点します。ペースと先行争いは、正解がないので採点せず、結果の事実を並べて表示します。</p>
+<textarea id="res-src" rows="8" placeholder="結果ページのテキストを貼り付け"></textarea>
+<div class="row"><button id="res-run" onclick="runResult()" disabled>結果を読み取って採点</button></div>
+<div id="res-msg"></div>
+<div id="res-out"></div>
 </section>
 
 </main>
