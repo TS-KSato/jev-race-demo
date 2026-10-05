@@ -142,7 +142,7 @@ function renderS1(){
   <b>芝の状態</b><span>${esc(T.turfNote||'—')}</span></div>`;
   h+=`<div class="lbl">出走馬（${P.horses.length}頭）</div><div class="tbl"><table><thead><tr><th>枠</th><th>馬番</th><th>馬名</th><th>人気</th><th>単勝</th><th>斤量</th><th>騎手</th><th>馬体重</th><th>過去走（日付・レース・距離・着順/頭数・[通過順]・上がり3F）</th></tr></thead><tbody>`;
   P.horses.forEach(x=>{
-    h+=`<tr><td>${x.frame}</td><td>${x.num}</td><td>${esc(x.name)}${x.blinker?' <span class="muted">B</span>':''}</td><td>${x.pop??'—'}</td><td>${x.odds??'—'}</td><td>${x.carried??'—'}</td><td>${esc(x.jockey||'—')}</td><td>${x.bodyWeight??'—'}${x.bodyWeightDiff?'('+esc(x.bodyWeightDiff)+')':''}</td>
+    h+=`<tr><td>${x.frame}</td><td>${x.num}</td><td>${esc(x.name)}${x.blinker?' <span class="muted">B</span>':''}${(x.markers&&x.markers.length)?' <span class="muted">'+esc(x.markers.join('・'))+'</span>':''}</td><td>${x.pop??'—'}</td><td>${x.odds??'—'}</td><td>${x.carried??'—'}</td><td>${esc(x.jockey||'—')}</td><td>${x.bodyWeight??'—'}${x.bodyWeightDiff?'('+esc(x.bodyWeightDiff)+')':''}</td>
     <td style="white-space:normal;min-width:420px">${(x.past||[]).map(p=>`${esc((p.date||'').slice(2))} ${esc(p.race)} ${p.dist||'?'}${esc(p.surface||'')} ${p.finish??'?'}着/${p.field??'?'}頭 [${p.corners?p.corners.join('-'):'—'}] ${p.last3f??''}`).join('<br>')}</td></tr>`;
   });
   $('s1out').innerHTML=h+'</tbody></table></div>';
