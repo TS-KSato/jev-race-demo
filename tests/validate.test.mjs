@@ -28,7 +28,7 @@ test('validate：1番の馬に odds を入れると警告が17件になる', () 
 
 test('validate：race.track に weather があれば馬場状態の警告が消える', () => {
   const { P } = roundTrip();
-  const has = w => w.startsWith('馬場状態（「天候：」以降）');
+  const has = w => w.startsWith('馬場状態（「天候：」');
   P.race.track = {};
   assert.ok(validate(P).some(has));
   P.race.track = { weather: '晴' };

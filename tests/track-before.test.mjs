@@ -49,7 +49,7 @@ test('当日の形式の State には announced_at を含めない', () => {
 test('馬場状態がない出馬表では既存の警告が出る', () => {
   const P = parse(basic);
   assert.deepStrictEqual(P.race.track, {});
-  assert.equal(P.warnings[0], '馬場状態（「天候：」以降）が見つかりません。馬場の情報なしで進みます');
+  assert.equal(P.warnings[0], '馬場状態（「天候：」または「芝のクッション値」以降）が見つかりません。馬場の情報なしで進みます');
 });
 
 test('一部の項目がない末尾：個別の警告が出て、読み取れた項目は残る', () => {

@@ -22,7 +22,7 @@ test('読み取り：レースと馬の数', () => {
 
 test('読み取り：警告', () => {
   assert.equal(P.warnings.length, 18);
-  assert.equal(P.warnings[0], '馬場状態（「天候：」以降）が見つかりません。馬場の情報なしで進みます');
+  assert.equal(P.warnings[0], '馬場状態（「天候：」または「芝のクッション値」以降）が見つかりません。馬場の情報なしで進みます');
   assert.equal(horse(4).past.length, 3);
   assert.ok(P.warnings.includes('4番 テストデルタ：過去走が3件です'));
 });
