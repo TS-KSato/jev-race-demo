@@ -138,6 +138,22 @@ export function summaryHtml(scoring) {
   return h + '</tbody></table></div>';
 }
 
+/* ---------- 基準との比較 ---------- */
+export const NOTE_BASELINE = '基準は、判定の難しさを測るための目安です。1レースの結果なので、差の大きさは判断できません。';
+export function baselinesHtml(scoring) {
+  const B = scoring.baselines, T = scoring.summary?.total, C = scoring.summary?.by_corner;
+  if (!B || !T || !C) return '';
+  const cells = (f, t, x) => `<td>${formatRate(f.correct, f.scored)}</td><td>${formatRate(t.correct, t.scored)}</td><td>${formatRate(x.correct, x.scored)}</td>`;
+  const row = (label, a, b, c) => `<tr><td>${label}</td><td>${formatRate(a.correct, a.scored)}</td><td>${formatRate(b.correct, b.scored)}</td><td>${formatRate(c.correct, c.scored)}</td></tr>`;
+  const A = B.always_largest, L = B.last_run, J = B.jev_same_items;
+  return `<div class="lbl">基準との比較</div><div class="tbl"><table><thead><tr><th></th><th>${CORNER_LABEL.first_corner}</th><th>${CORNER_LABEL.last_corner}</th><th>合わせて</th></tr></thead><tbody>`
+    + row('Jev（全体）', C.first_corner, C.last_corner, T)
+    + row(`常に最も広い区分（${zone(A.zone)}）`, A.first_corner, A.last_corner, A.total)
+    + row('前走と同じ区分', L.first_corner, L.last_corner, L.total)
+    + row('Jev（前走ありの項目に限る）', J.first_corner, J.last_corner, J.total)
+    + `</tbody></table></div><p class="desc">前走の区分なし：${esc(L.total.no_data)}件（対象外）</p><p class="desc">${esc(NOTE_BASELINE)}</p>`;
+}
+
 /* ---------- 全体 ---------- */
 export function scoreHtml(scoring, { stage3 = null, result = null } = {}) {
   if (!scoring) return '';
@@ -146,7 +162,7 @@ export function scoreHtml(scoring, { stage3 = null, result = null } = {}) {
   }
   let h = '';
   if (scoring.warnings?.length) h += `<div class="warn">採点時の注意（${scoring.warnings.length}件）<ul>${scoring.warnings.map(w => `<li>${esc(w.code)}：${esc(w.message)}</li>`).join('')}</ul></div>`;
-  return h + factsHtml(scoring, result) + paceHtml(scoring, stage3) + leaderHtml(scoring, result) + horsesHtml(scoring, result) + summaryHtml(scoring);
+  return h + factsHtml(scoring, result) + paceHtml(scoring, stage3) + leaderHtml(scoring, result) + horsesHtml(scoring, result) + summaryHtml(scoring) + baselinesHtml(scoring);
 }
 
 /* 読み取りの警告の一覧（コードとメッセージ） */

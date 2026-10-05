@@ -165,6 +165,11 @@ function leaderMark(L) {
   if (L.status === 'scored') return L.correct ? '○' : '×';
   return LEADER_MARK[L.status] ?? '採点不能';
 }
+function baselineItem(S) {
+  const B = S.baselines;
+  if (!B || !B.always_largest.total.scored) return []; // 採点した項目がなければ足さない
+  return [`基準=${ZL[B.always_largest.zone] ?? B.always_largest.zone}${rate(B.always_largest.total.correct, B.always_largest.total.scored)} 前走${rate(B.last_run.total.correct, B.last_run.total.scored)}`];
+}
 function scoringItems(ctx) {
   const fmt = `res=format${ctx.result.source_format ?? '?'}`, W = (ctx.result.warnings || []).length, S = ctx.scoring;
   if (!S.ok) return [fmt, '採点なし(race_mismatch)', `警告=${W}`];
@@ -244,7 +249,7 @@ export function buildSummaryLine(ctx) {
   } else parts.push('S4=未実行');
   const errs = errorsOf(ctx);
   parts.push(`err=${errs.length ? errs.join(';') : 'なし'}`);
-  if (ctx.result && ctx.scoring) parts.push(scoringItems(ctx).join(' '));
+  if (ctx.result && ctx.scoring) parts.push([...scoringItems(ctx), ...baselineItem(ctx.scoring)].join(' '));
   return oneLine(parts.join(' | '));
 }
 
