@@ -35,7 +35,7 @@ const item = (r, n, c) => r.horses.find(h => h.number === n)[c];
 
 test('(a) 形式 A：馬ごと・集計・取消', () => {
   const r = run();
-  assert.equal(r.schema, 'scoring@1');
+  assert.equal(r.schema, 'scoring@2');
   assert.equal(r.ok, true);
   assert.deepEqual(r.horses.map(h => h.number), [1, 2, 4, 5, 6, 7]);
   const fc = r.summary.by_corner.first_corner, lc = r.summary.by_corner.last_corner;

@@ -1,6 +1,6 @@
 import { pad } from './util.js';
 import { paceLabels } from './contracts.js';
-import { zoneRanges } from './derive.js';
+import { zoneRanges, didNotRun } from './derive.js';
 
 /* 振り分けの閾値。モデルの版ごとに持つ（暫定。design.md 7.2） */
 const T_1_13_0 = { noul: { highAtOrAbove: 0.9, highAtOrBelow: 0.1 }, choiceScore: { highAtOrAbove: 0.9, middleAtOrAbove: 0.5 } };
@@ -140,7 +140,7 @@ export function outlookFromValues({ leader, battle, pace } = {}) {
 }
 
 /* ---------- 結果と判定を照らす採点（scoring@1）。画面・記録には触れない ---------- */
-export const SCORING_SCHEMA = 'scoring@1';
+export const SCORING_SCHEMA = 'scoring@2';
 
 /* 区分の順序（先頭→後方）とキー・表示名の対応は derive.js の zoneRanges から取る（十分な頭数なら4区分すべてが出る） */
 const ZONES = zoneRanges(18);
@@ -188,6 +188,7 @@ function scoreItem(corner, answer, actualInfo, num, warnings) {
 
 const failResult = (reasons, warnings, nEntry, nResult) => ({
   schema: SCORING_SCHEMA, ok: false, reasons, warnings, n_entry: nEntry, n_result: nResult, horses: [], leader: null, summary: null, facts: null, baselines: null,
+  contracts: null, strata: null,
 });
 
 /* 簡単な基準（Jev が何を上乗せしているかを測る目安。予想の方法ではない）。Jev と同じ項目だけを対象にする */
@@ -230,6 +231,57 @@ function computeBaselines(targets, horses, nEntry) {
     last_run: { ...B, total: tot(B) },
     jev_same_items: { ...J, total: tot(J) },
   };
+}
+
+/* ---------- 前走との一致と層ごとの正答率（層の定義は結果を見る前に固定した。調整しない） ---------- */
+export const STRATA_DEFINITIONS = {
+  item: '項目＝馬×コーナー（first_corner / last_corner）。集計に使うのは status が scored（Jev の答えがあり、実際の区分が確定している）の項目だけ',
+  last_run: '前走の区分＝過去走（新しい順）のうち、そのコーナーの区分がある最も新しい走の区分。なければ「前走なし」',
+  run_count: '実質走数＝取消・除外を除いた過去走の数（facts.ranCount。なければ past から数える）。0〜2 は「0-2」、3 は「3」、4 以上は「4+」',
+  variety: '通過順のばらつき＝そのコーナーの区分がある過去走を集め、3走未満は「na」、区分が1種類だけは「same」、2種類以上は「varied」。コーナー別に定義する。層ごとの馬の数は first_corner の層で数える',
+};
+const ranCountOf = h => (Number.isInteger(h?.facts?.ranCount) ? h.facts.ranCount : (h?.past ?? []).filter(p => !didNotRun(p)).length);
+const runCountStratum = n => (n <= 2 ? '0-2' : n === 3 ? '3' : '4+');
+function varietyStratum(horse, corner) {
+  const zs = (horse?.past ?? []).map(p => p?.[ZONE_FIELD[corner]]).filter(Boolean);
+  if (zs.length < 3) return 'na';
+  return new Set(zs).size === 1 ? 'same' : 'varied';
+}
+const emptyStratum = () => ({ horses: 0, items: 0, jev_correct: 0, always_largest_correct: 0, with_last_run: { items: 0, jev_correct: 0, last_run_correct: 0 } });
+const emptyAgreement = () => ({ agree: { items: 0, correct: 0 }, deviate: { items: 0, jev_correct: 0, last_run_correct: 0 }, no_last_run: { items: 0 } });
+
+function computeStrata(targets, horses, nEntry) {
+  const largest = largestZone(nEntry);
+  const agreement = { total: emptyAgreement(), first_corner: emptyAgreement(), last_corner: emptyAgreement() };
+  const byRun = { '0-2': emptyStratum(), '3': emptyStratum(), '4+': emptyStratum() };
+  const byVar = { same: emptyStratum(), varied: emptyStratum(), na: emptyStratum() };
+  for (const h of targets) {
+    byRun[runCountStratum(ranCountOf(h))].horses++;
+    byVar[varietyStratum(h, 'first_corner')].horses++;
+    const row = horses.find(x => x.number === h.num);
+    for (const c of CORNERS) {
+      const item = row[c];
+      if (item.status !== 'scored') continue;
+      const lr = lastRunZone(h, c);
+      const strata = [byRun[runCountStratum(ranCountOf(h))], byVar[varietyStratum(h, c)]];
+      for (const S of strata) {
+        S.items++;
+        if (item.correct) S.jev_correct++;
+        if (largest === item.actual) S.always_largest_correct++;
+        if (lr !== null) {
+          S.with_last_run.items++;
+          if (item.correct) S.with_last_run.jev_correct++;
+          if (lr === item.actual) S.with_last_run.last_run_correct++;
+        }
+      }
+      for (const A of [agreement[c], agreement.total]) {
+        if (lr === null) A.no_last_run.items++;
+        else if (item.predicted === lr) { A.agree.items++; if (item.correct) A.agree.correct++; }
+        else { A.deviate.items++; if (item.correct) A.deviate.jev_correct++; if (lr === item.actual) A.deviate.last_run_correct++; }
+      }
+    }
+  }
+  return { definitions: { ...STRATA_DEFINITIONS }, agreement, by_run_count: byRun, by_variety: byVar };
 }
 
 export function scoreRace({ entry, stage3 = null, stage4 = null, result } = {}) {
@@ -316,5 +368,7 @@ export function scoreRace({ entry, stage3 = null, stage4 = null, result } = {}) 
     summary: { total, by_corner: byCorner, by_level: byLevel, confusion, high_confidence_misses: misses },
     facts: { pace: result.pace, race: result.race },
     baselines: computeBaselines(targets, horses, nEntry),
+    contracts: { outlook: stage3?.contract ?? null, position: stage4?.contract ?? null },
+    strata: computeStrata(targets, horses, nEntry),
   };
 }

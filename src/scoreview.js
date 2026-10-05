@@ -1,6 +1,6 @@
 /*
  * 採点の表示用の組み立て。HTML の文字列と整形だけを作り、DOM・ネットワーク・保存領域には触れない。
- * 入力：scoreRace の返り値（scoring@1）、記録の stage3、parseResult の返り値（着順と馬名のため）。
+ * 入力：scoreRace の返り値（scoring@2）、記録の stage3、parseResult の返り値（着順と馬名のため）。
  */
 import { levelLabel } from './score.js';
 
@@ -154,6 +154,35 @@ export function baselinesHtml(scoring) {
     + `</tbody></table></div><p class="desc">前走の区分なし：${esc(L.total.no_data)}件（対象外）</p><p class="desc">${esc(NOTE_BASELINE)}</p>`;
 }
 
+/* ---------- 前走との一致と層ごとの正答率 ---------- */
+export const NOTE_STRATA = '層ごとの件数は少なく、判定は互いに独立でないため、差の有無は判定できません。件数が少ない層は参考値です。';
+const STRATUM_LABEL = { '0-2': '0〜2走', '3': '3走', '4+': '4走以上', same: '区分が1種類', varied: '区分が2種類以上', na: '対象外（3走未満）' };
+export function strataRows(strata) {
+  const mk = (label, S) => ({ label, horses: S.horses, items: S.items, jev: [S.jev_correct, S.items], largest: [S.always_largest_correct, S.items],
+    jevLast: [S.with_last_run.jev_correct, S.with_last_run.items], lastRun: [S.with_last_run.last_run_correct, S.with_last_run.items] });
+  return {
+    run_count: Object.keys(strata.by_run_count).map(k => mk(STRATUM_LABEL[k] ?? k, strata.by_run_count[k])),
+    variety: Object.keys(strata.by_variety).map(k => mk(STRATUM_LABEL[k] ?? k, strata.by_variety[k])),
+  };
+}
+function strataTable(title, rows) {
+  let h = `<div class="lbl">${esc(title)}</div><div class="tbl"><table><thead><tr><th>層</th><th>馬の数</th><th>項目数</th><th>Jev</th><th>常に最も広い区分</th><th>Jev（前走ありの項目）</th><th>前走と同じ区分（同じ項目）</th></tr></thead><tbody>`;
+  for (const r of rows) h += `<tr><td>${esc(r.label)}</td><td>${esc(r.horses)}</td><td>${esc(r.items)}</td><td>${formatRate(...r.jev)}</td><td>${formatRate(...r.largest)}</td><td>${formatRate(...r.jevLast)}</td><td>${formatRate(...r.lastRun)}</td></tr>`;
+  return h + '</tbody></table></div>';
+}
+export function strataHtml(scoring) {
+  const X = scoring?.strata;
+  if (!X) return '';
+  const A = X.agreement.total, label = v => (v ? esc(v) : '不明');
+  let h = '<div class="lbl">前走との一致と層ごとの正答率</div><div class="tbl"><table><thead><tr><th>Jev の答え</th><th>項目数</th><th>Jev の正解</th><th>前走の区分の正解</th></tr></thead><tbody>'
+    + `<tr><td>前走と同じ区分</td><td>${esc(A.agree.items)}</td><td>${formatRate(A.agree.correct, A.agree.items)}</td><td>—</td></tr>`
+    + `<tr><td>前走と違う区分</td><td>${esc(A.deviate.items)}</td><td>${formatRate(A.deviate.jev_correct, A.deviate.items)}</td><td>${formatRate(A.deviate.last_run_correct, A.deviate.items)}</td></tr>`
+    + `<tr><td>前走の区分なし</td><td>${esc(A.no_last_run.items)}</td><td>—</td><td>—</td></tr></tbody></table></div>`;
+  const R = strataRows(X);
+  h += strataTable('実質走数別', R.run_count) + strataTable('通過順のばらつき別', R.variety);
+  return h + `<p class="desc">${esc(NOTE_STRATA)}</p><p class="desc">契約：${label(scoring.contracts?.outlook)} / ${label(scoring.contracts?.position)}</p>`;
+}
+
 /* ---------- 全体 ---------- */
 export function scoreHtml(scoring, { stage3 = null, result = null } = {}) {
   if (!scoring) return '';
@@ -162,7 +191,7 @@ export function scoreHtml(scoring, { stage3 = null, result = null } = {}) {
   }
   let h = '';
   if (scoring.warnings?.length) h += `<div class="warn">採点時の注意（${scoring.warnings.length}件）<ul>${scoring.warnings.map(w => `<li>${esc(w.code)}：${esc(w.message)}</li>`).join('')}</ul></div>`;
-  return h + factsHtml(scoring, result) + paceHtml(scoring, stage3) + leaderHtml(scoring, result) + horsesHtml(scoring, result) + summaryHtml(scoring) + baselinesHtml(scoring);
+  return h + factsHtml(scoring, result) + paceHtml(scoring, stage3) + leaderHtml(scoring, result) + horsesHtml(scoring, result) + summaryHtml(scoring) + baselinesHtml(scoring) + strataHtml(scoring);
 }
 
 /* 読み取りの警告の一覧（コードとメッセージ） */

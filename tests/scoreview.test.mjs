@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { scoreRace } from '../src/score.js';
 import { parseResult } from '../src/parse/result.js';
-import { formatRate, scoreHtml, paceHtml, summaryHtml } from '../src/scoreview.js';
+import { formatRate, scoreHtml, paceHtml, summaryHtml, strataHtml, NOTE_STRATA } from '../src/scoreview.js';
 
 const readResult = name => parseResult(readFileSync(new URL(`./fixtures/${name}`, import.meta.url), 'utf8'));
 const ZK = ['front', 'forward', 'mid', 'rear'];
@@ -116,4 +116,24 @@ test('基準 (b) 注意書き', () => {
 test('基準 (c) ok:false の採点には節が出ない', () => {
   const sc = scoreRace({ entry: entryA(undefined, { raceNo: 12 }), stage3: stage3(), stage4: stage4A(), result: resultA });
   assert.ok(!scoreHtml(sc, { result: resultA }).includes('基準との比較'));
+});
+
+test('前走との一致と層ごとの正答率：区画・注記・契約の行・失敗時は出さない', () => {
+  const sc = { ...scoringA(), contracts: { outlook: 'race-outlook@2', position: null } };
+  const h = strataHtml(sc), A = sc.strata.agreement.total;
+  assert.ok(h.includes('前走との一致と層ごとの正答率'));
+  assert.ok(h.includes('実質走数別') && h.includes('通過順のばらつき別'));
+  assert.ok(h.includes(formatRate(A.agree.correct, A.agree.items)) || A.agree.items === 0);
+  assert.ok(h.includes(NOTE_STRATA));
+  assert.ok(h.includes('契約：race-outlook@2 / 不明'));
+  assert.ok(scoreHtml(sc, { stage3: stage3(), result: resultA }).indexOf('前走との一致') > scoreHtml(sc, { stage3: stage3(), result: resultA }).indexOf('基準との比較'));
+  assert.equal(strataHtml({ ...sc, strata: null }), '');
+  assert.ok(!scoreHtml({ ok: false, reasons: [], strata: null }).includes('層ごとの正答率'));
+});
+
+test('前走との一致の区画：悪意のある契約ラベルをエスケープする', () => {
+  const sc = { ...scoringA(), contracts: { outlook: '<img src=x onerror=alert(1)>', position: '"><script>' } };
+  const h = strataHtml(sc);
+  assert.ok(!h.includes('<img') && !h.includes('<script>'));
+  assert.ok(h.includes('&lt;img'));
 });

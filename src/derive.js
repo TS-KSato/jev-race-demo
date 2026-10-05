@@ -18,7 +18,7 @@ export function didNotRun(p){return !!p&&(p.finish==='取消'||p.finish==='除�
 
 /* 馬番の内外（馬番を頭数で3等分する。値が不正なら null） */
 export function gatePosition(num,field){
-  if(!Number.isInteger(num)||!Number.isInteger(field)||num<1||field<1||num>field) return null;
+  if(!Number.isInteger(num)||!Number.isInteger(field)||num<1||field<3||num>field) return null;
   return 3*num<=field?'内':3*num<=2*field?'中':'外';
 }
 

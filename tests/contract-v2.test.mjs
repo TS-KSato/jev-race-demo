@@ -55,8 +55,10 @@ test('gatePosition の境界', () => {
   assert.equal(gatePosition(7, 18), '中');
   assert.equal(gatePosition(12, 18), '中');
   assert.equal(gatePosition(13, 18), '外');
-  // 仕様の式（3*num<=field）どおりでは 1頭立ての1番は '外' になる。作業指示の例（'内'）とは食い違う。完了報告に記載
-  assert.equal(gatePosition(1, 1), '外');
+  // 3区分に分けるには3頭以上が要るので、3頭未満は null
+  assert.equal(gatePosition(1, 1), null);
+  assert.equal(gatePosition(1, 2), null);
+  assert.deepEqual([1, 2, 3].map(n => gatePosition(n, 3)), ['内', '中', '外']);
   for (const [n, f] of [[0, 18], [-1, 18], [19, 18], [null, 18], [3, null], [undefined, 18], [1.5, 18]]) assert.equal(gatePosition(n, f), null, `${n},${f}`);
 });
 
