@@ -90,3 +90,30 @@ test('(g) race_mismatch：採点しないメッセージと違う項目', () => 
   assert.ok(h.includes('レース番号'));
   assert.ok(!h.includes('集計'));
 });
+
+/* ---------- 基準との比較 ---------- */
+const PAST_A = { 2: ['先頭', '先頭'], 4: ['中団', '後方'], 5: ['中団', '中団'], 1: ['好位', '中団'], 7: [null, '中団'], 6: ['後方', null] };
+const scoringBase = () => {
+  const entry = entryA();
+  for (const h of entry.horses) if (PAST_A[h.num]) h.past = [{ firstZone: PAST_A[h.num][0], lastZone: PAST_A[h.num][1] }];
+  return scoreRace({ entry, stage3: stage3(), stage4: stage4A(), result: resultA });
+};
+
+test('基準 (a) 基準との比較の節に各基準の件数と対象外の件数が出る', () => {
+  const h = scoreHtml(scoringBase(), { stage3: stage3(), result: resultA });
+  assert.ok(h.includes('基準との比較'));
+  assert.ok(h.includes('4/12（33%）'));
+  assert.ok(h.includes('7/10（70%）'));
+  assert.ok(h.includes('8/10（80%）'));
+  assert.ok(h.includes('前走の区分なし：2件'));
+  assert.ok(h.includes('常に最も広い区分（中団）'));
+});
+
+test('基準 (b) 注意書き', () => {
+  assert.ok(scoreHtml(scoringBase(), { result: resultA }).includes('差の大きさは判断できません'));
+});
+
+test('基準 (c) ok:false の採点には節が出ない', () => {
+  const sc = scoreRace({ entry: entryA(undefined, { raceNo: 12 }), stage3: stage3(), stage4: stage4A(), result: resultA });
+  assert.ok(!scoreHtml(sc, { result: resultA }).includes('基準との比較'));
+});

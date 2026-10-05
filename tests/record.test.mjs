@@ -335,3 +335,21 @@ test('要約・詳しいテキスト：採点なしは従来どおり、あり�
   assert.ok(!buildDetailText(ctx()).includes('結果と採点'));
   assert.ok(buildDetailText(ctx({ result, scoring })).includes('【結果と採点】'));
 });
+
+test('baselines：記録の scoring に入り、要約の1行の末尾に 基準= が付く。null や採点0件では付かない', async () => {
+  const { result } = scored();
+  const horses = [1, 2, 4, 5, 6, 7].map(n => ({ num: n, name: `馬${n}`, past: [{ firstZone: '中団', lastZone: '中団' }] }));
+  const entry = { race: { date: '2031-11-02', venue: '東京', raceNo: 11, distance: 1600, surface: '芝' }, horses };
+  const sel = key => ({ kind: 'select', choice: key, level: 'high', confidence: 0.9,
+    probabilities: ['front', 'forward', 'mid', 'rear'].map(k => ({ key: k, label: k, probability: k === key ? 0.7 : 0.1 })) });
+  const stage4 = { results: horses.map(h => ({ num: h.num, name: h.name, status: 'ok', firstCorner: sel('mid'), lastCorner: sel('mid') })) };
+  const scoring = scoreRace({ entry, stage3: null, stage4, result });
+  assert.ok(scoring.baselines);
+  const rec = await buildRecord(ctx({ result, scoring, scoredAt: NOW }));
+  assert.deepEqual(rec.scoring.baselines, scoring.baselines);
+  assert.notEqual(rec.scoring.baselines, scoring.baselines);
+  const B = scoring.baselines;
+  const line = buildSummaryLine(ctx({ result, scoring }));
+  assert.ok(line.endsWith(` 基準=中団${B.always_largest.total.correct}/${B.always_largest.total.scored} 前走${B.last_run.total.correct}/${B.last_run.total.scored}`));
+  assert.ok(!buildSummaryLine(ctx({ result, scoring: { ...scoring, baselines: null } })).includes('基準='));
+});

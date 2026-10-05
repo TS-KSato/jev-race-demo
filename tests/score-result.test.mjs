@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { scoreRace } from '../src/score.js';
+import { zoneRanges } from '../src/derive.js';
 import { parseResult } from '../src/parse/result.js';
 
 const readResult = name => parseResult(readFileSync(new URL(`./fixtures/${name}`, import.meta.url), 'utf8'));
@@ -145,4 +146,60 @@ test('(h) 頭数が違えば starters_changed', () => {
   assert.match(w.message, /7頭/);
   assert.match(w.message, /6頭/);
   assert.ok(!run({ entry: { ...entryA(), horses: entryA().horses.filter(h => h.num !== 3) } }).warnings.some(x => x.code === 'starters_changed'));
+});
+
+/* ---------- baselines（簡単な基準との比較） ---------- */
+const PAST_A = { 2: ['先頭', '先頭'], 4: ['中団', '後方'], 5: ['中団', '中団'], 1: ['好位', '中団'], 7: [null, '中団'], 6: ['後方', null] };
+const entryWithPast = (over = {}) => {
+  const e = entryA(over);
+  for (const h of e.horses) if (PAST_A[h.num]) h.past = [{ firstZone: PAST_A[h.num][0], lastZone: PAST_A[h.num][1] }];
+  return e;
+};
+const runB = (over = {}) => scoreRace({ entry: entryWithPast(), stage3: lead('h05'), stage4: stage4A(), result: resultA, ...over });
+
+test('baselines (a) always_largest：7頭では中団。最初 2/6、最後 2/6', () => {
+  const b = runB().baselines.always_largest;
+  assert.equal(b.zone, 'mid');
+  assert.deepEqual(b.first_corner, { scored: 6, correct: 2 });
+  assert.deepEqual(b.last_corner, { scored: 6, correct: 2 });
+  assert.deepEqual(b.total, { scored: 12, correct: 4 });
+});
+
+test('baselines (b) last_run：過去走に区分がない馬は no_data', () => {
+  const b = runB().baselines.last_run;
+  assert.deepEqual(b.first_corner, { scored: 5, correct: 3, no_data: 1 });
+  assert.deepEqual(b.last_corner, { scored: 5, correct: 4, no_data: 1 });
+  assert.deepEqual(b.total, { scored: 10, correct: 7, no_data: 2 });
+});
+
+test('baselines (c) jev_same_items：last_run と同じ項目に限った Jev の結果', () => {
+  const b = runB().baselines.jev_same_items;
+  assert.deepEqual(b.first_corner, { scored: 5, correct: 4 });
+  assert.deepEqual(b.last_corner, { scored: 5, correct: 4 });
+  assert.deepEqual(b.total, { scored: 10, correct: 8 });
+});
+
+test('baselines (d) 実際が確定できない項目は、すべての基準で採点しない', () => {
+  const entry = { race: { date: '2031-11-09', venue: '京都', raceNo: 11, distance: 2000, surface: '芝' }, horses: [1, 3, 4, 5, 6, 8].map(n => ({ num: n, name: `馬${n}`, past: [{ firstZone: '中団', lastZone: '中団' }] })) };
+  const stage4 = { results: entry.horses.map(h => okRec(h.num, answer('mid', 'middle', 0.6), answer('mid', 'middle', 0.6))) };
+  const r = scoreRace({ entry, stage3: lead('h01'), stage4, result: readResult('result_b.txt') });
+  const b = r.baselines, t = r.summary.total;
+  assert.equal(r.summary.total.unscorable, 4);
+  assert.equal(b.always_largest.total.scored, t.scored);
+  assert.ok(b.always_largest.total.scored <= t.scored);
+  assert.ok(b.last_run.total.scored + b.last_run.total.no_data <= t.scored);
+  assert.ok(b.jev_same_items.total.scored <= t.scored);
+});
+
+test('baselines (e) 番手の数が最大の区分が複数のとき、順序で先の区分', () => {
+  // 6頭：先頭1、好位1、中団2、後方2 で、中団と後方が同数
+  assert.deepEqual(zoneRanges(6).map(z => z.to - z.from + 1), [1, 1, 2, 2]);
+  const e = { race: entryA().race, horses: [1, 2, 4, 5, 6, 7].map(k => ({ num: k, name: `馬${k}` })) };
+  assert.equal(scoreRace({ entry: e, stage3: lead('h05'), stage4: stage4A(), result: resultA }).baselines.always_largest.zone, 'mid');
+});
+
+test('baselines (f) ok:false のとき null', () => {
+  const r = runB({ entry: entryWithPast({ raceNo: 12 }) });
+  assert.equal(r.ok, false);
+  assert.equal(r.baselines, null);
 });

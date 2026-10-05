@@ -187,8 +187,50 @@ function scoreItem(corner, answer, actualInfo, num, warnings) {
 }
 
 const failResult = (reasons, warnings, nEntry, nResult) => ({
-  schema: SCORING_SCHEMA, ok: false, reasons, warnings, n_entry: nEntry, n_result: nResult, horses: [], leader: null, summary: null, facts: null,
+  schema: SCORING_SCHEMA, ok: false, reasons, warnings, n_entry: nEntry, n_result: nResult, horses: [], leader: null, summary: null, facts: null, baselines: null,
 });
+
+/* 簡単な基準（Jev が何を上乗せしているかを測る目安。予想の方法ではない）。Jev と同じ項目だけを対象にする */
+const ZONE_FIELD = { first_corner: 'firstZone', last_corner: 'lastZone' };
+const addTo = (acc, ok) => { acc.scored++; if (ok) acc.correct++; };
+const sumCounts = (a, b) => Object.fromEntries(Object.keys(a).map(k => [k, a[k] + b[k]]));
+
+/* 番手の数が最も多い区分（同数なら順序で先のもの） */
+function largestZone(n) {
+  let best = null;
+  for (const z of zoneRanges(n)) if (!best || z.to - z.from > best.to - best.from) best = z;
+  return best.key;
+}
+/* 過去走（新しい順）のうち、そのコーナーの区分がある最も新しいもの */
+function lastRunZone(horse, corner) {
+  for (const p of horse?.past ?? []) {
+    const k = KEY_OF_LABEL[p?.[ZONE_FIELD[corner]]];
+    if (k) return k;
+  }
+  return null;
+}
+function computeBaselines(targets, horses, nEntry) {
+  const zone = largestZone(nEntry);
+  const A = {}, B = {}, J = {};
+  for (const c of CORNERS) {
+    A[c] = { scored: 0, correct: 0 }; B[c] = { scored: 0, correct: 0, no_data: 0 }; J[c] = { scored: 0, correct: 0 };
+    for (const h of targets) {
+      const item = horses.find(x => x.number === h.num)[c];
+      if (item.actual === null || !['scored', 'unscorable_predicted'].includes(item.status)) continue;
+      addTo(A[c], zone === item.actual);
+      const lr = lastRunZone(h, c);
+      if (lr === null) { B[c].no_data++; continue; }
+      addTo(B[c], lr === item.actual);
+      if (item.status === 'scored') addTo(J[c], item.correct);
+    }
+  }
+  const tot = X => CORNERS.map(c => X[c]).reduce(sumCounts);
+  return {
+    always_largest: { zone, ...A, total: tot(A) },
+    last_run: { ...B, total: tot(B) },
+    jev_same_items: { ...J, total: tot(J) },
+  };
+}
 
 export function scoreRace({ entry, stage3 = null, stage4 = null, result } = {}) {
   const eHorses = entry?.horses ?? [], rHorses = (result?.horses ?? []).filter(h => h.status === null || h.status === '中止' || h.status === '失格');
@@ -273,5 +315,6 @@ export function scoreRace({ entry, stage3 = null, stage4 = null, result } = {}) 
     schema: SCORING_SCHEMA, ok: true, reasons: [], warnings, n_entry: nEntry, n_result: nResult, horses, leader,
     summary: { total, by_corner: byCorner, by_level: byLevel, confusion, high_confidence_misses: misses },
     facts: { pace: result.pace, race: result.race },
+    baselines: computeBaselines(targets, horses, nEntry),
   };
 }
