@@ -2,7 +2,7 @@ import { parse } from './parse/index.js';
 import { derive, zoneRanges, cushionCat } from './derive.js';
 import { validate } from './parse/validate.js';
 import { raceBlock, raceState, raceQuestions, horseRequest } from './requests.js';
-import { RACE_OUTLOOK, HORSE_POSITION } from './contracts.js';
+import { CONTRACT_SETS, DEFAULT_SET, RACE_OUTLOOK_V1, setOfLabel } from './contracts.js';
 import { outlookFromValues, outlookFromAnswers, describeAnswer } from './score.js';
 import { MODEL_ID, PRICE, buildRequest, checkLimits, parseResponse, estimateCostUsd } from './jev.js';
 import { paceLabels } from './contracts.js';
@@ -83,7 +83,7 @@ function renderJ(){
   h+=`<p class="desc">STEP4 には確率の数値ではなく、コードで言葉にした値を渡します：${res.outlook?['expected_leader','early_lead_battle','pace'].filter(k=>k in res.outlook).map(k=>`<code>${esc(res.outlook[k])}</code>`).join(' '):'なし'}</p>`;
   if(res.overridden.length) h+=`<div class="warn">STEP4 には、手で上書きした項目（${res.overridden.map(k=>OV_NAMES[k]).join('／')}）が使われています。</div>`;
   const m=J.answeredModel;
-  h+=`<div class="kv"><b>答えたモデルの版</b><span>${esc(m||'不明')} ／ 契約：${esc(RACE_OUTLOOK.label)}</span>
+  h+=`<div class="kv"><b>答えたモデルの版</b><span>${esc(m||'不明')} ／ 契約：${esc((JM&&JM.contract)||RACE_OUTLOOK_V1.label)}</span>
   <b>評価時間</b><span>${formatEvalTime(J.evaluationTimeMs)}</span>
   <b>往復時間</b><span>${formatRoundTrip(J.roundTripMs)}</span>
   <b>request_id</b><span>${esc(J.requestId||'不明')}</span>
@@ -96,12 +96,12 @@ function renderJ(){
   rescore();
   refreshFeedback();
 }
-function loadAnswers(){loadAnswersFrom($('j-src').value,{method:'paste'});}
+function loadAnswers(){loadAnswersFrom($('j-src').value,{method:'paste',contract:CONTRACT_SETS[setKey()].outlook.label});}
 function loadAnswersFrom(text,meta){
   const msg=$('j-msg');msg.innerHTML='';
   if(!D) return;
   try{
-    const parsed=parseResponse(text,RACE_OUTLOOK.questions(D));
+    const parsed=parseResponse(text,CONTRACT_SETS[setOfLabel(meta.contract)||setKey()].outlook.questions(D));
     describeAll(parsed);
     outlookFromAnswers(parsed,D.horses,overrides());
     J=parsed;JM={...meta,raw:text};E3=null;
@@ -164,6 +164,8 @@ function renderS2(){
   });
   $('s2out').innerHTML=h+'</tbody></table></div>';
 }
+// 画面で選んでいる契約の版の組（'new' か 'old'）
+function setKey(){const v=$('ctr-set')&&$('ctr-set').value;return CONTRACT_SETS[v]?v:DEFAULT_SET;}
 // State 欄の上に、契約・モデルの表示と、上限の目安を超えたときの警告を出す
 function showMeta(stateId,contract,req){
   const grid=$(stateId).closest('.grid');
@@ -174,12 +176,12 @@ function showMeta(stateId,contract,req){
     `<div class="warn">リクエストの大きさが上限の目安を超えています（全体 ${c.total}／${L.requestTokens}、state と最大の質問 ${c.stateAndLongest}／${L.stateAndLongestQuestionTokens}。1文字を1トークンとみなした目安）</div>`);
 }
 function renderS3(){
-  const st=raceState(D),req=buildRequest(st,raceQuestions(D));
-  S3={state:st,questions:raceQuestions(D)};
+  const set=setKey(),st=raceState(D,set),qs=raceQuestions(D,set),req=buildRequest(st,qs);
+  S3={state:st,questions:qs,contract:CONTRACT_SETS[set].outlook.label};
   $('r-state').value=JSON.stringify(st,null,2);
   $('r-q').value=JSON.stringify(req.questions,null,2);
   $('r-body').value=JSON.stringify(req,null,2);
-  showMeta('r-state',RACE_OUTLOOK,req);
+  showMeta('r-state',CONTRACT_SETS[set].outlook,req);
   const s=$('o-lead'),cur=s.value;
   s.innerHTML=`<option value="">${blank('ハナ')}</option>`+D.horses.map(h=>`<option value="${h.num}番 ${esc(h.name)}">${h.num}番 ${esc(h.name)}</option>`).join('')+'<option value="特定できない">特定できない</option>';
   if([...s.options].some(o=>o.value===cur)) s.value=cur;
@@ -205,11 +207,11 @@ async function runStep3(){
   const myGen=gen,msg=$('j-msg'),sent=S3;msg.innerHTML='';
   setRunning(true);
   try{
-    const text=await callRelay({contract:RACE_OUTLOOK.label,state:sent.state,questions:sent.questions,password:$('x-pass').value,
+    const text=await callRelay({contract:sent.contract,state:sent.state,questions:sent.questions,password:$('x-pass').value,
       onRetry:(n,max)=>{if(myGen===gen) setRunning(true,`実行中…（再試行 ${n}/${max}）`);}});
     if(myGen!==gen) return;
     $('j-src').value=text;
-    loadAnswersFrom(text,{method:'api',at:new Date().toISOString(),request:{state:structuredClone(sent.state),questions:structuredClone(sent.questions)}});
+    loadAnswersFrom(text,{method:'api',at:new Date().toISOString(),contract:sent.contract,request:{state:structuredClone(sent.state),questions:structuredClone(sent.questions)}});
   }catch(e){
     if(myGen===gen){msg.innerHTML=`<div class="err">${esc(e.message)}</div>`;E3={kind:typeof e.kind==='string'?e.kind:'other',message:e.message,at:new Date().toISOString()};refreshFeedback();}
   }finally{
@@ -222,11 +224,11 @@ function renderS4(){
   sel.innerHTML=D.horses.map(h=>`<option value="${h.num}">${h.num}番 ${esc(h.name)}</option>`).join('');
   if(D.horses.some(h=>String(h.num)===cur)) sel.value=cur;
   const h=D.horses.find(x=>String(x.num)===sel.value)||D.horses[0];
-  const r=horseRequest(D,h,outlook()),req=buildRequest(r.state,r.questions);
+  const set=setKey(),r=horseRequest(D,h,outlook(),set),req=buildRequest(r.state,r.questions);
   $('h-state').value=JSON.stringify(r.state,null,2);
   $('h-q').value=JSON.stringify(req.questions,null,2);
   $('h-body').value=JSON.stringify(req,null,2);
-  showMeta('h-state',HORSE_POSITION,req);
+  showMeta('h-state',CONTRACT_SETS[set].position,req);
   renderStage4();
 }
 
@@ -235,17 +237,18 @@ function failedNums(){return S4?S4.results.filter(r=>r.status!=='ok').map(r=>r.n
 async function runStep4(onlyFailed){
   if(!D||running||running4) return;
   if(!onlyFailed&&S4&&!confirm('前回の結果を破棄して全頭を実行し直します')) return;
+  const set=onlyFailed&&S4?S4.set:setKey(),pos=CONTRACT_SETS[set].position;
   const myGen=gen,used=onlyFailed&&S4?S4.usedOutlook:outlook(),usedOv=onlyFailed&&S4?S4.usedOverridden:overriddenKeys();
   const previous=onlyFailed&&S4?Object.fromEntries(S4.results.map(r=>[r.num,r])):undefined;
   const onlyNums=onlyFailed&&S4?failedNums():undefined;
-  const zq=HORSE_POSITION.questions(D,D.horses[0],used); // 選択肢は馬によらず同じ
+  const zq=pos.questions(D,D.horses[0],used); // 選択肢は馬によらず同じ
   cancel4=false;running4=true;progress4='実行中…';
   refreshControls();renderStage4();
   let out=null;
   try{
     out=await runStage4({horses:D.horses,previous,onlyNums,
-      buildFor:h=>horseRequest(D,h,used),
-      callOne:({state,questions})=>callRelay({contract:HORSE_POSITION.label,state,questions,password:$('x-pass').value,
+      buildFor:h=>horseRequest(D,h,used,set),
+      callOne:({state,questions})=>callRelay({contract:pos.label,state,questions,password:$('x-pass').value,
         onRetry:(n,max)=>{if(myGen===gen){progress4=`${progress4.split('（再試行')[0]}（再試行 ${n}/${max}）`;renderProgress4();}}}),
       parse:text=>parseResponse(text,zq),
       shouldCancel:()=>cancel4||myGen!==gen,
@@ -258,7 +261,7 @@ async function runStep4(onlyFailed){
   }
   if(myGen!==gen) return;
   running4=false;cancel4=false;progress4='';
-  if(out) S4={results:out.results,usedOutlook:used,usedOverridden:usedOv,aborted:out.aborted,cancelled:out.cancelled};
+  if(out) S4={set,contract:pos.label,results:out.results,usedOutlook:used,usedOverridden:usedOv,aborted:out.aborted,cancelled:out.cancelled};
   refreshControls();renderStage4();
 }
 function cancelStep4(){cancel4=true;progress4='中止しています…';renderProgress4();}
@@ -293,6 +296,7 @@ function renderStage4(){
   let h='';
   if(S4.aborted) h+=`<div class="err">実行を中止しました（${esc(S4.aborted.kind)}）：${esc(S4.aborted.message)}</div>`;
   else if(S4.cancelled) h+='<div class="warn">中止しました。未実行の馬があります。</div>';
+  if(J&&setOfLabel(JM.contract)!==S4.set) h+='<div class="warn">STEP3 と STEP4 で契約の版が異なります</div>';
   if(isStale(S4.usedOutlook,outlook())) h+='<div class="warn stale"><b>この結果は、変更前の展開（race_outlook）で実行されました。今の展開で実行し直す場合は、全頭を実行し直してください。</b></div>';
   h+=`<p class="desc">実行に使った race_outlook：${outlookText(S4.usedOutlook)}</p>`;
   h+='<p class="desc">振り分けは確率の集中度による目安です。答えの正しさを保証するものではありません。</p>';
@@ -316,9 +320,9 @@ function renderStage4(){
   refreshFeedback();
 }
 function downloadAll(){
-  const ol=outlook();
-  const reqs=D.horses.map(h=>{const r=horseRequest(D,h,ol);return {horse:`${h.num}番 ${h.name}`,request:buildRequest(r.state,r.questions)};});
-  const blob=new Blob([JSON.stringify({race:raceBlock(D),step:'STEP4',contract:HORSE_POSITION.label,model:MODEL_ID,requests:reqs},null,2)],{type:'application/json'});
+  const ol=outlook(),set=setKey();
+  const reqs=D.horses.map(h=>{const r=horseRequest(D,h,ol,set);return {horse:`${h.num}番 ${h.name}`,request:buildRequest(r.state,r.questions)};});
+  const blob=new Blob([JSON.stringify({race:raceBlock(D),step:'STEP4',contract:CONTRACT_SETS[set].position.label,model:MODEL_ID,requests:reqs},null,2)],{type:'application/json'});
   const u=URL.createObjectURL(blob),a=document.createElement('a');
   a.href=u;a.download=`jev_step4_${D.race.date||'race'}.json`;document.body.appendChild(a);a.click();a.remove();
   setTimeout(()=>URL.revokeObjectURL(u),1000);
@@ -350,10 +354,10 @@ function feedbackCtx(){
   const f=$('fb-blind').value;
   return {now:new Date(),host:location.hostname,userAgent:navigator.userAgent,race:D.race,horses:D.horses,warnings:P.warnings,
     userInput:{blind:f,memo:$('fb-memo').value},
-    s3:J?{parsed:J,meta:JM,state:S3.state,overrides:overrides(),raw:JM.raw}:null,s3Error:J?null:E3,
+    s3:J?{parsed:J,meta:JM,contract:JM.contract,state:S3.state,overrides:overrides(),raw:JM.raw}:null,s3Error:J?null:E3,
     result:RES,scoring:SC,scoredAt:SCAT,
-    s4:S4?{results:S4.results,usedOutlook:S4.usedOutlook,usedOverridden:S4.usedOverridden,aborted:S4.aborted,cancelled:S4.cancelled,
-      states:Object.fromEntries(D.horses.map(h=>[h.num,horseRequest(D,h,S4.usedOutlook).state]))}:null};
+    s4:S4?{contract:S4.contract,results:S4.results,usedOutlook:S4.usedOutlook,usedOverridden:S4.usedOverridden,aborted:S4.aborted,cancelled:S4.cancelled,
+      states:Object.fromEntries(D.horses.map(h=>[h.num,horseRequest(D,h,S4.usedOutlook,S4.set).state]))}:null};
 }
 function refreshFeedback(){
   if(!D||!P) return;
@@ -378,6 +382,7 @@ function copy(id,btn){
 }
 
 $('x-pass').addEventListener('input',refreshControls);
+$('ctr-set').addEventListener('change',()=>{if(D){renderS3();renderS4();}});
 refreshControls();
 ['o-lead','o-cont','o-pace'].forEach(id=>$(id).addEventListener('change',renderJ));
 ['fb-blind','fb-memo'].forEach(id=>{$(id).addEventListener('input',refreshFeedback);$(id).addEventListener('change',refreshFeedback);});

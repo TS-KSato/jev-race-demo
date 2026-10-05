@@ -8,7 +8,7 @@ const PACE_CRITERIA=['スロー：このクラス・距離としては前半が�
 export const paceLabels=()=>PACE_CRITERIA.map(c=>c.split('：')[0]);
 
 /* 判断契約：Jev に送る質問の文言・選択肢と版。質問の kind はデモ内部の名前（truth・select・grade）。 */
-export const RACE_OUTLOOK = { id: 'race-outlook', version: 1, label: 'race-outlook@1',
+export const RACE_OUTLOOK_V1 = { id: 'race-outlook', version: 1, label: 'race-outlook@1',
   questions(D){
     const crit={};
     D.horses.forEach(h=>{crit['h'+pad(h.num)]=`${h.num}番 ${h.name}（${h.frame}枠。直近の過去走で最初のコーナーの位置：${h.past.map(p=>p.firstZone||'不明').join('、')}）`;});
@@ -22,7 +22,7 @@ export const RACE_OUTLOOK = { id: 'race-outlook', version: 1, label: 'race-outlo
     };
   } };
 
-export const HORSE_POSITION = { id: 'horse-position', version: 2, label: 'horse-position@2',
+export const HORSE_POSITION_V2 = { id: 'horse-position', version: 2, label: 'horse-position@2',
   questions(D,h,ol){
     const n=D.horses.length,crit={};
     zoneRanges(n).forEach(z=>{crit[z.key]=z.key==='front'?'先頭：1番手で通過する':`${z.label}：${z.from}〜${z.to}番手で通過する`;});
@@ -34,3 +34,36 @@ export const HORSE_POSITION = { id: 'horse-position', version: 2, label: 'horse-
       last_corner:{kind:'select',instructions:`${who}は、このレース（${n}頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。${basis}${note}`,criteria:{...crit}}
     };
   } };
+
+/* ---------- 新版（過去走の範囲と、位置取りの説明になりうる事実を明記する） ---------- */
+export const EXTRA_OUTLOOK='各馬の過去走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `effective_run_count`）。';
+export const EXTRA_POSITION='`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。';
+
+const LEAD_ANCHOR='を根拠にする。';
+const NOTE_ANCHOR='`race_outlook` の項目が';
+
+export const RACE_OUTLOOK = { id: 'race-outlook', version: 2, label: 'race-outlook@2',
+  questions(D){
+    const q=RACE_OUTLOOK_V1.questions(D),ins=q.lead_horse.instructions;
+    const i=ins.indexOf(LEAD_ANCHOR)+LEAD_ANCHOR.length;
+    q.lead_horse={...q.lead_horse,instructions:ins.slice(0,i)+EXTRA_OUTLOOK+ins.slice(i)};
+    return q;
+  } };
+
+export const HORSE_POSITION = { id: 'horse-position', version: 3, label: 'horse-position@3',
+  questions(D,h,ol){
+    const q=HORSE_POSITION_V2.questions(D,h,ol);
+    for(const k of ['first_corner','last_corner']){
+      const ins=q[k].instructions,i=ins.indexOf(NOTE_ANCHOR);
+      q[k]={...q[k],instructions:ins.slice(0,i)+EXTRA_POSITION+ins.slice(i)};
+    }
+    return q;
+  } };
+
+/* 契約の版の組（画面で選ぶ。新版が既定） */
+export const CONTRACT_SETS = { new: { outlook: RACE_OUTLOOK, position: HORSE_POSITION }, old: { outlook: RACE_OUTLOOK_V1, position: HORSE_POSITION_V2 } };
+export const DEFAULT_SET = 'new';
+export function setOfLabel(label){
+  for(const [k,v] of Object.entries(CONTRACT_SETS)) if(v.outlook.label===label||v.position.label===label) return k;
+  return null;
+}

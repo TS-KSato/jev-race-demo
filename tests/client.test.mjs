@@ -61,7 +61,7 @@ test('callRelay：200 で本文がそのまま返り、送信先・ヘッダ・�
   assert.equal(init.headers['Content-Type'], 'application/json');
   const body = JSON.parse(init.body);
   assert.ok(!('model' in body));
-  assert.equal(body.contract, 'race-outlook@1');
+  assert.equal(body.contract, 'race-outlook@2');
 });
 
 test('429（Retry-After: 2）の次に 200 → 2秒待って成功する', async () => {

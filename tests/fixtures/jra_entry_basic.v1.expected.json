@@ -1008,10 +1008,7 @@
             "lastZone": "先頭",
             "tags": [
               "今回との距離差-200m"
-            ],
-            "gatePos": "内",
-            "jockeySame": true,
-            "daysBefore": 21
+            ]
           },
           {
             "date": "2025-11-15",
@@ -1042,10 +1039,7 @@
             "last": 11,
             "firstZone": "中団",
             "lastZone": "中団",
-            "tags": [],
-            "gatePos": "外",
-            "jockeySame": true,
-            "daysBefore": 106
+            "tags": []
           },
           {
             "date": "2025-10-04",
@@ -1076,10 +1070,7 @@
             "last": 2,
             "firstZone": "好位",
             "lastZone": "好位",
-            "tags": [],
-            "gatePos": "中",
-            "jockeySame": true,
-            "daysBefore": 148
+            "tags": []
           },
           {
             "date": "2025-07-27",
@@ -1112,10 +1103,7 @@
             "lastZone": "中団",
             "tags": [
               "今回との距離差-200m"
-            ],
-            "gatePos": "内",
-            "jockeySame": true,
-            "daysBefore": 217
+            ]
           }
         ],
         "facts": {
@@ -1124,9 +1112,7 @@
           "racesWithCorners": 4,
           "bestFront3f": null,
           "jockeyChange": false,
-          "daysSinceLast": 21,
-          "gatePos": "内",
-          "ranCount": 4
+          "daysSinceLast": 21
         }
       },
       {
@@ -1170,10 +1156,7 @@
               "今回との距離差-200m",
               "通過順なし",
               "不良馬場"
-            ],
-            "gatePos": null,
-            "jockeySame": false,
-            "daysBefore": 66
+            ]
           },
           {
             "date": "2025-11-30",
@@ -1206,10 +1189,7 @@
             "lastZone": "中団",
             "tags": [
               "今回との距離差-200m"
-            ],
-            "gatePos": "内",
-            "jockeySame": true,
-            "daysBefore": 91
+            ]
           },
           {
             "date": "2025-09-23",
@@ -1233,10 +1213,7 @@
             "tags": [
               "今回との距離差-200m",
               "通過順なし"
-            ],
-            "gatePos": null,
-            "jockeySame": false,
-            "daysBefore": 159
+            ]
           },
           {
             "date": "2025-09-04",
@@ -1260,10 +1237,7 @@
             "tags": [
               "今回との距離差-200m",
               "通過順なし"
-            ],
-            "gatePos": null,
-            "jockeySame": false,
-            "daysBefore": 178
+            ]
           }
         ],
         "facts": {
@@ -1272,9 +1246,7 @@
           "racesWithCorners": 1,
           "bestFront3f": null,
           "jockeyChange": true,
-          "daysSinceLast": 66,
-          "gatePos": "内",
-          "ranCount": 4
+          "daysSinceLast": 66
         }
       },
       {
@@ -1328,10 +1300,7 @@
             "lastZone": "中団",
             "tags": [
               "今回との距離差+200m"
-            ],
-            "gatePos": "中",
-            "jockeySame": true,
-            "daysBefore": 35
+            ]
           },
           {
             "date": "2025-12-14",
@@ -1367,10 +1336,7 @@
             "tags": [
               "今回との距離差+200m",
               "稍重馬場"
-            ],
-            "gatePos": "外",
-            "jockeySame": true,
-            "daysBefore": 77
+            ]
           },
           {
             "date": "2025-11-09",
@@ -1406,10 +1372,7 @@
             "tags": [
               "今回との距離差+200m",
               "不良馬場"
-            ],
-            "gatePos": "中",
-            "jockeySame": false,
-            "daysBefore": 112
+            ]
           },
           {
             "date": "2025-09-27",
@@ -1445,10 +1408,7 @@
             "tags": [
               "今回との距離差+400m",
               "重馬場"
-            ],
-            "gatePos": "外",
-            "jockeySame": true,
-            "daysBefore": 155
+            ]
           }
         ],
         "facts": {
@@ -1457,9 +1417,7 @@
           "racesWithCorners": 4,
           "bestFront3f": null,
           "jockeyChange": false,
-          "daysSinceLast": 35,
-          "gatePos": "中",
-          "ranCount": 4
+          "daysSinceLast": 35
         }
       },
       {
@@ -1513,10 +1471,7 @@
             "lastZone": "好位",
             "tags": [
               "今回との距離差+200m"
-            ],
-            "gatePos": "外",
-            "jockeySame": false,
-            "daysBefore": 84
+            ]
           },
           {
             "date": "2025-10-13",
@@ -1539,10 +1494,7 @@
             "timeSec": 94.9,
             "tags": [
               "通過順なし"
-            ],
-            "gatePos": null,
-            "jockeySame": false,
-            "daysBefore": 139
+            ]
           },
           {
             "date": "2025-06-08",
@@ -1575,10 +1527,7 @@
             "lastZone": "好位",
             "tags": [
               "馬場種別が異なる"
-            ],
-            "gatePos": "内",
-            "jockeySame": false,
-            "daysBefore": 266
+            ]
           }
         ],
         "facts": {
@@ -1587,9 +1536,7 @@
           "racesWithCorners": 2,
           "bestFront3f": null,
           "jockeyChange": true,
-          "daysSinceLast": 84,
-          "gatePos": "中",
-          "ranCount": 3
+          "daysSinceLast": 84
         }
       },
       {
@@ -1643,10 +1590,7 @@
             "lastZone": "中団",
             "tags": [
               "今回との距離差+200m"
-            ],
-            "gatePos": "中",
-            "jockeySame": true,
-            "daysBefore": 84
+            ]
           },
           {
             "date": "2025-11-09",
@@ -1682,10 +1626,7 @@
             "tags": [
               "今回との距離差+200m",
               "不良馬場"
-            ],
-            "gatePos": "内",
-            "jockeySame": true,
-            "daysBefore": 112
+            ]
           },
           {
             "date": "2025-09-07",
@@ -1710,10 +1651,7 @@
               "今回との距離差+200m",
               "通過順なし",
               "稍重馬場"
-            ],
-            "gatePos": null,
-            "jockeySame": true,
-            "daysBefore": 175
+            ]
           },
           {
             "date": "2025-07-02",
@@ -1737,10 +1675,7 @@
             "tags": [
               "今回との距離差+400m",
               "通過順なし"
-            ],
-            "gatePos": null,
-            "jockeySame": true,
-            "daysBefore": 242
+            ]
           }
         ],
         "facts": {
@@ -1749,9 +1684,7 @@
           "racesWithCorners": 2,
           "bestFront3f": null,
           "jockeyChange": false,
-          "daysSinceLast": 84,
-          "gatePos": "中",
-          "ranCount": 4
+          "daysSinceLast": 84
         }
       },
       {
@@ -1804,10 +1737,7 @@
             "tags": [
               "馬場種別が異なる",
               "今回との距離差-400m"
-            ],
-            "gatePos": "外",
-            "jockeySame": false,
-            "daysBefore": 98
+            ]
           },
           {
             "date": "2025-10-05",
@@ -1842,10 +1772,7 @@
             "tags": [
               "馬場種別が異なる",
               "今回との距離差+200m"
-            ],
-            "gatePos": "内",
-            "jockeySame": false,
-            "daysBefore": 147
+            ]
           },
           {
             "date": "2025-06-08",
@@ -1878,10 +1805,7 @@
             "lastZone": "好位",
             "tags": [
               "馬場種別が異なる"
-            ],
-            "gatePos": "中",
-            "jockeySame": false,
-            "daysBefore": 266
+            ]
           },
           {
             "date": "2025-04-27",
@@ -1916,10 +1840,7 @@
             "tags": [
               "馬場種別が異なる",
               "今回との距離差-400m"
-            ],
-            "gatePos": "外",
-            "jockeySame": false,
-            "daysBefore": 308
+            ]
           }
         ],
         "facts": {
@@ -1928,9 +1849,7 @@
           "racesWithCorners": 4,
           "bestFront3f": 34.4,
           "jockeyChange": true,
-          "daysSinceLast": 98,
-          "gatePos": "外",
-          "ranCount": 4
+          "daysSinceLast": 98
         }
       },
       {
@@ -1984,10 +1903,7 @@
             "lastZone": "中団",
             "tags": [
               "今回との距離差+200m"
-            ],
-            "gatePos": "外",
-            "jockeySame": false,
-            "daysBefore": 84
+            ]
           },
           {
             "date": "2025-11-15",
@@ -2018,10 +1934,7 @@
             "last": 2,
             "firstZone": "好位",
             "lastZone": "好位",
-            "tags": [],
-            "gatePos": "外",
-            "jockeySame": false,
-            "daysBefore": 106
+            "tags": []
           },
           {
             "date": "2025-10-13",
@@ -2044,10 +1957,7 @@
             "timeSec": 95.6,
             "tags": [
               "通過順なし"
-            ],
-            "gatePos": null,
-            "jockeySame": false,
-            "daysBefore": 139
+            ]
           },
           {
             "date": "2025-04-05",
@@ -2070,10 +1980,7 @@
             "timeSec": 101.5,
             "tags": [
               "通過順なし"
-            ],
-            "gatePos": null,
-            "jockeySame": false,
-            "daysBefore": 330
+            ]
           }
         ],
         "facts": {
@@ -2082,9 +1989,7 @@
           "racesWithCorners": 2,
           "bestFront3f": null,
           "jockeyChange": true,
-          "daysSinceLast": 84,
-          "gatePos": "外",
-          "ranCount": 4
+          "daysSinceLast": 84
         }
       },
       {
@@ -2138,10 +2043,7 @@
             "lastZone": "好位",
             "tags": [
               "今回との距離差+200m"
-            ],
-            "gatePos": "内",
-            "jockeySame": true,
-            "daysBefore": 35
+            ]
           },
           {
             "date": "2025-11-09",
@@ -2177,10 +2079,7 @@
             "tags": [
               "今回との距離差+200m",
               "不良馬場"
-            ],
-            "gatePos": "内",
-            "jockeySame": false,
-            "daysBefore": 112
+            ]
           },
           {
             "date": "2025-09-27",
@@ -2215,10 +2114,7 @@
             "lastZone": "中団",
             "tags": [
               "今回との距離差+400m"
-            ],
-            "gatePos": "中",
-            "jockeySame": true,
-            "daysBefore": 155
+            ]
           },
           {
             "date": "2025-06-28",
@@ -2250,10 +2146,7 @@
             "last": 3,
             "firstZone": "好位",
             "lastZone": "好位",
-            "tags": [],
-            "gatePos": "中",
-            "jockeySame": false,
-            "daysBefore": 246
+            "tags": []
           }
         ],
         "facts": {
@@ -2262,9 +2155,7 @@
           "racesWithCorners": 4,
           "bestFront3f": null,
           "jockeyChange": false,
-          "daysSinceLast": 35,
-          "gatePos": "外",
-          "ranCount": 4
+          "daysSinceLast": 35
         }
       }
     ],
@@ -2365,10 +2256,7 @@
               "last_3f_sec": 36.2,
               "notes": [
                 "今回との距離差-200m"
-              ],
-              "gate_position": "内",
-              "jockey_same_as_today": true,
-              "days_before_today": 21
+              ]
             },
             {
               "date": "2025-11-15",
@@ -2381,10 +2269,7 @@
               "first_corner_zone": "中団",
               "last_corner_zone": "中団",
               "front_3f_sec": null,
-              "last_3f_sec": 35.3,
-              "gate_position": "外",
-              "jockey_same_as_today": true,
-              "days_before_today": 106
+              "last_3f_sec": 35.3
             },
             {
               "date": "2025-10-04",
@@ -2397,10 +2282,7 @@
               "first_corner_zone": "好位",
               "last_corner_zone": "好位",
               "front_3f_sec": null,
-              "last_3f_sec": 36,
-              "gate_position": "中",
-              "jockey_same_as_today": true,
-              "days_before_today": 148
+              "last_3f_sec": 36
             },
             {
               "date": "2025-07-27",
@@ -2416,15 +2298,9 @@
               "last_3f_sec": 35.6,
               "notes": [
                 "今回との距離差-200m"
-              ],
-              "gate_position": "内",
-              "jockey_same_as_today": true,
-              "days_before_today": 217
+              ]
             }
           ],
-          "gate_position": "内",
-          "effective_run_count": 4,
-          "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
           "facts": {
             "led_at_first_corner": 1,
             "within_2nd_at_first_corner": 2,
@@ -2458,10 +2334,7 @@
                 "今回との距離差-200m",
                 "通過順なし",
                 "不良馬場"
-              ],
-              "gate_position": null,
-              "jockey_same_as_today": false,
-              "days_before_today": 66
+              ]
             },
             {
               "date": "2025-11-30",
@@ -2477,10 +2350,7 @@
               "last_3f_sec": 35.7,
               "notes": [
                 "今回との距離差-200m"
-              ],
-              "gate_position": "内",
-              "jockey_same_as_today": true,
-              "days_before_today": 91
+              ]
             },
             {
               "date": "2025-09-23",
@@ -2497,10 +2367,7 @@
               "notes": [
                 "今回との距離差-200m",
                 "通過順なし"
-              ],
-              "gate_position": null,
-              "jockey_same_as_today": false,
-              "days_before_today": 159
+              ]
             },
             {
               "date": "2025-09-04",
@@ -2517,15 +2384,9 @@
               "notes": [
                 "今回との距離差-200m",
                 "通過順なし"
-              ],
-              "gate_position": null,
-              "jockey_same_as_today": false,
-              "days_before_today": 178
+              ]
             }
           ],
-          "gate_position": "内",
-          "effective_run_count": 4,
-          "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
           "facts": {
             "led_at_first_corner": 0,
             "within_2nd_at_first_corner": 0,
@@ -2557,10 +2418,7 @@
               "last_3f_sec": 36.4,
               "notes": [
                 "今回との距離差+200m"
-              ],
-              "gate_position": "中",
-              "jockey_same_as_today": true,
-              "days_before_today": 35
+              ]
             },
             {
               "date": "2025-12-14",
@@ -2577,10 +2435,7 @@
               "notes": [
                 "今回との距離差+200m",
                 "稍重馬場"
-              ],
-              "gate_position": "外",
-              "jockey_same_as_today": true,
-              "days_before_today": 77
+              ]
             },
             {
               "date": "2025-11-09",
@@ -2597,10 +2452,7 @@
               "notes": [
                 "今回との距離差+200m",
                 "不良馬場"
-              ],
-              "gate_position": "中",
-              "jockey_same_as_today": false,
-              "days_before_today": 112
+              ]
             },
             {
               "date": "2025-09-27",
@@ -2617,15 +2469,9 @@
               "notes": [
                 "今回との距離差+400m",
                 "重馬場"
-              ],
-              "gate_position": "外",
-              "jockey_same_as_today": true,
-              "days_before_today": 155
+              ]
             }
           ],
-          "gate_position": "中",
-          "effective_run_count": 4,
-          "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
           "facts": {
             "led_at_first_corner": 1,
             "within_2nd_at_first_corner": 1,
@@ -2657,10 +2503,7 @@
               "last_3f_sec": 38.6,
               "notes": [
                 "今回との距離差+200m"
-              ],
-              "gate_position": "外",
-              "jockey_same_as_today": false,
-              "days_before_today": 84
+              ]
             },
             {
               "date": "2025-10-13",
@@ -2676,10 +2519,7 @@
               "last_3f_sec": null,
               "notes": [
                 "通過順なし"
-              ],
-              "gate_position": null,
-              "jockey_same_as_today": false,
-              "days_before_today": 139
+              ]
             },
             {
               "date": "2025-06-08",
@@ -2695,15 +2535,9 @@
               "last_3f_sec": 34.7,
               "notes": [
                 "馬場種別が異なる"
-              ],
-              "gate_position": "内",
-              "jockey_same_as_today": false,
-              "days_before_today": 266
+              ]
             }
           ],
-          "gate_position": "中",
-          "effective_run_count": 3,
-          "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
           "facts": {
             "led_at_first_corner": 0,
             "within_2nd_at_first_corner": 1,
@@ -2735,10 +2569,7 @@
               "last_3f_sec": 36.9,
               "notes": [
                 "今回との距離差+200m"
-              ],
-              "gate_position": "中",
-              "jockey_same_as_today": true,
-              "days_before_today": 84
+              ]
             },
             {
               "date": "2025-11-09",
@@ -2755,10 +2586,7 @@
               "notes": [
                 "今回との距離差+200m",
                 "不良馬場"
-              ],
-              "gate_position": "内",
-              "jockey_same_as_today": true,
-              "days_before_today": 112
+              ]
             },
             {
               "date": "2025-09-07",
@@ -2776,10 +2604,7 @@
                 "今回との距離差+200m",
                 "通過順なし",
                 "稍重馬場"
-              ],
-              "gate_position": null,
-              "jockey_same_as_today": true,
-              "days_before_today": 175
+              ]
             },
             {
               "date": "2025-07-02",
@@ -2796,15 +2621,9 @@
               "notes": [
                 "今回との距離差+400m",
                 "通過順なし"
-              ],
-              "gate_position": null,
-              "jockey_same_as_today": true,
-              "days_before_today": 242
+              ]
             }
           ],
-          "gate_position": "中",
-          "effective_run_count": 4,
-          "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
           "facts": {
             "led_at_first_corner": 0,
             "within_2nd_at_first_corner": 0,
@@ -2837,10 +2656,7 @@
               "notes": [
                 "馬場種別が異なる",
                 "今回との距離差-400m"
-              ],
-              "gate_position": "外",
-              "jockey_same_as_today": false,
-              "days_before_today": 98
+              ]
             },
             {
               "date": "2025-10-05",
@@ -2857,10 +2673,7 @@
               "notes": [
                 "馬場種別が異なる",
                 "今回との距離差+200m"
-              ],
-              "gate_position": "内",
-              "jockey_same_as_today": false,
-              "days_before_today": 147
+              ]
             },
             {
               "date": "2025-06-08",
@@ -2876,10 +2689,7 @@
               "last_3f_sec": 35.1,
               "notes": [
                 "馬場種別が異なる"
-              ],
-              "gate_position": "中",
-              "jockey_same_as_today": false,
-              "days_before_today": 266
+              ]
             },
             {
               "date": "2025-04-27",
@@ -2896,15 +2706,9 @@
               "notes": [
                 "馬場種別が異なる",
                 "今回との距離差-400m"
-              ],
-              "gate_position": "外",
-              "jockey_same_as_today": false,
-              "days_before_today": 308
+              ]
             }
           ],
-          "gate_position": "外",
-          "effective_run_count": 4,
-          "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
           "facts": {
             "led_at_first_corner": 0,
             "within_2nd_at_first_corner": 1,
@@ -2936,10 +2740,7 @@
               "last_3f_sec": 38.5,
               "notes": [
                 "今回との距離差+200m"
-              ],
-              "gate_position": "外",
-              "jockey_same_as_today": false,
-              "days_before_today": 84
+              ]
             },
             {
               "date": "2025-11-15",
@@ -2952,10 +2753,7 @@
               "first_corner_zone": "好位",
               "last_corner_zone": "好位",
               "front_3f_sec": null,
-              "last_3f_sec": 36.2,
-              "gate_position": "外",
-              "jockey_same_as_today": false,
-              "days_before_today": 106
+              "last_3f_sec": 36.2
             },
             {
               "date": "2025-10-13",
@@ -2971,10 +2769,7 @@
               "last_3f_sec": null,
               "notes": [
                 "通過順なし"
-              ],
-              "gate_position": null,
-              "jockey_same_as_today": false,
-              "days_before_today": 139
+              ]
             },
             {
               "date": "2025-04-05",
@@ -2990,15 +2785,9 @@
               "last_3f_sec": null,
               "notes": [
                 "通過順なし"
-              ],
-              "gate_position": null,
-              "jockey_same_as_today": false,
-              "days_before_today": 330
+              ]
             }
           ],
-          "gate_position": "外",
-          "effective_run_count": 4,
-          "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
           "facts": {
             "led_at_first_corner": 0,
             "within_2nd_at_first_corner": 0,
@@ -3030,10 +2819,7 @@
               "last_3f_sec": 37.3,
               "notes": [
                 "今回との距離差+200m"
-              ],
-              "gate_position": "内",
-              "jockey_same_as_today": true,
-              "days_before_today": 35
+              ]
             },
             {
               "date": "2025-11-09",
@@ -3050,10 +2836,7 @@
               "notes": [
                 "今回との距離差+200m",
                 "不良馬場"
-              ],
-              "gate_position": "内",
-              "jockey_same_as_today": false,
-              "days_before_today": 112
+              ]
             },
             {
               "date": "2025-09-27",
@@ -3069,10 +2852,7 @@
               "last_3f_sec": 36.7,
               "notes": [
                 "今回との距離差+400m"
-              ],
-              "gate_position": "中",
-              "jockey_same_as_today": true,
-              "days_before_today": 155
+              ]
             },
             {
               "date": "2025-06-28",
@@ -3085,15 +2865,9 @@
               "first_corner_zone": "好位",
               "last_corner_zone": "好位",
               "front_3f_sec": null,
-              "last_3f_sec": 36.8,
-              "gate_position": "中",
-              "jockey_same_as_today": false,
-              "days_before_today": 246
+              "last_3f_sec": 36.8
             }
           ],
-          "gate_position": "外",
-          "effective_run_count": 4,
-          "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
           "facts": {
             "led_at_first_corner": 0,
             "within_2nd_at_first_corner": 0,
@@ -3107,7 +2881,7 @@
     "questions": {
       "lead_horse": {
         "type": "choice",
-        "instructions": "このレース 第9回テストマイルステークスGⅢ（1600m） で、最初のコーナーを先頭で通過する馬を選ぶ。stateの`horses`の過去の通過位置と枠、`race_facts.front_runners`を根拠にする。各馬の過去走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `effective_run_count`）。根拠が足りない場合は unclear を選ぶ。",
+        "instructions": "このレース 第9回テストマイルステークスGⅢ（1600m） で、最初のコーナーを先頭で通過する馬を選ぶ。stateの`horses`の過去の通過位置と枠、`race_facts.front_runners`を根拠にする。根拠が足りない場合は unclear を選ぶ。",
         "criteria": {
           "h01": "1番 テストアルファ（1枠。直近の過去走で最初のコーナーの位置：先頭、中団、好位、中団）",
           "h02": "2番 テストブラボー（2枠。直近の過去走で最初のコーナーの位置：不明、後方、不明、不明）",
@@ -3179,10 +2953,7 @@
                 "last_3f_sec": 36.2,
                 "notes": [
                   "今回との距離差-200m"
-                ],
-                "gate_position": "内",
-                "jockey_same_as_today": true,
-                "days_before_today": 21
+                ]
               },
               {
                 "date": "2025-11-15",
@@ -3195,10 +2966,7 @@
                 "first_corner_zone": "中団",
                 "last_corner_zone": "中団",
                 "front_3f_sec": null,
-                "last_3f_sec": 35.3,
-                "gate_position": "外",
-                "jockey_same_as_today": true,
-                "days_before_today": 106
+                "last_3f_sec": 35.3
               },
               {
                 "date": "2025-10-04",
@@ -3211,10 +2979,7 @@
                 "first_corner_zone": "好位",
                 "last_corner_zone": "好位",
                 "front_3f_sec": null,
-                "last_3f_sec": 36,
-                "gate_position": "中",
-                "jockey_same_as_today": true,
-                "days_before_today": 148
+                "last_3f_sec": 36
               },
               {
                 "date": "2025-07-27",
@@ -3230,15 +2995,9 @@
                 "last_3f_sec": 35.6,
                 "notes": [
                   "今回との距離差-200m"
-                ],
-                "gate_position": "内",
-                "jockey_same_as_today": true,
-                "days_before_today": 217
+                ]
               }
             ],
-            "gate_position": "内",
-            "effective_run_count": 4,
-            "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
             "facts": {
               "led_at_first_corner": 1,
               "within_2nd_at_first_corner": 2,
@@ -3336,7 +3095,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -3346,7 +3105,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -3400,10 +3159,7 @@
                   "今回との距離差-200m",
                   "通過順なし",
                   "不良馬場"
-                ],
-                "gate_position": null,
-                "jockey_same_as_today": false,
-                "days_before_today": 66
+                ]
               },
               {
                 "date": "2025-11-30",
@@ -3419,10 +3175,7 @@
                 "last_3f_sec": 35.7,
                 "notes": [
                   "今回との距離差-200m"
-                ],
-                "gate_position": "内",
-                "jockey_same_as_today": true,
-                "days_before_today": 91
+                ]
               },
               {
                 "date": "2025-09-23",
@@ -3439,10 +3192,7 @@
                 "notes": [
                   "今回との距離差-200m",
                   "通過順なし"
-                ],
-                "gate_position": null,
-                "jockey_same_as_today": false,
-                "days_before_today": 159
+                ]
               },
               {
                 "date": "2025-09-04",
@@ -3459,15 +3209,9 @@
                 "notes": [
                   "今回との距離差-200m",
                   "通過順なし"
-                ],
-                "gate_position": null,
-                "jockey_same_as_today": false,
-                "days_before_today": 178
+                ]
               }
             ],
-            "gate_position": "内",
-            "effective_run_count": 4,
-            "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
             "facts": {
               "led_at_first_corner": 0,
               "within_2nd_at_first_corner": 0,
@@ -3565,7 +3309,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -3575,7 +3319,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -3627,10 +3371,7 @@
                 "last_3f_sec": 36.4,
                 "notes": [
                   "今回との距離差+200m"
-                ],
-                "gate_position": "中",
-                "jockey_same_as_today": true,
-                "days_before_today": 35
+                ]
               },
               {
                 "date": "2025-12-14",
@@ -3647,10 +3388,7 @@
                 "notes": [
                   "今回との距離差+200m",
                   "稍重馬場"
-                ],
-                "gate_position": "外",
-                "jockey_same_as_today": true,
-                "days_before_today": 77
+                ]
               },
               {
                 "date": "2025-11-09",
@@ -3667,10 +3405,7 @@
                 "notes": [
                   "今回との距離差+200m",
                   "不良馬場"
-                ],
-                "gate_position": "中",
-                "jockey_same_as_today": false,
-                "days_before_today": 112
+                ]
               },
               {
                 "date": "2025-09-27",
@@ -3687,15 +3422,9 @@
                 "notes": [
                   "今回との距離差+400m",
                   "重馬場"
-                ],
-                "gate_position": "外",
-                "jockey_same_as_today": true,
-                "days_before_today": 155
+                ]
               }
             ],
-            "gate_position": "中",
-            "effective_run_count": 4,
-            "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
             "facts": {
               "led_at_first_corner": 1,
               "within_2nd_at_first_corner": 1,
@@ -3793,7 +3522,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -3803,7 +3532,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -3855,10 +3584,7 @@
                 "last_3f_sec": 38.6,
                 "notes": [
                   "今回との距離差+200m"
-                ],
-                "gate_position": "外",
-                "jockey_same_as_today": false,
-                "days_before_today": 84
+                ]
               },
               {
                 "date": "2025-10-13",
@@ -3874,10 +3600,7 @@
                 "last_3f_sec": null,
                 "notes": [
                   "通過順なし"
-                ],
-                "gate_position": null,
-                "jockey_same_as_today": false,
-                "days_before_today": 139
+                ]
               },
               {
                 "date": "2025-06-08",
@@ -3893,15 +3616,9 @@
                 "last_3f_sec": 34.7,
                 "notes": [
                   "馬場種別が異なる"
-                ],
-                "gate_position": "内",
-                "jockey_same_as_today": false,
-                "days_before_today": 266
+                ]
               }
             ],
-            "gate_position": "中",
-            "effective_run_count": 3,
-            "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
             "facts": {
               "led_at_first_corner": 0,
               "within_2nd_at_first_corner": 1,
@@ -4000,7 +3717,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4010,7 +3727,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4062,10 +3779,7 @@
                 "last_3f_sec": 36.9,
                 "notes": [
                   "今回との距離差+200m"
-                ],
-                "gate_position": "中",
-                "jockey_same_as_today": true,
-                "days_before_today": 84
+                ]
               },
               {
                 "date": "2025-11-09",
@@ -4082,10 +3796,7 @@
                 "notes": [
                   "今回との距離差+200m",
                   "不良馬場"
-                ],
-                "gate_position": "内",
-                "jockey_same_as_today": true,
-                "days_before_today": 112
+                ]
               },
               {
                 "date": "2025-09-07",
@@ -4103,10 +3814,7 @@
                   "今回との距離差+200m",
                   "通過順なし",
                   "稍重馬場"
-                ],
-                "gate_position": null,
-                "jockey_same_as_today": true,
-                "days_before_today": 175
+                ]
               },
               {
                 "date": "2025-07-02",
@@ -4123,15 +3831,9 @@
                 "notes": [
                   "今回との距離差+400m",
                   "通過順なし"
-                ],
-                "gate_position": null,
-                "jockey_same_as_today": true,
-                "days_before_today": 242
+                ]
               }
             ],
-            "gate_position": "中",
-            "effective_run_count": 4,
-            "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
             "facts": {
               "led_at_first_corner": 0,
               "within_2nd_at_first_corner": 0,
@@ -4229,7 +3931,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4239,7 +3941,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4292,10 +3994,7 @@
                 "notes": [
                   "馬場種別が異なる",
                   "今回との距離差-400m"
-                ],
-                "gate_position": "外",
-                "jockey_same_as_today": false,
-                "days_before_today": 98
+                ]
               },
               {
                 "date": "2025-10-05",
@@ -4312,10 +4011,7 @@
                 "notes": [
                   "馬場種別が異なる",
                   "今回との距離差+200m"
-                ],
-                "gate_position": "内",
-                "jockey_same_as_today": false,
-                "days_before_today": 147
+                ]
               },
               {
                 "date": "2025-06-08",
@@ -4331,10 +4027,7 @@
                 "last_3f_sec": 35.1,
                 "notes": [
                   "馬場種別が異なる"
-                ],
-                "gate_position": "中",
-                "jockey_same_as_today": false,
-                "days_before_today": 266
+                ]
               },
               {
                 "date": "2025-04-27",
@@ -4351,15 +4044,9 @@
                 "notes": [
                   "馬場種別が異なる",
                   "今回との距離差-400m"
-                ],
-                "gate_position": "外",
-                "jockey_same_as_today": false,
-                "days_before_today": 308
+                ]
               }
             ],
-            "gate_position": "外",
-            "effective_run_count": 4,
-            "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
             "facts": {
               "led_at_first_corner": 0,
               "within_2nd_at_first_corner": 1,
@@ -4457,7 +4144,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4467,7 +4154,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4519,10 +4206,7 @@
                 "last_3f_sec": 38.5,
                 "notes": [
                   "今回との距離差+200m"
-                ],
-                "gate_position": "外",
-                "jockey_same_as_today": false,
-                "days_before_today": 84
+                ]
               },
               {
                 "date": "2025-11-15",
@@ -4535,10 +4219,7 @@
                 "first_corner_zone": "好位",
                 "last_corner_zone": "好位",
                 "front_3f_sec": null,
-                "last_3f_sec": 36.2,
-                "gate_position": "外",
-                "jockey_same_as_today": false,
-                "days_before_today": 106
+                "last_3f_sec": 36.2
               },
               {
                 "date": "2025-10-13",
@@ -4554,10 +4235,7 @@
                 "last_3f_sec": null,
                 "notes": [
                   "通過順なし"
-                ],
-                "gate_position": null,
-                "jockey_same_as_today": false,
-                "days_before_today": 139
+                ]
               },
               {
                 "date": "2025-04-05",
@@ -4573,15 +4251,9 @@
                 "last_3f_sec": null,
                 "notes": [
                   "通過順なし"
-                ],
-                "gate_position": null,
-                "jockey_same_as_today": false,
-                "days_before_today": 330
+                ]
               }
             ],
-            "gate_position": "外",
-            "effective_run_count": 4,
-            "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
             "facts": {
               "led_at_first_corner": 0,
               "within_2nd_at_first_corner": 0,
@@ -4679,7 +4351,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4689,7 +4361,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4741,10 +4413,7 @@
                 "last_3f_sec": 37.3,
                 "notes": [
                   "今回との距離差+200m"
-                ],
-                "gate_position": "内",
-                "jockey_same_as_today": true,
-                "days_before_today": 35
+                ]
               },
               {
                 "date": "2025-11-09",
@@ -4761,10 +4430,7 @@
                 "notes": [
                   "今回との距離差+200m",
                   "不良馬場"
-                ],
-                "gate_position": "内",
-                "jockey_same_as_today": false,
-                "days_before_today": 112
+                ]
               },
               {
                 "date": "2025-09-27",
@@ -4780,10 +4446,7 @@
                 "last_3f_sec": 36.7,
                 "notes": [
                   "今回との距離差+400m"
-                ],
-                "gate_position": "中",
-                "jockey_same_as_today": true,
-                "days_before_today": 155
+                ]
               },
               {
                 "date": "2025-06-28",
@@ -4796,15 +4459,9 @@
                 "first_corner_zone": "好位",
                 "last_corner_zone": "好位",
                 "front_3f_sec": null,
-                "last_3f_sec": 36.8,
-                "gate_position": "中",
-                "jockey_same_as_today": false,
-                "days_before_today": 246
+                "last_3f_sec": 36.8
               }
             ],
-            "gate_position": "外",
-            "effective_run_count": 4,
-            "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
             "facts": {
               "led_at_first_corner": 0,
               "within_2nd_at_first_corner": 0,
@@ -4902,7 +4559,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4912,7 +4569,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -4972,10 +4629,7 @@
                 "last_3f_sec": 36.2,
                 "notes": [
                   "今回との距離差-200m"
-                ],
-                "gate_position": "内",
-                "jockey_same_as_today": true,
-                "days_before_today": 21
+                ]
               },
               {
                 "date": "2025-11-15",
@@ -4988,10 +4642,7 @@
                 "first_corner_zone": "中団",
                 "last_corner_zone": "中団",
                 "front_3f_sec": null,
-                "last_3f_sec": 35.3,
-                "gate_position": "外",
-                "jockey_same_as_today": true,
-                "days_before_today": 106
+                "last_3f_sec": 35.3
               },
               {
                 "date": "2025-10-04",
@@ -5004,10 +4655,7 @@
                 "first_corner_zone": "好位",
                 "last_corner_zone": "好位",
                 "front_3f_sec": null,
-                "last_3f_sec": 36,
-                "gate_position": "中",
-                "jockey_same_as_today": true,
-                "days_before_today": 148
+                "last_3f_sec": 36
               },
               {
                 "date": "2025-07-27",
@@ -5023,15 +4671,9 @@
                 "last_3f_sec": 35.6,
                 "notes": [
                   "今回との距離差-200m"
-                ],
-                "gate_position": "内",
-                "jockey_same_as_today": true,
-                "days_before_today": 217
+                ]
               }
             ],
-            "gate_position": "内",
-            "effective_run_count": 4,
-            "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
             "facts": {
               "led_at_first_corner": 1,
               "within_2nd_at_first_corner": 2,
@@ -5129,7 +4771,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -5139,7 +4781,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（1番 テストアルファ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -5199,10 +4841,7 @@
                   "今回との距離差-200m",
                   "通過順なし",
                   "不良馬場"
-                ],
-                "gate_position": null,
-                "jockey_same_as_today": false,
-                "days_before_today": 66
+                ]
               },
               {
                 "date": "2025-11-30",
@@ -5218,10 +4857,7 @@
                 "last_3f_sec": 35.7,
                 "notes": [
                   "今回との距離差-200m"
-                ],
-                "gate_position": "内",
-                "jockey_same_as_today": true,
-                "days_before_today": 91
+                ]
               },
               {
                 "date": "2025-09-23",
@@ -5238,10 +4874,7 @@
                 "notes": [
                   "今回との距離差-200m",
                   "通過順なし"
-                ],
-                "gate_position": null,
-                "jockey_same_as_today": false,
-                "days_before_today": 159
+                ]
               },
               {
                 "date": "2025-09-04",
@@ -5258,15 +4891,9 @@
                 "notes": [
                   "今回との距離差-200m",
                   "通過順なし"
-                ],
-                "gate_position": null,
-                "jockey_same_as_today": false,
-                "days_before_today": 178
+                ]
               }
             ],
-            "gate_position": "内",
-            "effective_run_count": 4,
-            "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
             "facts": {
               "led_at_first_corner": 0,
               "within_2nd_at_first_corner": 0,
@@ -5364,7 +4991,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -5374,7 +5001,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（2番 テストブラボー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -5432,10 +5059,7 @@
                 "last_3f_sec": 36.4,
                 "notes": [
                   "今回との距離差+200m"
-                ],
-                "gate_position": "中",
-                "jockey_same_as_today": true,
-                "days_before_today": 35
+                ]
               },
               {
                 "date": "2025-12-14",
@@ -5452,10 +5076,7 @@
                 "notes": [
                   "今回との距離差+200m",
                   "稍重馬場"
-                ],
-                "gate_position": "外",
-                "jockey_same_as_today": true,
-                "days_before_today": 77
+                ]
               },
               {
                 "date": "2025-11-09",
@@ -5472,10 +5093,7 @@
                 "notes": [
                   "今回との距離差+200m",
                   "不良馬場"
-                ],
-                "gate_position": "中",
-                "jockey_same_as_today": false,
-                "days_before_today": 112
+                ]
               },
               {
                 "date": "2025-09-27",
@@ -5492,15 +5110,9 @@
                 "notes": [
                   "今回との距離差+400m",
                   "重馬場"
-                ],
-                "gate_position": "外",
-                "jockey_same_as_today": true,
-                "days_before_today": 155
+                ]
               }
             ],
-            "gate_position": "中",
-            "effective_run_count": 4,
-            "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
             "facts": {
               "led_at_first_corner": 1,
               "within_2nd_at_first_corner": 1,
@@ -5598,7 +5210,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -5608,7 +5220,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（3番 テストチャーリー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -5666,10 +5278,7 @@
                 "last_3f_sec": 38.6,
                 "notes": [
                   "今回との距離差+200m"
-                ],
-                "gate_position": "外",
-                "jockey_same_as_today": false,
-                "days_before_today": 84
+                ]
               },
               {
                 "date": "2025-10-13",
@@ -5685,10 +5294,7 @@
                 "last_3f_sec": null,
                 "notes": [
                   "通過順なし"
-                ],
-                "gate_position": null,
-                "jockey_same_as_today": false,
-                "days_before_today": 139
+                ]
               },
               {
                 "date": "2025-06-08",
@@ -5704,15 +5310,9 @@
                 "last_3f_sec": 34.7,
                 "notes": [
                   "馬場種別が異なる"
-                ],
-                "gate_position": "内",
-                "jockey_same_as_today": false,
-                "days_before_today": 266
+                ]
               }
             ],
-            "gate_position": "中",
-            "effective_run_count": 3,
-            "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
             "facts": {
               "led_at_first_corner": 0,
               "within_2nd_at_first_corner": 1,
@@ -5811,7 +5411,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -5821,7 +5421,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（4番 テストデルタ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -5879,10 +5479,7 @@
                 "last_3f_sec": 36.9,
                 "notes": [
                   "今回との距離差+200m"
-                ],
-                "gate_position": "中",
-                "jockey_same_as_today": true,
-                "days_before_today": 84
+                ]
               },
               {
                 "date": "2025-11-09",
@@ -5899,10 +5496,7 @@
                 "notes": [
                   "今回との距離差+200m",
                   "不良馬場"
-                ],
-                "gate_position": "内",
-                "jockey_same_as_today": true,
-                "days_before_today": 112
+                ]
               },
               {
                 "date": "2025-09-07",
@@ -5920,10 +5514,7 @@
                   "今回との距離差+200m",
                   "通過順なし",
                   "稍重馬場"
-                ],
-                "gate_position": null,
-                "jockey_same_as_today": true,
-                "days_before_today": 175
+                ]
               },
               {
                 "date": "2025-07-02",
@@ -5940,15 +5531,9 @@
                 "notes": [
                   "今回との距離差+400m",
                   "通過順なし"
-                ],
-                "gate_position": null,
-                "jockey_same_as_today": true,
-                "days_before_today": 242
+                ]
               }
             ],
-            "gate_position": "中",
-            "effective_run_count": 4,
-            "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
             "facts": {
               "led_at_first_corner": 0,
               "within_2nd_at_first_corner": 0,
@@ -6046,7 +5631,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -6056,7 +5641,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（5番 テストエコー）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -6115,10 +5700,7 @@
                 "notes": [
                   "馬場種別が異なる",
                   "今回との距離差-400m"
-                ],
-                "gate_position": "外",
-                "jockey_same_as_today": false,
-                "days_before_today": 98
+                ]
               },
               {
                 "date": "2025-10-05",
@@ -6135,10 +5717,7 @@
                 "notes": [
                   "馬場種別が異なる",
                   "今回との距離差+200m"
-                ],
-                "gate_position": "内",
-                "jockey_same_as_today": false,
-                "days_before_today": 147
+                ]
               },
               {
                 "date": "2025-06-08",
@@ -6154,10 +5733,7 @@
                 "last_3f_sec": 35.1,
                 "notes": [
                   "馬場種別が異なる"
-                ],
-                "gate_position": "中",
-                "jockey_same_as_today": false,
-                "days_before_today": 266
+                ]
               },
               {
                 "date": "2025-04-27",
@@ -6174,15 +5750,9 @@
                 "notes": [
                   "馬場種別が異なる",
                   "今回との距離差-400m"
-                ],
-                "gate_position": "外",
-                "jockey_same_as_today": false,
-                "days_before_today": 308
+                ]
               }
             ],
-            "gate_position": "外",
-            "effective_run_count": 4,
-            "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
             "facts": {
               "led_at_first_corner": 0,
               "within_2nd_at_first_corner": 1,
@@ -6280,7 +5850,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -6290,7 +5860,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（6番 テストフォックス）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -6348,10 +5918,7 @@
                 "last_3f_sec": 38.5,
                 "notes": [
                   "今回との距離差+200m"
-                ],
-                "gate_position": "外",
-                "jockey_same_as_today": false,
-                "days_before_today": 84
+                ]
               },
               {
                 "date": "2025-11-15",
@@ -6364,10 +5931,7 @@
                 "first_corner_zone": "好位",
                 "last_corner_zone": "好位",
                 "front_3f_sec": null,
-                "last_3f_sec": 36.2,
-                "gate_position": "外",
-                "jockey_same_as_today": false,
-                "days_before_today": 106
+                "last_3f_sec": 36.2
               },
               {
                 "date": "2025-10-13",
@@ -6383,10 +5947,7 @@
                 "last_3f_sec": null,
                 "notes": [
                   "通過順なし"
-                ],
-                "gate_position": null,
-                "jockey_same_as_today": false,
-                "days_before_today": 139
+                ]
               },
               {
                 "date": "2025-04-05",
@@ -6402,15 +5963,9 @@
                 "last_3f_sec": null,
                 "notes": [
                   "通過順なし"
-                ],
-                "gate_position": null,
-                "jockey_same_as_today": false,
-                "days_before_today": 330
+                ]
               }
             ],
-            "gate_position": "外",
-            "effective_run_count": 4,
-            "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
             "facts": {
               "led_at_first_corner": 0,
               "within_2nd_at_first_corner": 0,
@@ -6508,7 +6063,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -6518,7 +6073,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（7番 テストゴルフ）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -6576,10 +6131,7 @@
                 "last_3f_sec": 37.3,
                 "notes": [
                   "今回との距離差+200m"
-                ],
-                "gate_position": "内",
-                "jockey_same_as_today": true,
-                "days_before_today": 35
+                ]
               },
               {
                 "date": "2025-11-09",
@@ -6596,10 +6148,7 @@
                 "notes": [
                   "今回との距離差+200m",
                   "不良馬場"
-                ],
-                "gate_position": "内",
-                "jockey_same_as_today": false,
-                "days_before_today": 112
+                ]
               },
               {
                 "date": "2025-09-27",
@@ -6615,10 +6164,7 @@
                 "last_3f_sec": 36.7,
                 "notes": [
                   "今回との距離差+400m"
-                ],
-                "gate_position": "中",
-                "jockey_same_as_today": true,
-                "days_before_today": 155
+                ]
               },
               {
                 "date": "2025-06-28",
@@ -6631,15 +6177,9 @@
                 "first_corner_zone": "好位",
                 "last_corner_zone": "好位",
                 "front_3f_sec": null,
-                "last_3f_sec": 36.8,
-                "gate_position": "中",
-                "jockey_same_as_today": false,
-                "days_before_today": 246
+                "last_3f_sec": 36.8
               }
             ],
-            "gate_position": "外",
-            "effective_run_count": 4,
-            "recent_races_scope": "記載された直近の過去走のみ（通算の傾向ではない）。取消・除外は『出走せず』として表示し、数えない",
             "facts": {
               "led_at_first_corner": 0,
               "within_2nd_at_first_corner": 0,
@@ -6737,7 +6277,7 @@
         "questions": {
           "first_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最初のコーナーをどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",
@@ -6747,7 +6287,7 @@
           },
           "last_corner": {
             "type": "choice",
-            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`target.recent_races` の各走には、その走での枠の内外（`gate_position`）、騎手が今回と同じか（`jockey_same_as_today`）、今回との間隔（`days_before_today`）がある。今回の枠の内外は `target.gate_position`。過去の通過位置が、枠や騎手の違いによるものかを見分ける材料にしてよい。`recent_races` は記載された直近の過去走だけで、通算の傾向ではない（走った数は `target.effective_run_count`）。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
+            "instructions": "`target`の馬（8番 テストホテル）は、このレース（8頭立て）の最後のコーナー（4コーナー）をどの位置で通過するか。`target.recent_races`の通過位置と枠、`race_outlook`の想定展開、`others`の先行しそうな馬との位置関係を根拠にする。`race_outlook` の項目が「どちらとも言えない」「特定できない」「判断できない」の場合、その項目は根拠にしない。",
             "criteria": {
               "front": "先頭：1番手で通過する",
               "forward": "好位：2〜2番手で通過する",

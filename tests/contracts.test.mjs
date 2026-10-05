@@ -2,14 +2,16 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { parse } from '../src/parse/index.js';
 import { derive } from '../src/derive.js';
-import { RACE_OUTLOOK, HORSE_POSITION } from '../src/contracts.js';
+import { RACE_OUTLOOK, HORSE_POSITION, RACE_OUTLOOK_V1, HORSE_POSITION_V2 } from '../src/contracts.js';
 import { readFileSync } from 'node:fs';
 
 const D = derive(parse(readFileSync(new URL('./fixtures/jra_entry_basic.txt', import.meta.url), 'utf8')));
 
 test('契約の label', () => {
-  assert.equal(RACE_OUTLOOK.label, 'race-outlook@1');
-  assert.equal(HORSE_POSITION.label, 'horse-position@2');
+  assert.equal(RACE_OUTLOOK.label, 'race-outlook@2');
+  assert.equal(HORSE_POSITION.label, 'horse-position@3');
+  assert.equal(RACE_OUTLOOK_V1.label, 'race-outlook@1');
+  assert.equal(HORSE_POSITION_V2.label, 'horse-position@2');
 });
 test('RACE_OUTLOOK の質問', () => {
   const q = RACE_OUTLOOK.questions(D);

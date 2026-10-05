@@ -1,6 +1,6 @@
 /*
  * 記録（JSON）と、フィードバック用の要約・詳しいテキストを作る。DOM・ネットワーク・保存領域には触れない。
- * ctx から読むのは下の項目だけ。合言葉・API キーは受け取らない。
+ * ctx から読むのは下の項目だけ（s3・s4 の contract は、実際に使った契約のラベル。なければ旧版とみなす）。合言葉・API キーは受け取らない。
  *   now（Date）, host（ホスト名）, userAgent, race, horses, warnings, userInput{blind,memo},
  *   s3: null | {parsed, meta{method,at,request?{state,questions}}, state, overrides, error?}   s3Error: null | {kind,message,at}
  *   s4: null | {results, usedOutlook, usedOverridden, aborted, cancelled, states{馬番:state}}
@@ -9,7 +9,7 @@
  */
 import { describeAnswer, outlookFromAnswers, levelLabel } from './score.js';
 import { zoneRanges } from './derive.js';
-import { paceLabels, RACE_OUTLOOK, HORSE_POSITION } from './contracts.js';
+import { paceLabels, RACE_OUTLOOK_V1, HORSE_POSITION_V2 } from './contracts.js';
 import { MODEL_ID, estimateCostUsd } from './jev.js';
 import { summarizeStage4 } from './stage4.js';
 import { pad } from './util.js';
@@ -97,6 +97,10 @@ const roundTripOf = p => (typeof p.roundTripMs === 'number' ? p.roundTripMs : nu
 const requestIdOf = p => (typeof p.requestId === 'string' ? p.requestId : null);
 const evalOf = p => (typeof p.evaluationTimeMs === 'number' ? p.evaluationTimeMs : null);
 
+/* 実際に使った契約のラベル。ラベルがない旧い形の入力は、変更前と同じ旧版とみなす */
+const s3Label = ctx => ctx.s3?.contract || RACE_OUTLOOK_V1.label;
+const s4Label = ctx => ctx.s4?.contract || HORSE_POSITION_V2.label;
+
 /* ---------- 記録（JSON） ---------- */
 export async function buildRecord(ctx) {
   const R = ctx.race || {}, T = R.track || {};
@@ -108,7 +112,7 @@ export async function buildRecord(ctx) {
     const { parsed, meta, state } = ctx.s3, ol = s3Outlook(ctx), api = meta?.method === 'api';
     const request = api ? requestOf(meta.request) : null;
     stage3 = {
-      contract: RACE_OUTLOOK.label, route: api ? 'api' : 'paste', executedAt: api ? meta.at ?? null : null,
+      contract: s3Label(ctx), route: api ? 'api' : 'paste', executedAt: api ? meta.at ?? null : null,
       sentModel: api ? MODEL_ID : null, answeredModel: parsed.answeredModel ?? null,
       stateHash: await stateHash(request ? request.state : state), outlook: ol.outlook, overridden: ol.overridden,
       answers: s3Answers(ctx), usage: usageOf(parsed), evaluationTimeMs: evalOf(parsed), requestId: requestIdOf(parsed), roundTripMs: roundTripOf(parsed), raw: ctx.s3.raw ?? null,
@@ -131,7 +135,7 @@ export async function buildRecord(ctx) {
         request,
       });
     }
-    stage4 = { contract: HORSE_POSITION.label, sentModel: MODEL_ID, usedOutlook: ctx.s4.usedOutlook ?? null,
+    stage4 = { contract: s4Label(ctx), sentModel: MODEL_ID, usedOutlook: ctx.s4.usedOutlook ?? null,
       aborted: ctx.s4.aborted ?? null, cancelled: !!ctx.s4.cancelled, results };
   }
   return {
@@ -240,11 +244,11 @@ export function buildSummaryLine(ctx) {
   if (track) parts.push(`track=${track}`);
   if (ctx.s3) {
     const m = ctx.s3.meta?.method === 'api' ? 'api' : 'paste';
-    parts.push(['S3=' + m, '成功', `model=${ctx.s3.parsed.answeredModel ?? '不明'}`, `ctr=${RACE_OUTLOOK.label}`, ...outlookItems(ctx)].join(' '));
+    parts.push(['S3=' + m, '成功', `model=${ctx.s3.parsed.answeredModel ?? '不明'}`, `ctr=${s3Label(ctx)}`, ...outlookItems(ctx)].join(' '));
   } else parts.push(ctx.s3Error ? 'S3=失敗' : 'S3=未実行');
   if (ctx.s4) {
     const m = summarizeStage4(ctx.s4.results, estimateCostUsd);
-    parts.push(['S4=api', `ok${m.okCount}/ng${m.failedCount}/skip${m.skippedCount}`, `ctr=${HORSE_POSITION.label}`, `outlook=${outlookSource(ctx.s4)}`,
+    parts.push(['S4=api', `ok${m.okCount}/ng${m.failedCount}/skip${m.skippedCount}`, `ctr=${s4Label(ctx)}`, `outlook=${outlookSource(ctx.s4)}`,
       `tok=${m.inputTokens}/${m.outputTokens}`, `cost=${fmtCostLine(m)}`].join(' '));
   } else parts.push('S4=未実行');
   const errs = errorsOf(ctx);
@@ -276,7 +280,7 @@ export function buildDetailText(ctx) {
   if (!ctx.s3) L.push(ctx.s3Error ? `失敗（${ctx.s3Error.kind}：${oneLine(ctx.s3Error.message)}）` : '未実行');
   else {
     const { parsed, meta } = ctx.s3, A = s3Answers(ctx), ol = s3Outlook(ctx);
-    L.push(`経路：${meta?.method === 'api' ? 'api' : 'paste'} ／ 実行日時：${meta?.at ?? '—'} ／ 契約：${RACE_OUTLOOK.label} ／ 答えた版：${parsed.answeredModel ?? '不明'}`,
+    L.push(`経路：${meta?.method === 'api' ? 'api' : 'paste'} ／ 実行日時：${meta?.at ?? '—'} ／ 契約：${s3Label(ctx)} ／ 答えた版：${parsed.answeredModel ?? '不明'}`,
       `ハナ：${answerText(A.lead_horse)}`, `先行争い：${answerText(A.early_lead_battle)}`, `ペース：${answerText(A.pace)}`,
       `STEP4 に渡す値：${ol.outlook ? ['expected_leader', 'early_lead_battle', 'pace'].filter(k => k in ol.outlook).map(k => `${k}=${oneLine(ol.outlook[k])}`).join(' ／ ') : 'なし'}${ol.overridden.length ? `（手で上書き：${ol.overridden.join('、')}）` : ''}`,
       `評価時間：${formatEvalTime(parsed.evaluationTimeMs)} ／ 往復時間：${formatRoundTrip(parsed.roundTripMs)} ／ トークン：入力 ${parsed.inputTokens ?? '不明'} 出力 ${parsed.outputTokens ?? '不明'}`);
@@ -285,7 +289,7 @@ export function buildDetailText(ctx) {
   if (!ctx.s4) L.push('未実行');
   else {
     const m = summarizeStage4(ctx.s4.results, estimateCostUsd);
-    L.push(`契約：${HORSE_POSITION.label} ／ race_outlook：${outlookSource(ctx.s4)} ／ 成功${m.okCount} 失敗${m.failedCount} 未実行${m.skippedCount}${ctx.s4.cancelled ? ' ／ 中止あり' : ''}${ctx.s4.aborted ? ` ／ 中断（${ctx.s4.aborted.kind}）` : ''}`,
+    L.push(`契約：${s4Label(ctx)} ／ race_outlook：${outlookSource(ctx.s4)} ／ 成功${m.okCount} 失敗${m.failedCount} 未実行${m.skippedCount}${ctx.s4.cancelled ? ' ／ 中止あり' : ''}${ctx.s4.aborted ? ` ／ 中断（${ctx.s4.aborted.kind}）` : ''}`,
       `トークン：入力 ${m.inputTokens} 出力 ${m.outputTokens} ／ 評価時間の合計：${formatEvalTotal(ctx.s4.results)} ／ 概算費用：${fmtCostLine(m)}`);
     for (const r of ctx.s4.results) {
       if (r.status === 'ok') {
