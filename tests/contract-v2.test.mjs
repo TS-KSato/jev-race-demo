@@ -166,7 +166,7 @@ test('record：実際に使ったラベルが記録・サマリー・詳細に�
   const { parseResponse } = await import('../src/jev.js');
   const J = parseResponse(raw, RACE_OUTLOOK.questions(D));
   const mkCtx = (c3, c4) => ({ now: new Date('2026-03-01T10:20:30+09:00'), host: 'x', userAgent: 'UA', race: D.race, horses: D.horses, warnings: [],
-    userInput: { blind: 'blind', memo: '' }, s3Error: null,
+    userInput: { memo: '' }, s3Error: null,
     s3: { parsed: J, meta: { method: 'paste' }, state: raceState(D), overrides: {}, raw, ...(c3 ? { contract: c3 } : {}) },
     s4: { results: [], usedOutlook: null, usedOverridden: [], aborted: null, cancelled: false, states: {}, ...(c4 ? { contract: c4 } : {}) } });
   const a = mkCtx('race-outlook@2', 'horse-position@3');
