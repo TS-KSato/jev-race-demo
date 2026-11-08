@@ -3,6 +3,7 @@
  * 入力：scoreRace の返り値（scoring@2）、記録の stage3、parseResult の返り値（着順と馬名のため）。
  */
 import { levelLabel } from './score.js';
+import { formatFirst3f } from './util.js';
 
 export const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -47,7 +48,7 @@ export function factsHtml(scoring, result) {
 <b>馬場状態</b><span>${esc(going)}</span>
 <b>出走頭数</b><span>${esc(R.starters ?? '—')}頭（取消 ${esc(R.scratched ?? 0)}頭）</span>
 <b>ハロンタイム</b><span>${esc(fl)}</span>
-<b>前半3F</b><span>${sec(P.first_3f)}</span>
+<b>前半3F</b><span>${esc(formatFirst3f(P.first_3f, R.distance))}</span>
 <b>後半3F</b><span>${sec(P.last_3f)}</span>
 <b>差（後半 − 前半）</b><span>${formatDiff(P.first_last_diff)}（正が後半の方が遅い）</span>
 <b>公表の後半3F</b><span>${sec(P.reported_last_3f)}</span></div>`;
@@ -59,13 +60,13 @@ function answerText(a) {
   return `${esc(a.selected ?? '—')} <span class="bdg bdg-${esc(a.level)}">${esc(a.levelLabel ?? level(a.level))}</span>`;
 }
 export function paceHtml(scoring, stage3) {
-  const P = scoring.facts?.pace ?? {};
+  const P = scoring.facts?.pace ?? {}, R = scoring.facts?.race ?? {};
   let h = '<div class="lbl">ペースと先行争い（採点しません）</div>';
   h += '<p class="desc">ペースと先行争いは採点しません。結果の事実は上のとおりです。</p>';
   if (!stage3?.answers) return h + '<p class="muted">STEP3 が未実行です。</p>';
   h += `<div class="kv"><b>STEP3 のペース</b><span>${answerText(stage3.answers.pace)}</span>
 <b>STEP3 の先行争い</b><span>${answerText(stage3.answers.early_lead_battle)}</span>
-<b>結果の前半3F</b><span>${sec(P.first_3f)}</span>
+<b>結果の前半3F</b><span>${esc(formatFirst3f(P.first_3f, R.distance))}</span>
 <b>結果の後半3F</b><span>${sec(P.last_3f)}</span>
 <b>結果の差（後半 − 前半）</b><span>${formatDiff(P.first_last_diff)}</span></div>`;
   return h;

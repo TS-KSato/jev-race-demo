@@ -12,7 +12,7 @@ import { zoneRanges } from './derive.js';
 import { paceLabels, RACE_OUTLOOK_V1, HORSE_POSITION_V2 } from './contracts.js';
 import { MODEL_ID, estimateCostUsd } from './jev.js';
 import { summarizeStage4 } from './stage4.js';
-import { pad } from './util.js';
+import { pad, formatFirst3f } from './util.js';
 
 export const RECORD_SCHEMA = 'jev-demo-record@1';
 const MAX_ERRORS = 3, MAX_ERR_CHARS = 60;
@@ -218,6 +218,8 @@ function scoringDetail(ctx) {
   const S = ctx.scoring, L = ['', '【結果と採点】'];
   if (!S.ok) { L.push(`採点なし：${(S.reasons || []).map(r => oneLine(r.message)).join(' ／ ')}`); return L; }
   L.push(scoringItems(ctx).join(' '));
+  const P = ctx.result.pace || {}, d = v => (typeof v === 'number' && Number.isFinite(v) ? `${v > 0 ? '+' : ''}${v.toFixed(1)}` : '—');
+  L.push(`前半3F：${formatFirst3f(P.first_3f, ctx.result.race?.distance)} ／ 後半3F：${typeof P.last_3f === 'number' ? P.last_3f.toFixed(1) : '—'} ／ 差（後半 − 前半）：${d(P.first_last_diff)}`);
   for (const h of S.horses) L.push(`${h.number}番 ${h.name}：最初のコーナー ${itemText(h.first_corner)} ／ 最後のコーナー ${itemText(h.last_corner)}`);
   const ms = S.summary.high_confidence_misses;
   L.push(`高確信で外れた馬：${ms.length ? '' : 'なし'}`);

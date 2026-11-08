@@ -171,7 +171,10 @@ function pacePart(tail,race,winTenths,warnings){
   const total=sum(fl);
   if(fl.length>=3){
     const f3=sum(fl.slice(0,3)),l3=sum(fl.slice(-3));
-    p.first_3f=sec(f3);p.last_3f=sec(l3);p.first_last_diff=sec(l3-f3);
+    p.last_3f=sec(l3);
+    // 前半3Fは、距離が200mで割り切れるときだけ（割り切れないと、最初の区間が200m未満になる）
+    if(race.distance&&race.distance%200===0){p.first_3f=sec(f3);p.first_last_diff=sec(l3-f3);}
+    else if(!race.distance) warnings.push(W('first3f_no_distance','距離が読み取れないため、前半3Fと後半3Fとの差を算出しません'));
   }
   if(fl.length>=4) p.last_4f=sec(sum(fl.slice(-4)));
   if(winTenths!=null&&total!==winTenths) warnings.push(W('furlong_sum_mismatch',`ハロンタイムの合計（${sec(total)}）と勝ち馬のタイム（${sec(winTenths)}）が違います`));
