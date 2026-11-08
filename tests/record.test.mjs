@@ -28,7 +28,7 @@ const sk = num => ({ num, name: 'Y', status: 'skipped', raw: null, parsed: null,
 const OL = outlookFromAnswers(J, D.horses, {}).outlook;
 function ctx(over = {}) {
   return { now: NOW, host: 'x.netlify.app', userAgent: 'UA', race: D.race, horses: D.horses, warnings: P.warnings,
-    userInput: { blind: 'blind', memo: 'めも\n2行目' }, password: SECRET, s3: null, s3Error: null, s4: null, ...over };
+    userInput: { memo: 'めも\n2行目' }, password: SECRET, s3: null, s3Error: null, s4: null, ...over };
 }
 const s3 = (meta = { method: 'paste' }, overrides = {}) => ({ parsed: J, meta, state: raceState(D), overrides, raw: RAW3 });
 const s4 = (results, extra = {}) => ({ results, usedOutlook: OL, usedOverridden: [], aborted: null, cancelled: false,
@@ -55,7 +55,7 @@ test('STEP4 の評価時間の合計：一部にない場合は頭数を併記�
 
 test('要約：どちらもない場合', () => {
   const line = buildSummaryLine(ctx({ warnings: [] }));
-  assert.match(line, /^FB1 \| 2026-03-01T\d\d:20:30[+-]\d\d:\d\d \| host=netlify \| race=2026-03-01 東京 11R 第9回テストマイルステークスGⅢ 1600m（ダート・左） 8頭 \| warn=0 \| S3=未実行 \| S4=未実行 \| err=なし$/);
+  assert.match(line, /^FB1 \| 2026-03-01T\d\d:20:30[+-]\d\d:\d\d \| host=netlify \| race=2026-03-01 東京 11R 第9回テストマイルステークスGⅢ 1600m（ダート・左） 8頭 \| warn=0 \| exec=unknown 実行=不明 発走=2026-03-01T15:45:00\+09:00 \| S3=未実行 \| S4=未実行 \| err=なし$/);
   assert.ok(!/[\r\n]/.test(line));
 });
 
@@ -107,7 +107,7 @@ test('要約：STEP3 の失敗だけがある場合', () => {
 
 test('合言葉・応答本文は要約・詳しいテキスト・記録（合言葉）に含まれない。応答本文は記録だけに含まれる', async () => {
   const rs = [ok(1, raw4({ request_id: 'RAWMARK-4' })), ng(2, 'other', 'm', 'a')];
-  const c = ctx({ s3: s3(), s4: s4(rs), userInput: { blind: 'blind', memo: 'メモ' } });
+  const c = ctx({ s3: s3(), s4: s4(rs), userInput: { memo: 'メモ' } });
   const rec = JSON.stringify(await buildRecord(c));
   for (const t of [buildSummaryLine(c), buildDetailText(c), rec]) assert.ok(!t.includes(SECRET));
   for (const t of [buildSummaryLine(c), buildDetailText(c)]) { assert.ok(!t.includes('playground_test0001')); assert.ok(!t.includes('RAWMARK-4')); }
@@ -116,11 +116,13 @@ test('合言葉・応答本文は要約・詳しいテキスト・記録（合�
 
 test('buildRecord：STEP3', async () => {
   const r = await buildRecord(ctx({ s3: s3({ method: 'api', at: '2026-03-01T01:00:00.000Z' }) }));
-  assert.equal(r.schema, 'jev-demo-record@1');
+  assert.equal(r.schema, 'jev-demo-record@2');
   assert.equal(new Date(r.createdAt).getTime(), NOW.getTime());
   assert.equal(r.page.host, 'netlify');
   assert.deepEqual(r.race, { name: '第9回テストマイルステークスGⅢ', date: '2026-03-01', venue: '東京', course: '1600m（ダート・左）', conditions: '4歳以上 オープン （国際）（指定） 別定', fieldSize: 8 });
-  assert.deepEqual(r.userInput, { blind: 'blind', memo: 'めも\n2行目' });
+  assert.deepEqual(r.userInput, { memo: 'めも\n2行目' });
+  assert.ok(!('blind' in r.userInput));
+  assert.equal(r.execution.blindClass, 'blind'); // 2026-03-01 10:00（日本時間）の実行、発走 15時45分
   assert.equal(r.stage4, null);
   const s = r.stage3;
   assert.equal(s.contract, 'race-outlook@1');
@@ -278,7 +280,7 @@ test('request (f)：既存のキーは変わらず、request が追加される�
   const meta = { method: 'api', at: 'a', request: sentOf(raceState(D), raceQuestions(D)) };
   const r = await buildRecord(ctx({ s3: s3(meta), s4: s4(out.results) }));
   const b = await buildRecord(ctx({ s3: s3(), s4: s4([ok(1)]) }));
-  assert.equal(r.schema, 'jev-demo-record@1');
+  assert.equal(r.schema, 'jev-demo-record@2');
   const without = o => Object.keys(o).filter(k => k !== 'request');
   assert.deepEqual(without(r.stage3), Object.keys(b.stage3).filter(k => k !== 'request'));
   assert.deepEqual(without(r.stage4.results[0]), Object.keys(b.stage4.results[0]).filter(k => k !== 'request'));
@@ -309,7 +311,7 @@ test('buildRecord：結果と採点を渡すと result・scoring・scoredAt が�
   assert.equal(rec.scoring.schema, 'scoring@2');
   assert.equal(rec.scoredAt, rec.createdAt);
   assert.equal((await buildRecord(ctx({ result, scoring, scoredAt: new Date(NOW.getTime() + 60000) }))).scoredAt.slice(14, 16), '21');
-  assert.equal(rec.schema, 'jev-demo-record@1');
+  assert.equal(rec.schema, 'jev-demo-record@2');
 });
 
 test('buildRecord：記録に結果ページの本文は入らない', async () => {
@@ -322,7 +324,7 @@ test('buildRecord：記録に結果ページの本文は入らない', async () 
 test('buildRecord：結果なしでは result・scoring・scoredAt が null で、他のキーは従来どおり', async () => {
   const rec = await buildRecord(ctx());
   assert.deepEqual([rec.result, rec.scoring, rec.scoredAt], [null, null, null]);
-  assert.deepEqual(Object.keys(rec), ['schema', 'createdAt', 'page', 'race', 'track', 'warnings', 'userInput', 'stage3', 'stage4', 'result', 'scoring', 'scoredAt']);
+  assert.deepEqual(Object.keys(rec), ['schema', 'createdAt', 'page', 'race', 'track', 'warnings', 'userInput', 'execution', 'stage3', 'stage4', 'result', 'scoring', 'scoredAt']);
 });
 
 test('要約・詳しいテキスト：採点なしは従来どおり、ありは末尾に res= の項目', () => {

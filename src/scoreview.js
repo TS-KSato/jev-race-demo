@@ -3,6 +3,7 @@
  * 入力：scoreRace の返り値（scoring@2）、記録の stage3、parseResult の返り値（着順と馬名のため）。
  */
 import { levelLabel } from './score.js';
+import { formatFirst3f } from './util.js';
 
 export const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -47,7 +48,7 @@ export function factsHtml(scoring, result) {
 <b>馬場状態</b><span>${esc(going)}</span>
 <b>出走頭数</b><span>${esc(R.starters ?? '—')}頭（取消 ${esc(R.scratched ?? 0)}頭）</span>
 <b>ハロンタイム</b><span>${esc(fl)}</span>
-<b>前半3F</b><span>${sec(P.first_3f)}</span>
+<b>前半3F</b><span>${esc(formatFirst3f(P.first_3f, R.distance))}</span>
 <b>後半3F</b><span>${sec(P.last_3f)}</span>
 <b>差（後半 − 前半）</b><span>${formatDiff(P.first_last_diff)}（正が後半の方が遅い）</span>
 <b>公表の後半3F</b><span>${sec(P.reported_last_3f)}</span></div>`;
@@ -55,17 +56,17 @@ export function factsHtml(scoring, result) {
 
 /* ---------- ペースと先行争い（採点しない） ---------- */
 function answerText(a) {
-  if (!a || a.error) return '答えなし';
+  if (!a || a.error) return '回答なし';
   return `${esc(a.selected ?? '—')} <span class="bdg bdg-${esc(a.level)}">${esc(a.levelLabel ?? level(a.level))}</span>`;
 }
 export function paceHtml(scoring, stage3) {
-  const P = scoring.facts?.pace ?? {};
+  const P = scoring.facts?.pace ?? {}, R = scoring.facts?.race ?? {};
   let h = '<div class="lbl">ペースと先行争い（採点しません）</div>';
   h += '<p class="desc">ペースと先行争いは採点しません。結果の事実は上のとおりです。</p>';
   if (!stage3?.answers) return h + '<p class="muted">STEP3 が未実行です。</p>';
   h += `<div class="kv"><b>STEP3 のペース</b><span>${answerText(stage3.answers.pace)}</span>
 <b>STEP3 の先行争い</b><span>${answerText(stage3.answers.early_lead_battle)}</span>
-<b>結果の前半3F</b><span>${sec(P.first_3f)}</span>
+<b>結果の前半3F</b><span>${esc(formatFirst3f(P.first_3f, R.distance))}</span>
 <b>結果の後半3F</b><span>${sec(P.last_3f)}</span>
 <b>結果の差（後半 − 前半）</b><span>${formatDiff(P.first_last_diff)}</span></div>`;
   return h;
@@ -76,15 +77,18 @@ function nameOf(n, scoring, result) {
   const h = (result?.horses ?? []).find(x => x.number === n) ?? (scoring.horses ?? []).find(x => x.number === n);
   return h ? `${num(n)} ${esc(h.name)}` : num(n);
 }
-export function leaderHtml(scoring, result) {
+/* STEP3 は実行したが、ハナの答えが取れなかった（「特定できない」と答えた場合とは別） */
+export const noLeaderAnswer = stage3 => !!stage3?.answers && (!stage3.answers.lead_horse || !!stage3.answers.lead_horse.error);
+export function leaderHtml(scoring, result, stage3 = null) {
   const L = scoring.leader;
+  const missing = noLeaderAnswer(stage3) ? '回答なし' : '未実行';
   if (!L) return '';
   const actual = L.actual != null ? nameOf(L.actual, scoring, result)
     : `${L.candidates?.length ? `候補：${L.candidates.map(num).join('、')}（` : '（'}確定できません）`;
   const pred = L.predicted_status === 'predicted' ? `${nameOf(L.predicted, scoring, result)}（確率 ${pct(L.probability)}、${esc(level(L.level))}）`
     : L.predicted_status === 'abstain' ? '特定できないと回答（採点しません）'
-    : L.predicted_status === 'unscorable_predicted' ? '採点不能' : '未実行';
-  const res = L.status === 'scored' ? (L.correct ? '○' : '×') : L.status === 'abstain' ? '特定できないと回答' : L.status === 'missing' ? '未実行' : '採点不能';
+    : L.predicted_status === 'unscorable_predicted' ? '採点不能' : missing;
+  const res = L.status === 'scored' ? (L.correct ? '○' : '×') : L.status === 'abstain' ? '特定できないと回答' : L.status === 'missing' ? missing : '採点不能';
   return `<div class="lbl">ハナを切った馬</div><div class="kv"><b>実際</b><span>${actual}</span><b>STEP3 の予測</b><span>${pred}</span>
 <b>結果</b><span class="${markClass(res)}">${res}</span></div>`;
 }
@@ -191,7 +195,7 @@ export function scoreHtml(scoring, { stage3 = null, result = null } = {}) {
   }
   let h = '';
   if (scoring.warnings?.length) h += `<div class="warn">採点時の注意（${scoring.warnings.length}件）<ul>${scoring.warnings.map(w => `<li>${esc(w.code)}：${esc(w.message)}</li>`).join('')}</ul></div>`;
-  return h + factsHtml(scoring, result) + paceHtml(scoring, stage3) + leaderHtml(scoring, result) + horsesHtml(scoring, result) + summaryHtml(scoring) + baselinesHtml(scoring) + strataHtml(scoring);
+  return h + factsHtml(scoring, result) + paceHtml(scoring, stage3) + leaderHtml(scoring, result, stage3) + horsesHtml(scoring, result) + summaryHtml(scoring) + baselinesHtml(scoring) + strataHtml(scoring);
 }
 
 /* 読み取りの警告の一覧（コードとメッセージ） */

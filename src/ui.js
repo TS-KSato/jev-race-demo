@@ -1,4 +1,5 @@
 import { parse } from './parse/index.js';
+import { formatMoisture } from './util.js';
 import { derive, zoneRanges, cushionCat } from './derive.js';
 import { validate } from './parse/validate.js';
 import { raceBlock, raceState, raceQuestions, horseRequest } from './requests.js';
@@ -12,7 +13,7 @@ import { parseResult } from './parse/result.js';
 import { scoreRace } from './score.js';
 import { scoreHtml, warningsHtml } from './scoreview.js';
 import { recordStatus } from './record-status.js';
-import { buildRecord, buildSummaryLine, buildDetailText, formatEvalTime, formatEvalTotal, formatRoundTrip, recordFileName } from './record.js';
+import { buildRecord, buildSummaryLine, buildDetailText, formatEvalTime, formatEvalTotal, formatRoundTrip, recordFileName, executionNotice, classifyExecution, executionTimes, executionText } from './record.js';
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -129,7 +130,7 @@ function afterParse(){
   gen++;setRunning(false);$('x-status').textContent='';
   S4=null;running4=false;cancel4=false;progress4='';
   RES=null;SC=null;SCAT=null;scGen++;$('res-msg').innerHTML='';$('res-out').innerHTML='';
-  renderS1();renderS2();renderS3();renderS4();
+  renderS1();renderS2();renderS3();renderS4();refreshNotice();
   ['s2','s3','s4','sfb','s5'].forEach(id=>$(id).classList.remove('dim'));
 }
 function renderS1(){
@@ -140,6 +141,7 @@ function renderS1(){
   h+=`<div class="kv"><b>レース</b><span>${esc(R.date||'')} ${esc(R.venue||'')} ${R.raceNo?R.raceNo+'R':''} ${esc(R.name)}</span>
   <b>条件</b><span>${R.distance?R.distance+'m':'?'}（${esc(R.courseDesc||'?')}） ${esc(R.conditions||'')}</span>
   <b>馬場</b><span>${esc(T.weather||'')} 芝：${esc(T.turfGoing||'?')} ／ クッション値：${T.cushion??'?'}${T.cushion!=null?'（'+cushionCat(T.cushion)+'）':''}${T.announcedAt?' ／ '+esc(T.announcedAt):''}</span>
+  <b>芝の含水率</b><span>${esc(formatMoisture(T.turfMoisture))}</span>
   <b>芝の状態</b><span>${esc(T.turfNote||'—')}</span></div>`;
   h+=`<div class="lbl">出走馬（${P.horses.length}頭）</div><div class="tbl"><table><thead><tr><th>枠</th><th>馬番</th><th>馬名</th><th>人気</th><th>単勝</th><th>斤量</th><th>騎手</th><th>馬体重</th><th>過去走（日付・レース・距離・着順/頭数・[通過順]・上がり3F）</th></tr></thead><tbody>`;
   P.horses.forEach(x=>{
@@ -201,6 +203,7 @@ function refreshControls(){
   $('x4-retry').disabled=!ok||busy||!hasPw||!D;
   $('res-run').disabled=!D;
   $('x4-cancel').hidden=!running4;
+  refreshNotice();
   $('x4-note').textContent=!ok?'このページでは実行できません。Netlify の URL を使うか、Playground に貼り付けてください。':!hasPw?'合言葉を入力してください（STEP3 の合言葉欄と共通です）。':'';
 }
 async function runStep3(){
@@ -352,9 +355,8 @@ async function rescore(){
 }
 /* ---------- フィードバック用のコピーと記録のダウンロード ---------- */
 function feedbackCtx(){
-  const f=$('fb-blind').value;
   return {now:new Date(),host:location.hostname,userAgent:navigator.userAgent,race:D.race,horses:D.horses,warnings:P.warnings,
-    userInput:{blind:f,memo:$('fb-memo').value},
+    userInput:{memo:$('fb-memo').value},
     s3:J?{parsed:J,meta:JM,contract:JM.contract,state:S3.state,overrides:overrides(),raw:JM.raw}:null,s3Error:J?null:E3,
     result:RES,scoring:SC,scoredAt:SCAT,
     s4:S4?{contract:S4.contract,results:S4.results,usedOutlook:S4.usedOutlook,usedOverridden:S4.usedOverridden,aborted:S4.aborted,cancelled:S4.cancelled,
@@ -367,6 +369,12 @@ function refreshFeedback(){
   $('fb-detail').value=buildDetailText(ctx);
   $('fb-dl').disabled=!(J||S4);
   $('fb-status').innerHTML=esc(recordStatus({hasRecord:!!(J||S4),hasResult:!!RES,scoring:SC}).text);
+  $('fb-exec').textContent=(J||S4)?`実行の区分（発走時刻と実行時刻から自動で判定）：${executionText(classifyExecution(ctx.race,executionTimes(ctx)))}`:'';
+}
+// 実行ボタンの近くの予告（現在時刻と発走日時を比べる）
+function refreshNotice(){
+  const t=D?executionNotice(D.race,new Date()):'';
+  $('x-when').textContent=t;$('x4-when').textContent=t;
 }
 async function downloadRecord(){
   if(!D||!(J||S4)) return;
@@ -387,5 +395,6 @@ $('x-pass').addEventListener('input',refreshControls);
 $('ctr-set').addEventListener('change',()=>{if(D){renderS3();renderS4();}});
 refreshControls();
 ['o-lead','o-cont','o-pace'].forEach(id=>$(id).addEventListener('change',renderJ));
-['fb-blind','fb-memo'].forEach(id=>{$(id).addEventListener('input',refreshFeedback);$(id).addEventListener('change',refreshFeedback);});
+$('fb-memo').addEventListener('input',refreshFeedback);
+setInterval(refreshNotice,30000);
 Object.assign(window,{runResult,runStep3,runStep4,cancelStep4,run,rerun,loadAnswers,renderS4,downloadAll,downloadRecord,copy,$});

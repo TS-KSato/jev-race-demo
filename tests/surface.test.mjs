@@ -6,8 +6,9 @@ import { validate } from '../src/parse/validate.js';
 
 const base = readFileSync(new URL('./fixtures/jra_entry_trackday_before.txt', import.meta.url), 'utf8');
 const withCourse = (desc, t = base) => t.replace('（ダート・左）', `（${desc}）`);
-const CUSHION = '馬場状態：クッション値が読み取れません';
-const DIRT = '馬場状態：ダートの状態が読み取れません';
+const CUSHION = '『クッション値』は読み取れませんでした';
+const DIRT = '『ダートの状態』は読み取れませんでした';
+const hasW = (W, head) => W.some(w => w.startsWith(head));
 
 test('馬場種別：障害を含む表記はいずれも障と判定され、エラーで止まる', () => {
   for (const d of ['芝・障害', '障害・芝', '障害']) {
@@ -29,13 +30,13 @@ test('馬場種別：判別できない表記は null で警告が出る', () =>
 
 test('馬場関連の警告：芝は芝のクッション値が無いと警告、ダートは出ない', () => {
   const cut = t => t.replace('クッション値\n10.1\n', '');
-  assert.ok(parse(cut(withCourse('芝・左'))).warnings.includes(CUSHION));
-  assert.ok(!parse(cut(base)).warnings.includes(CUSHION));
+  assert.ok(hasW(parse(cut(withCourse('芝・左'))).warnings, CUSHION));
+  assert.ok(!hasW(parse(cut(base)).warnings, CUSHION));
 });
 
 test('馬場関連の警告：ダートで dirtGoing が無いと警告が出る', () => {
   const P = parse(base);
-  assert.ok(!P.warnings.includes(DIRT));
+  assert.ok(!hasW(P.warnings, DIRT));
   const race = { ...P.race, track: { ...P.race.track, dirtGoing: null } };
-  assert.ok(validate({ race, horses: [] }).includes(DIRT));
+  assert.ok(hasW(validate({ race, horses: [] }), DIRT));
 });

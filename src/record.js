@@ -1,7 +1,7 @@
 /*
  * 記録（JSON）と、フィードバック用の要約・詳しいテキストを作る。DOM・ネットワーク・保存領域には触れない。
  * ctx から読むのは下の項目だけ（s3・s4 の contract は、実際に使った契約のラベル。なければ旧版とみなす）。合言葉・API キーは受け取らない。
- *   now（Date）, host（ホスト名）, userAgent, race, horses, warnings, userInput{blind,memo},
+ *   now（Date）, host（ホスト名）, userAgent, race, horses, warnings, userInput{memo},
  *   s3: null | {parsed, meta{method,at,request?{state,questions}}, state, overrides, error?}   s3Error: null | {kind,message,at}
  *   s4: null | {results, usedOutlook, usedOverridden, aborted, cancelled, states{馬番:state}}
  *   result（任意）: parseResult の返り値（race-result@1。警告を含む。結果ページの本文は含まない）
@@ -12,12 +12,63 @@ import { zoneRanges } from './derive.js';
 import { paceLabels, RACE_OUTLOOK_V1, HORSE_POSITION_V2 } from './contracts.js';
 import { MODEL_ID, estimateCostUsd } from './jev.js';
 import { summarizeStage4 } from './stage4.js';
-import { pad } from './util.js';
+import { pad, formatFirst3f, formatMoisture } from './util.js';
 
-export const RECORD_SCHEMA = 'jev-demo-record@1';
+export const RECORD_SCHEMA = 'jev-demo-record@2';
 const MAX_ERRORS = 3, MAX_ERR_CHARS = 60;
-const BLIND = ['blind', 'non-blind', 'unspecified'];
-const BLIND_LABEL = { blind: 'ブラインド（レース前に実行）', 'non-blind': '非ブラインド（結果を知ったあとに実行）', unspecified: '未指定' };
+
+/* ---------- 実行の区分（発走日時と実行時刻から決める） ---------- */
+export const EXECUTION_RULE = 'all-executions-before-post-time';
+export const BLIND_CLASS_LABEL = { blind: 'ブラインド', 'non-blind': '非ブラインド', unknown: '判定不能' };
+const LEGACY_BLIND_LABEL = { blind: 'ブラインド（レース前に実行）', 'non-blind': '非ブラインド（結果を知ったあとに実行）', unspecified: '未指定' };
+const LEGACY_NOTE = '（旧形式の記録。利用者の設定による）';
+const POST_TIME_RE = /^(\d{1,2})(?:時|:)(\d{1,2})分?$/;
+/* 発走日時（日本時間）。race.date（YYYY-MM-DD）と race.postTime（「15時30分」）から作る。作れなければ null */
+export function postTimeIso(race) {
+  const d = String(race?.date ?? ''), m = String(race?.postTime ?? '').trim().match(POST_TIME_RE);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(d) || !m || +m[1] > 23 || +m[2] > 59) return null;
+  const iso = `${d}T${pad(m[1])}:${pad(m[2])}:00+09:00`; // ブラウザの時差設定に依存しないよう、+09:00 を付けた文字列から作る
+  return isNaN(new Date(iso)) ? null : iso;
+}
+const hhmm = iso => iso.slice(11, 16);
+/* 実行した時刻の一覧。STEP3 の1回（貼り付けの経路は時刻がないので null）と、STEP4 で送信した各馬（未実行の馬は除く） */
+export function executionTimes(ctx) {
+  const list = [];
+  if (ctx.s3) list.push(ctx.s3.meta?.method === 'api' ? ctx.s3.meta.at ?? null : null);
+  for (const r of ctx.s4?.results || []) if (r.status !== 'skipped') list.push(r.at ?? null);
+  return list;
+}
+/* 区分：すべての実行が発走前 → blind、1つでも発走以後 → non-blind、発走日時が作れない・時刻が分からない実行がある → unknown */
+export function classifyExecution(race, times) {
+  const post = postTimeIso(race), postMs = post ? new Date(post).getTime() : NaN;
+  const known = (times || []).map(t => ({ t, ms: t == null ? NaN : new Date(t).getTime() })).filter(x => Number.isFinite(x.ms)).sort((a, b) => a.ms - b.ms);
+  let blindClass = 'unknown';
+  if (post && known.some(x => x.ms >= postMs)) blindClass = 'non-blind';
+  else if (post && known.length && known.length === (times || []).length) blindClass = 'blind';
+  return { blindClass, rule: EXECUTION_RULE, postTime: race?.postTime ?? null, postTimeIso: post,
+    firstExecutedAt: known.length ? known[0].t : null, lastExecutedAt: known.length ? known[known.length - 1].t : null, clock: 'browser' };
+}
+/* 実行前の予告（現在時刻と発走日時を比べる） */
+export function executionNotice(race, now) {
+  const post = postTimeIso(race);
+  if (!post) return '発走時刻が読み取れないため、区分は『判定不能』として記録されます。';
+  if (toDate(now).getTime() < new Date(post).getTime()) return '発走前です。この実行は『ブラインド』として記録されます。';
+  return `発走時刻（${hhmm(post)}）を過ぎています。結果が出ている可能性があるため、この実行は『非ブラインド』として記録されます。`;
+}
+/* 記録から実行の区分を読む。@2 は execution、@1 は userInput.blind（利用者の設定）から取る */
+export function executionFromRecord(rec) {
+  if (rec?.execution) return { ...rec.execution, legacy: false };
+  const b = rec?.userInput?.blind; // @1 の記録だけが持つ項目
+  return { blindClass: b === 'blind' || b === 'non-blind' ? b : 'unspecified', legacy: true };
+}
+const runSpan = e => (e.firstExecutedAt ? (e.firstExecutedAt === e.lastExecutedAt ? e.firstExecutedAt : `${e.firstExecutedAt}〜${e.lastExecutedAt}`) : '不明');
+/* 実行の区分の表示。根拠として実行時刻と発走時刻を併記する */
+export function executionText(e) {
+  if (!e) return '—';
+  if (e.legacy) return `${LEGACY_BLIND_LABEL[e.blindClass] ?? LEGACY_BLIND_LABEL.unspecified}${LEGACY_NOTE}`;
+  return `${BLIND_CLASS_LABEL[e.blindClass] ?? '判定不能'}（実行：${runSpan(e)} ／ 発走：${e.postTimeIso ?? (e.postTime ? `${e.postTime}（日時にできません）` : '不明')}）`;
+}
+const executionOf = ctx => classifyExecution(ctx.race, executionTimes(ctx));
 
 /* ---------- 小さな整形 ---------- */
 export function formatEvalTime(ms) {
@@ -106,7 +157,6 @@ export async function buildRecord(ctx) {
   const R = ctx.race || {}, T = R.track || {};
   const track = {};
   for (const [k, v] of Object.entries(T)) if (present(v)) track[k] = v;
-  const blind = BLIND.includes(ctx.userInput?.blind) ? ctx.userInput.blind : 'unspecified';
   let stage3 = null;
   if (ctx.s3) {
     const { parsed, meta, state } = ctx.s3, ol = s3Outlook(ctx), api = meta?.method === 'api';
@@ -144,7 +194,8 @@ export async function buildRecord(ctx) {
     race: { name: R.name ?? null, date: R.date ?? null, venue: R.venue ?? null, course: `${R.distance || '?'}m（${R.courseDesc || '?'}）`,
       conditions: R.conditions ?? null, fieldSize: ctx.horses.length },
     track, warnings: [...(ctx.warnings || [])].map(String),
-    userInput: { blind, memo: String(ctx.userInput?.memo ?? '') },
+    userInput: { memo: String(ctx.userInput?.memo ?? '') },
+    execution: executionOf(ctx),
     stage3, stage4,
     result: ctx.result ? structuredClone(ctx.result) : null,
     scoring: ctx.result && ctx.scoring ? structuredClone(ctx.scoring) : null,
@@ -163,10 +214,12 @@ export function recordFileName(ctx) {
 
 /* ---------- 採点の要約項目 ---------- */
 const rate = (c, n) => `${c}/${n}`;
-const LEADER_MARK = { scored: null, abstain: '答えなし', missing: '未実行' };
-function leaderMark(L) {
+/* 「特定できないと回答」（Jev が unclear を選んだ）と「回答なし」（答えが取れなかった）は別の表記にする */
+const LEADER_MARK = { scored: null, abstain: '特定できないと回答', missing: '未実行' };
+function leaderMark(L, ctx) {
   if (!L) return '採点不能';
   if (L.status === 'scored') return L.correct ? '○' : '×';
+  if (L.status === 'missing' && ctx?.s3) return '回答なし';
   return LEADER_MARK[L.status] ?? '採点不能';
 }
 function baselineItem(S) {
@@ -204,7 +257,7 @@ function scoringItems(ctx) {
   if (!S.ok) return [fmt, '採点なし(race_mismatch)', `警告=${W}`];
   const T = S.summary.total, C = S.summary.by_corner, H = S.summary.by_level.high;
   return [fmt, `最初=${rate(C.first_corner.correct, C.first_corner.scored)}`, `最後=${rate(C.last_corner.correct, C.last_corner.scored)}`,
-    `高確信=${rate(H.correct, H.scored)}`, `ハナ=${leaderMark(S.leader)}`, `採点不能=${T.unscorable}`, `警告=${W}`];
+    `高確信=${rate(H.correct, H.scored)}`, `ハナ=${leaderMark(S.leader, ctx)}`, `採点不能=${T.unscorable}`, `警告=${W}`];
 }
 const ZL = { front: '先頭', forward: '好位', mid: '中団', rear: '後方' };
 const CL = { first_corner: '最初のコーナー', last_corner: '最後のコーナー' };
@@ -218,6 +271,8 @@ function scoringDetail(ctx) {
   const S = ctx.scoring, L = ['', '【結果と採点】'];
   if (!S.ok) { L.push(`採点なし：${(S.reasons || []).map(r => oneLine(r.message)).join(' ／ ')}`); return L; }
   L.push(scoringItems(ctx).join(' '));
+  const P = ctx.result.pace || {}, d = v => (typeof v === 'number' && Number.isFinite(v) ? `${v > 0 ? '+' : ''}${v.toFixed(1)}` : '—');
+  L.push(`前半3F：${formatFirst3f(P.first_3f, ctx.result.race?.distance)} ／ 後半3F：${typeof P.last_3f === 'number' ? P.last_3f.toFixed(1) : '—'} ／ 差（後半 − 前半）：${d(P.first_last_diff)}`);
   for (const h of S.horses) L.push(`${h.number}番 ${h.name}：最初のコーナー ${itemText(h.first_corner)} ／ 最後のコーナー ${itemText(h.last_corner)}`);
   const ms = S.summary.high_confidence_misses;
   L.push(`高確信で外れた馬：${ms.length ? '' : 'なし'}`);
@@ -265,7 +320,9 @@ export function buildSummaryLine(ctx) {
   const R = ctx.race || {}, T = R.track || {};
   const parts = ['FB1', isoWithOffset(ctx.now), `host=${hostKind(ctx.host)}`];
   const race = [R.date, R.venue, R.raceNo ? `${R.raceNo}R` : null, R.name, R.distance ? `${R.distance}m${R.courseDesc ? `（${R.courseDesc}）` : ''}` : null, `${ctx.horses.length}頭`].filter(present).join(' ');
-  parts.push(`race=${race}`, `warn=${(ctx.warnings || []).length}`);
+  const ex = executionOf(ctx);
+  parts.push(`race=${race}`, `warn=${(ctx.warnings || []).length}`,
+    `exec=${ex.blindClass} 実行=${runSpan(ex)} 発走=${ex.postTimeIso ?? '不明'}`);
   const track = [T.weather, T.turfGoing, present(T.cushion) ? `CV${T.cushion}` : null, T.announcedAt ? `発表=${T.announcedAt}` : null].filter(present).join(' ');
   if (track) parts.push(`track=${track}`);
   if (ctx.s3) {
@@ -296,10 +353,10 @@ export function buildDetailText(ctx) {
   const R = ctx.race || {}, T = R.track || {}, L = [];
   L.push('【レース】', `${R.date ?? ''} ${R.venue ?? ''} ${R.raceNo ? R.raceNo + 'R' : ''} ${R.name ?? ''}`.replace(/\s+/g, ' ').trim(),
     `コース：${R.distance || '?'}m（${R.courseDesc || '?'}） 条件：${R.conditions ?? '—'} 頭数：${ctx.horses.length}`,
-    `ホスト：${hostKind(ctx.host)} ／ 実行の区分：${BLIND_LABEL[ctx.userInput?.blind] || BLIND_LABEL.unspecified}`);
+    `ホスト：${hostKind(ctx.host)} ／ 実行の区分：${executionText(executionOf(ctx))}`);
   if (ctx.userInput?.memo) L.push(`メモ：${oneLine(ctx.userInput.memo)}`);
   L.push('', '【馬場】');
-  const tk = Object.entries(T).filter(([, v]) => present(v)).map(([k, v]) => `${k}=${oneLine(v)}`);
+  const tk = Object.entries(T).filter(([, v]) => present(v)).map(([k, v]) => `${k}=${oneLine(k === 'turfMoisture' ? formatMoisture(v) : v)}`);
   L.push(tk.length ? tk.join(' ／ ') : '—');
   L.push('', `【警告】${(ctx.warnings || []).length}件`, ...(ctx.warnings || []).map(w => `- ${oneLine(w)}`));
   L.push('', '【STEP3】');
@@ -307,7 +364,7 @@ export function buildDetailText(ctx) {
   else {
     const { parsed, meta } = ctx.s3, A = s3Answers(ctx), ol = s3Outlook(ctx);
     L.push(`経路：${meta?.method === 'api' ? 'api' : 'paste'} ／ 実行日時：${meta?.at ?? '—'} ／ 契約：${s3Label(ctx)} ／ 答えた版：${parsed.answeredModel ?? '不明'}`,
-      `ハナ：${answerText(A.lead_horse)}`, `先行争い：${answerText(A.early_lead_battle)}`, `ペース：${answerText(A.pace)}`,
+      `ハナ：${A.lead_horse?.choice === 'unclear' ? `特定できないと回答（${topProbs(A.lead_horse.probabilities)}）` : answerText(A.lead_horse)}`, `先行争い：${answerText(A.early_lead_battle)}`, `ペース：${answerText(A.pace)}`,
       `STEP4 に渡す値：${ol.outlook ? ['expected_leader', 'early_lead_battle', 'pace'].filter(k => k in ol.outlook).map(k => `${k}=${oneLine(ol.outlook[k])}`).join(' ／ ') : 'なし'}${ol.overridden.length ? `（手で上書き：${ol.overridden.join('、')}）` : ''}`,
       `評価時間：${formatEvalTime(parsed.evaluationTimeMs)} ／ 往復時間：${formatRoundTrip(parsed.roundTripMs)} ／ トークン：入力 ${parsed.inputTokens ?? '不明'} 出力 ${parsed.outputTokens ?? '不明'}`);
   }

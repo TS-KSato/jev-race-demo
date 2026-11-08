@@ -2,6 +2,18 @@ import { didNotRun } from '../derive.js';
 import { NAME_OK_RE } from './markers.js';
 
 /* ---------- STEP1: 読み取り結果の検査（警告の作成） ---------- */
+// 馬場の項目と表示名。クッション値と含水率は、ダートのレースでは求めない
+const TRACK_ITEMS=[['weather','天候'],['turfGoing','芝の状態（良など）'],['dirtGoing','ダートの状態'],['cushion','クッション値',true],['turfMoisture','含水率',true],['rail','使用コース'],['turfNote','芝の状態の説明']];
+const has=v=>v!=null&&v!=='';
+// 見出しがない →「含まれていません」、見出しはあるが値がない →「読み取れませんでした」。読めた項目があれば末尾に添える
+function trackWarnings(R){
+  const T=R.track||{},F=R.trackFound||{};
+  const items=TRACK_ITEMS.filter(([,,turfOnly])=>!(turfOnly&&R.surface==='ダ'));
+  const read=TRACK_ITEMS.filter(([k])=>has(T[k])).map(([,label])=>label);
+  const tail=read.length?`。読めた項目：${read.join('、')}`:'';
+  return items.filter(([k])=>!has(T[k])).map(([k,label])=>(F[k]===false?`貼った文字に『${label}』が含まれていません`:`『${label}』は読み取れませんでした`)+tail);
+}
+
 export function validate(P){
   const W=[],R=P.race||{};
   if(!R.distance) W.push('レース：距離・コース（「コース：1,200メートル（芝…）」）が読み取れません');
@@ -9,14 +21,8 @@ export function validate(P){
   if(!R.date) W.push('レース：開催日が読み取れません');
   const T=R.track||{};
   const none=T.weather==null&&T.turfGoing==null&&T.dirtGoing==null&&T.cushion==null&&T.turfMoisture==null;
-  if(none) W.push('馬場状態（「天候：」または「芝のクッション値」以降）が見つかりません。馬場の情報なしで進みます');
-  else{
-    if(T.weather==null) W.push('馬場状態：天候が読み取れません');
-    if(T.turfGoing==null) W.push('馬場状態：芝の状態が読み取れません');
-    if(T.dirtGoing==null) W.push('馬場状態：ダートの状態が読み取れません');
-    if(R.surface!=='ダ'&&T.cushion==null) W.push('馬場状態：クッション値が読み取れません');
-    if(R.surface!=='ダ'&&T.turfMoisture==null) W.push('馬場状態：芝の含水率が読み取れません');
-  }
+  if(none&&!R.trackFound) W.push('馬場状態（「天候：」または「芝のクッション値」以降）が見つかりません。馬場の情報なしで進みます');
+  else W.push(...trackWarnings(R));
   if(R.trackTextIgnored) W.push('馬場情報らしい文字がありますが、読み取れる形式ではありませんでした。「天候：」の行、または「芝のクッション値」の見出しを含めて貼り付けてください');
   if(R.weeklyInfoIgnored) W.push('週間情報（天候・雨量・散水）は読み取りません。クッション値・含水率・使用コース・芝の状態だけを使います');
   (P.horses||[]).forEach(x=>{
