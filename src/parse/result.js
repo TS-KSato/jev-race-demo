@@ -51,11 +51,13 @@ function baseHorse(f0,fr,no,nameRaw){
   const fm=fr.trim().match(/^(?:枠)?(\d+)/);h.frame=fm?+fm[1]:null;
   return h;
 }
+const BW_ITEM_RE=/^\d{3}\s*[(（][^)）]*[)）]$/;
+const EST_RE=/^\d{2}\.\d$/;
 const bodyWeightA=s=>{const m=String(s||'').trim().match(/^(\d+)\s*[(（]([^)）]*)[)）]$/);return m?{w:+m[1],d:intOrNull(m[2])}:{w:intOrNull(s),d:null};};
 
 /* 馬の行を読む。形式 A は3行、B・C は1行 */
 function readHorses(lines,rowIdx,fmt,warnings){
-  const horses=[];
+  const horses=[];let lacksEst=false;
   rowIdx.forEach(i=>{
     const f=lines[i].split('\t');
     let b=null,j=i+1,nameRaw=f[3]||'';
@@ -84,9 +86,18 @@ function readHorses(lines,rowIdx,fmt,warnings){
       h.time=tenths(b[3]);h.margin=emptyStr(b[4])?'':b[4];
       if(notRan&&!pos){h.trainer=(g[0]||'').trim();}
       else{
-        h.last_3f_est=emptyStr(g[0])?null:(tenths(g[0].trim())); // 秒（小数1桁）に直すため仮に0.1秒単位
-        const bw=bodyWeightA(g[1]);h.body_weight=bw.w;h.body_weight_diff=bw.d;
-        h.trainer=(g[2]||'').trim();h.popularity=intOrNull(g[3]);
+        const t=g.map(x=>x.trim()),bi=t.findIndex(x=>BW_ITEM_RE.test(x));
+        if(bi>=0){ // 内容で読む：馬体重の前が推定上り、次が調教師、最後が単勝人気（形式 D は推定上りの列がないことがある）
+          h.last_3f_est=bi>0&&EST_RE.test(t[bi-1])?tenths(t[bi-1]):null;
+          const bw=bodyWeightA(t[bi]);h.body_weight=bw.w;h.body_weight_diff=bw.d;
+          h.trainer=t[bi+1]||'';
+          const last=t.slice(bi+2).filter(x=>x!=='').pop();h.popularity=/^\d+$/.test(last||'')?+last:null;
+        }else{
+          h.last_3f_est=emptyStr(g[0])?null:(tenths(g[0].trim())); // 秒（小数1桁）に直すため仮に0.1秒単位
+          const bw=bodyWeightA(g[1]);h.body_weight=bw.w;h.body_weight_diff=bw.d;
+          h.trainer=(g[2]||'').trim();h.popularity=intOrNull(g[3]);
+        }
+        if(fmt==='A'&&bi===0) lacksEst=true;
       }
       h._pos=pos;h._end=j+1;
       h.corner_positions=pos?pos.map(rank=>({corner:null,rank})):[];
@@ -98,6 +109,7 @@ function readHorses(lines,rowIdx,fmt,warnings){
     const sj=splitJockey(h.jockey_raw);h.jockey=sj.jockey;h.jockey_mark=sj.mark;
     horses.push(h);
   });
+  horses.lacksEst=lacksEst;
   return horses;
 }
 
@@ -108,7 +120,7 @@ function parseRaceInfo(header,fmt){
   const k=header.match(/(\d+)回([^\d\s　\t]+?)(\d+)日/);
   if(k){r.kai=+k[1];r.venue=k[2];r.nichi=+k[3];}
   let nameRaw=null;
-  if(fmt==='A'){
+  if(fmt==='A'||fmt==='D'){
     const n=header.match(/(?:^|\n)[ \t　]*(\d+)レース[ \t　]*(?=\n|$)/);
     if(n) r.race_no=+n[1];
     const nm=header.match(/(?:^|\n)[ \t　]*(第\d+回[^\t\n]*)/);
@@ -125,7 +137,7 @@ function parseRaceInfo(header,fmt){
     r.name=nm.trim();
   }
   let surf=null,rest=null;
-  const ca=fmt==='A'?header.match(COURSE_A_RE):null;
+  const aLike=fmt==='A'||fmt==='D',ca=aLike?header.match(COURSE_A_RE):null;
   if(ca){
     r.distance=+ca[1].replace(/,/g,'');
     const parts=ca[2].split('・').map(x=>x.trim());
@@ -134,7 +146,7 @@ function parseRaceInfo(header,fmt){
     rest=parts.slice(r.turn?2:1).join('・');
     const dm=rest.match(/^((?:内|外)[内外回り]*)/);
     r.course_detail=dm?dm[1]:null;
-  }else if(fmt!=='A'){
+  }else if(fmt!=='A'){ // 形式 D で「コース：…メートル」がないときも、こちらで探す
     const c=header.match(COURSE_RE);
     if(c){r.distance=+c[1];surf=c[2];r.turn=c[3]||null;r.course_detail=c[4]||null;}
   }
@@ -182,7 +194,7 @@ export function parseResult(text){
     let k=i+1;while(k<lines.length&&emptyStr(lines[k])) k++;
     return POS_LINE_RE.test(lines[i+1]||'')||POS_LINE_RE.test(lines[k+2]||'');
   });
-  const fmt=isA?'A':lines[rowIdx[0]].split('\t').length===15?(/^枠/.test(lines[rowIdx[0]].split('\t')[1].trim())?'B':'C'):null;
+  let fmt=isA?'A':lines[rowIdx[0]].split('\t').length===15?(/^枠/.test(lines[rowIdx[0]].split('\t')[1].trim())?'B':'C'):null;
   if(!fmt) fail();
   if(lines.filter(l=>DATE_LINE_RE.test(l)).length>=2) throw new Error('複数のレースが含まれています。1レースずつ貼り付けてください');
   const warnings=[];
@@ -196,11 +208,13 @@ export function parseResult(text){
   }
   const horses=readHorses(lines,good,fmt,warnings);
   if(!horses.length) fail();
+  // 形式 D：A と同じ3行の構成で、馬体重の行に推定上りの列がない（空欄でなく、列ごとない）馬がいるもの
+  if(horses.lacksEst) fmt='D';
 
   // 末尾（ハロンタイム・コーナー通過順位）。払戻金より後ろは読まない
   const lastRow=good[good.length-1];
   const lastH=horses[horses.length-1];
-  const tailStart=fmt==='A'?lastH._end:lastRow+1;
+  const tailStart=fmt==='A'||fmt==='D'?lastH._end:lastRow+1;
   const payout=lines.findIndex((l,i)=>i>=lastRow&&l.includes('払戻金'));
   const tail=lines.slice(tailStart,payout<0?lines.length:payout).join('\n');
 
@@ -250,7 +264,7 @@ export function parseResult(text){
   let countWarned=false;
   const positions=starters.map(h=>{
     const cs=[];
-    if(fmt==='A'){
+    if(fmt==='A'||fmt==='D'){
       const pos=h._pos||[];
       const aligned=pos.length===cnos.length;
       if(!aligned&&!countWarned&&(cnos.length||pos.length)){countWarned=true;warnings.push(W('corner_count_mismatch',`馬の行の番手の数（${pos.length}）と読めたコーナー行の数（${cnos.length}）が違います（${h.number}番ほか）`));}
