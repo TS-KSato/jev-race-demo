@@ -12,3 +12,10 @@ export function formatFirst3f(first3f,distance){
   if(distance%200!==0) return '算出しない（距離が200mで割り切れず、最初の区間が200m未満のため）';
   return '—';
 }
+
+/* 芝の含水率（{goal, corner4}）の表示。片方だけならある方だけ、どちらもなければ「—」（画面と記録の要約で共用） */
+export function formatMoisture(m){
+  const ok=v=>typeof v==='number'&&Number.isFinite(v);
+  const parts=[ok(m?.goal)?`ゴール前 ${m.goal}%`:null,ok(m?.corner4)?`4コーナー ${m.corner4}%`:null].filter(Boolean);
+  return parts.length?parts.join(' ／ '):'—';
+}

@@ -85,9 +85,10 @@ for (const [label, blk] of [['題名の行あり', BLOCK], ['題名の行なし'
   test(`馬場情報のページ（${label}）：警告`, () => {
     const W = parse(basic + '\n' + blk).warnings;
     assert.ok(!W.some(w => w.startsWith('馬場状態（') && w.includes('見つかりません')));
-    assert.ok(W.includes('馬場状態：天候が読み取れません'));
-    assert.ok(W.includes('馬場状態：芝の状態が読み取れません'));
-    assert.ok(W.includes('馬場状態：ダートの状態が読み取れません'));
+    const READ = '。読めた項目：クッション値、含水率、使用コース、芝の状態の説明';
+    assert.ok(W.includes('『天候』は読み取れませんでした' + READ)); // 週間情報の「天候」の行はあるが、読み取らない
+    assert.ok(W.includes('貼った文字に『芝の状態（良など）』が含まれていません' + READ));
+    assert.ok(W.includes('貼った文字に『ダートの状態』が含まれていません' + READ));
   });
 }
 

@@ -56,7 +56,7 @@ export function factsHtml(scoring, result) {
 
 /* ---------- ペースと先行争い（採点しない） ---------- */
 function answerText(a) {
-  if (!a || a.error) return '答えなし';
+  if (!a || a.error) return '回答なし';
   return `${esc(a.selected ?? '—')} <span class="bdg bdg-${esc(a.level)}">${esc(a.levelLabel ?? level(a.level))}</span>`;
 }
 export function paceHtml(scoring, stage3) {
@@ -77,15 +77,18 @@ function nameOf(n, scoring, result) {
   const h = (result?.horses ?? []).find(x => x.number === n) ?? (scoring.horses ?? []).find(x => x.number === n);
   return h ? `${num(n)} ${esc(h.name)}` : num(n);
 }
-export function leaderHtml(scoring, result) {
+/* STEP3 は実行したが、ハナの答えが取れなかった（「特定できない」と答えた場合とは別） */
+export const noLeaderAnswer = stage3 => !!stage3?.answers && (!stage3.answers.lead_horse || !!stage3.answers.lead_horse.error);
+export function leaderHtml(scoring, result, stage3 = null) {
   const L = scoring.leader;
+  const missing = noLeaderAnswer(stage3) ? '回答なし' : '未実行';
   if (!L) return '';
   const actual = L.actual != null ? nameOf(L.actual, scoring, result)
     : `${L.candidates?.length ? `候補：${L.candidates.map(num).join('、')}（` : '（'}確定できません）`;
   const pred = L.predicted_status === 'predicted' ? `${nameOf(L.predicted, scoring, result)}（確率 ${pct(L.probability)}、${esc(level(L.level))}）`
     : L.predicted_status === 'abstain' ? '特定できないと回答（採点しません）'
-    : L.predicted_status === 'unscorable_predicted' ? '採点不能' : '未実行';
-  const res = L.status === 'scored' ? (L.correct ? '○' : '×') : L.status === 'abstain' ? '特定できないと回答' : L.status === 'missing' ? '未実行' : '採点不能';
+    : L.predicted_status === 'unscorable_predicted' ? '採点不能' : missing;
+  const res = L.status === 'scored' ? (L.correct ? '○' : '×') : L.status === 'abstain' ? '特定できないと回答' : L.status === 'missing' ? missing : '採点不能';
   return `<div class="lbl">ハナを切った馬</div><div class="kv"><b>実際</b><span>${actual}</span><b>STEP3 の予測</b><span>${pred}</span>
 <b>結果</b><span class="${markClass(res)}">${res}</span></div>`;
 }
@@ -192,7 +195,7 @@ export function scoreHtml(scoring, { stage3 = null, result = null } = {}) {
   }
   let h = '';
   if (scoring.warnings?.length) h += `<div class="warn">採点時の注意（${scoring.warnings.length}件）<ul>${scoring.warnings.map(w => `<li>${esc(w.code)}：${esc(w.message)}</li>`).join('')}</ul></div>`;
-  return h + factsHtml(scoring, result) + paceHtml(scoring, stage3) + leaderHtml(scoring, result) + horsesHtml(scoring, result) + summaryHtml(scoring) + baselinesHtml(scoring) + strataHtml(scoring);
+  return h + factsHtml(scoring, result) + paceHtml(scoring, stage3) + leaderHtml(scoring, result, stage3) + horsesHtml(scoring, result) + summaryHtml(scoring) + baselinesHtml(scoring) + strataHtml(scoring);
 }
 
 /* 読み取りの警告の一覧（コードとメッセージ） */

@@ -48,6 +48,7 @@ export function parse(text){
   const T=race.track;
   if(/クッション値|含水率|馬場状態/.test(after)&&T.weather==null&&T.turfGoing==null&&T.dirtGoing==null&&T.cushion==null&&T.turfMoisture==null) race.trackTextIgnored=true;
   if(/^[ \t\u3000]*週間情報[ \t\u3000]*$/m.test(tail)) race.weeklyInfoIgnored=true; // 週間情報の天候・雨量・散水は読み取らない
+  if(tail.trim()) race.trackFound=trackFound(tail); // 項目ごとの見出しの有無（警告の文面を分けるため。state・記録には入れない）
   const horses=idx.map((h,i)=>parseHorse(body.slice(h.pos,i+1<idx.length?idx[i+1].pos:body.length),h));
   return {race,horses};
 }
@@ -96,6 +97,20 @@ function parseTrack(t){
   if((m=t.match(/芝コース：ゴール前([\d.]+)%、4コーナー([\d.]+)%/))) r.turfMoisture={goal:+m[1],corner4:+m[2]};
   parseTrackBefore(t,r);
   return r;
+}
+
+// 末尾の文字に、項目ごとの見出し（またはその項目を含む区画）があるか
+const HEAD_RES={
+  weather:[/天候：/,/^[ \t\u3000]*天候(?:\t|[ \t\u3000]*$)/m],
+  turfGoing:[/馬場状態[：（]/,/^[ \t\u3000]*芝[ \t\u3000]*$/m],
+  dirtGoing:[/馬場状態[：（]/,/^[ \t\u3000]*ダート[ \t\u3000]*$/m],
+  cushion:[/クッション値/],
+  turfMoisture:[/含水率/],
+  rail:[/使用コース/,/（芝の状態）/],
+  turfNote:[/（芝の状態）/,/^[ \t\u3000]*芝の状態[ \t\u3000]*$/m],
+};
+function trackFound(t){
+  return Object.fromEntries(Object.entries(HEAD_RES).map(([k,rs])=>[k,rs.some(re=>re.test(t))]));
 }
 
 // 前日の形式（見出しの行と値の行が分かれている）。当日の形式で読めた項目は上書きしない

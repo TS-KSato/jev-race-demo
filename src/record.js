@@ -12,7 +12,7 @@ import { zoneRanges } from './derive.js';
 import { paceLabels, RACE_OUTLOOK_V1, HORSE_POSITION_V2 } from './contracts.js';
 import { MODEL_ID, estimateCostUsd } from './jev.js';
 import { summarizeStage4 } from './stage4.js';
-import { pad, formatFirst3f } from './util.js';
+import { pad, formatFirst3f, formatMoisture } from './util.js';
 
 export const RECORD_SCHEMA = 'jev-demo-record@1';
 const MAX_ERRORS = 3, MAX_ERR_CHARS = 60;
@@ -163,10 +163,12 @@ export function recordFileName(ctx) {
 
 /* ---------- 採点の要約項目 ---------- */
 const rate = (c, n) => `${c}/${n}`;
-const LEADER_MARK = { scored: null, abstain: '答えなし', missing: '未実行' };
-function leaderMark(L) {
+/* 「特定できないと回答」（Jev が unclear を選んだ）と「回答なし」（答えが取れなかった）は別の表記にする */
+const LEADER_MARK = { scored: null, abstain: '特定できないと回答', missing: '未実行' };
+function leaderMark(L, ctx) {
   if (!L) return '採点不能';
   if (L.status === 'scored') return L.correct ? '○' : '×';
+  if (L.status === 'missing' && ctx?.s3) return '回答なし';
   return LEADER_MARK[L.status] ?? '採点不能';
 }
 function baselineItem(S) {
@@ -204,7 +206,7 @@ function scoringItems(ctx) {
   if (!S.ok) return [fmt, '採点なし(race_mismatch)', `警告=${W}`];
   const T = S.summary.total, C = S.summary.by_corner, H = S.summary.by_level.high;
   return [fmt, `最初=${rate(C.first_corner.correct, C.first_corner.scored)}`, `最後=${rate(C.last_corner.correct, C.last_corner.scored)}`,
-    `高確信=${rate(H.correct, H.scored)}`, `ハナ=${leaderMark(S.leader)}`, `採点不能=${T.unscorable}`, `警告=${W}`];
+    `高確信=${rate(H.correct, H.scored)}`, `ハナ=${leaderMark(S.leader, ctx)}`, `採点不能=${T.unscorable}`, `警告=${W}`];
 }
 const ZL = { front: '先頭', forward: '好位', mid: '中団', rear: '後方' };
 const CL = { first_corner: '最初のコーナー', last_corner: '最後のコーナー' };
@@ -301,7 +303,7 @@ export function buildDetailText(ctx) {
     `ホスト：${hostKind(ctx.host)} ／ 実行の区分：${BLIND_LABEL[ctx.userInput?.blind] || BLIND_LABEL.unspecified}`);
   if (ctx.userInput?.memo) L.push(`メモ：${oneLine(ctx.userInput.memo)}`);
   L.push('', '【馬場】');
-  const tk = Object.entries(T).filter(([, v]) => present(v)).map(([k, v]) => `${k}=${oneLine(v)}`);
+  const tk = Object.entries(T).filter(([, v]) => present(v)).map(([k, v]) => `${k}=${oneLine(k === 'turfMoisture' ? formatMoisture(v) : v)}`);
   L.push(tk.length ? tk.join(' ／ ') : '—');
   L.push('', `【警告】${(ctx.warnings || []).length}件`, ...(ctx.warnings || []).map(w => `- ${oneLine(w)}`));
   L.push('', '【STEP3】');
@@ -309,7 +311,7 @@ export function buildDetailText(ctx) {
   else {
     const { parsed, meta } = ctx.s3, A = s3Answers(ctx), ol = s3Outlook(ctx);
     L.push(`経路：${meta?.method === 'api' ? 'api' : 'paste'} ／ 実行日時：${meta?.at ?? '—'} ／ 契約：${s3Label(ctx)} ／ 答えた版：${parsed.answeredModel ?? '不明'}`,
-      `ハナ：${answerText(A.lead_horse)}`, `先行争い：${answerText(A.early_lead_battle)}`, `ペース：${answerText(A.pace)}`,
+      `ハナ：${A.lead_horse?.choice === 'unclear' ? `特定できないと回答（${topProbs(A.lead_horse.probabilities)}）` : answerText(A.lead_horse)}`, `先行争い：${answerText(A.early_lead_battle)}`, `ペース：${answerText(A.pace)}`,
       `STEP4 に渡す値：${ol.outlook ? ['expected_leader', 'early_lead_battle', 'pace'].filter(k => k in ol.outlook).map(k => `${k}=${oneLine(ol.outlook[k])}`).join(' ／ ') : 'なし'}${ol.overridden.length ? `（手で上書き：${ol.overridden.join('、')}）` : ''}`,
       `評価時間：${formatEvalTime(parsed.evaluationTimeMs)} ／ 往復時間：${formatRoundTrip(parsed.roundTripMs)} ／ トークン：入力 ${parsed.inputTokens ?? '不明'} 出力 ${parsed.outputTokens ?? '不明'}`);
   }
