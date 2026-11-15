@@ -1,5 +1,5 @@
 import { createHash, timingSafeEqual } from 'node:crypto';
-import { ENDPOINT, buildRequest, checkLimits } from './jev.js';
+import { ENDPOINT, buildRequest } from './jev.js';
 import { CONTRACT_SETS } from './contracts.js';
 
 /*
@@ -159,8 +159,8 @@ export async function handleRelay({ method, headers, bodyText, env, fetchImpl })
     checkQuestions(contract, body.questions, expectedQuestions(contract, body.state));
 
     // model は本文から取らない。buildRequest が jev.js の MODEL_ID を入れる
+    // 大きさの目安（1文字＝1トークン）は多めなので、ここでは止めない。実際に超えていれば Jev のエラーとして返す
     const request = buildRequest(body.state, body.questions);
-    if (!checkLimits(request).ok) throw new Reject(413, 'Jevの上限超過', 'リクエストが Jev の上限を超えています');
 
     const { text: upstream, roundTripMs } = await forward(request, apiKey, fetchImpl);
     return { status: 200, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' }, body: withRoundTrip(upstream, roundTripMs) };
