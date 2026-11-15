@@ -308,7 +308,7 @@ test('buildRecord：結果と採点を渡すと result・scoring・scoredAt が�
   const rec = await buildRecord(ctx({ result, scoring, scoredAt: NOW }));
   assert.equal(rec.result.schema, 'race-result@1');
   assert.deepEqual(rec.result.warnings, result.warnings);
-  assert.equal(rec.scoring.schema, 'scoring@2');
+  assert.equal(rec.scoring.schema, 'scoring@3');
   assert.equal(rec.scoredAt, rec.createdAt);
   assert.equal((await buildRecord(ctx({ result, scoring, scoredAt: new Date(NOW.getTime() + 60000) }))).scoredAt.slice(14, 16), '21');
   assert.equal(rec.schema, 'jev-demo-record@2');
@@ -324,7 +324,7 @@ test('buildRecord：記録に結果ページの本文は入らない', async () 
 test('buildRecord：結果なしでは result・scoring・scoredAt が null で、他のキーは従来どおり', async () => {
   const rec = await buildRecord(ctx());
   assert.deepEqual([rec.result, rec.scoring, rec.scoredAt], [null, null, null]);
-  assert.deepEqual(Object.keys(rec), ['schema', 'createdAt', 'page', 'race', 'track', 'warnings', 'userInput', 'execution', 'stage3', 'stage4', 'result', 'scoring', 'scoredAt']);
+  assert.deepEqual(Object.keys(rec), ['schema', 'createdAt', 'page', 'race', 'track', 'warnings', 'userInput', 'execution', 'stage3', 'stage4', 'consistency', 'result', 'scoring', 'scoredAt']);
 });
 
 test('要約・詳しいテキスト：採点なしは従来どおり、ありは末尾に res= の項目', () => {

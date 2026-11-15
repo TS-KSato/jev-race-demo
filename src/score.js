@@ -140,7 +140,7 @@ export function outlookFromValues({ leader, battle, pace } = {}) {
 }
 
 /* ---------- 結果と判定を照らす採点（scoring@1）。画面・記録には触れない ---------- */
-export const SCORING_SCHEMA = 'scoring@2';
+export const SCORING_SCHEMA = 'scoring@3';
 
 /* 区分の順序（先頭→後方）とキー・表示名の対応は derive.js の zoneRanges から取る（十分な頭数なら4区分すべてが出る） */
 const ZONES = zoneRanges(18);
@@ -203,12 +203,19 @@ function largestZone(n) {
   return best.key;
 }
 /* 過去走（新しい順）のうち、そのコーナーの区分がある最も新しいもの */
-function lastRunZone(horse, corner) {
+function lastRun(horse, corner) {
   for (const p of horse?.past ?? []) {
     const k = KEY_OF_LABEL[p?.[ZONE_FIELD[corner]]];
-    if (k) return k;
+    if (k) return { zone: k, run: p };
   }
   return null;
+}
+const lastRunZone = (horse, corner) => lastRun(horse, corner)?.zone ?? null;
+/* 前走の区分に使った過去走の通過順の個数の層（解釈は変えず、数えるだけ） */
+function cornerCountStratum(horse, corner) {
+  const n = lastRun(horse, corner)?.run?.corners?.length;
+  if (!Number.isInteger(n) || n < 1) return 'unknown';
+  return n >= 4 ? '4' : '3-';
 }
 function computeBaselines(targets, horses, nEntry) {
   const zone = largestZone(nEntry);
@@ -239,6 +246,7 @@ export const STRATA_DEFINITIONS = {
   last_run: '前走の区分＝過去走（新しい順）のうち、そのコーナーの区分がある最も新しい走の区分。なければ「前走なし」',
   run_count: '実質走数＝取消・除外を除いた過去走の数（facts.ranCount。なければ past から数える）。0〜2 は「0-2」、3 は「3」、4 以上は「4+」',
   variety: '通過順のばらつき＝そのコーナーの区分がある過去走を集め、3走未満は「na」、区分が1種類だけは「same」、2種類以上は「varied」。コーナー別に定義する。層ごとの馬の数は first_corner の層で数える',
+  last_run_corner_count: '前走の通過順の個数。コーナー別に、前走の区分に使った過去走の通過順の数。4個は「4」、3個以下は「3-」、前走の区分がなければ「unknown」',
 };
 const ranCountOf = h => (Number.isInteger(h?.facts?.ranCount) ? h.facts.ranCount : (h?.past ?? []).filter(p => !didNotRun(p)).length);
 const runCountStratum = n => (n <= 2 ? '0-2' : n === 3 ? '3' : '4+');
@@ -248,6 +256,7 @@ function varietyStratum(horse, corner) {
   return new Set(zs).size === 1 ? 'same' : 'varied';
 }
 const emptyStratum = () => ({ horses: 0, items: 0, jev_correct: 0, always_largest_correct: 0, with_last_run: { items: 0, jev_correct: 0, last_run_correct: 0 } });
+const emptyCountStratum = () => ({ items: 0, jev_correct: 0, last_run_correct: 0 });
 const emptyAgreement = () => ({ agree: { items: 0, correct: 0 }, deviate: { items: 0, jev_correct: 0, last_run_correct: 0 }, no_last_run: { items: 0 } });
 
 function computeStrata(targets, horses, nEntry) {
@@ -255,6 +264,7 @@ function computeStrata(targets, horses, nEntry) {
   const agreement = { total: emptyAgreement(), first_corner: emptyAgreement(), last_corner: emptyAgreement() };
   const byRun = { '0-2': emptyStratum(), '3': emptyStratum(), '4+': emptyStratum() };
   const byVar = { same: emptyStratum(), varied: emptyStratum(), na: emptyStratum() };
+  const byCount = { '4': emptyCountStratum(), '3-': emptyCountStratum(), unknown: emptyCountStratum() };
   for (const h of targets) {
     byRun[runCountStratum(ranCountOf(h))].horses++;
     byVar[varietyStratum(h, 'first_corner')].horses++;
@@ -274,6 +284,10 @@ function computeStrata(targets, horses, nEntry) {
           if (lr === item.actual) S.with_last_run.last_run_correct++;
         }
       }
+      const K = byCount[cornerCountStratum(h, c)];
+      K.items++;
+      if (item.correct) K.jev_correct++;
+      if (lr !== null && lr === item.actual) K.last_run_correct++;
       for (const A of [agreement[c], agreement.total]) {
         if (lr === null) A.no_last_run.items++;
         else if (item.predicted === lr) { A.agree.items++; if (item.correct) A.agree.correct++; }
@@ -281,7 +295,7 @@ function computeStrata(targets, horses, nEntry) {
       }
     }
   }
-  return { definitions: { ...STRATA_DEFINITIONS }, agreement, by_run_count: byRun, by_variety: byVar };
+  return { definitions: { ...STRATA_DEFINITIONS }, agreement, by_run_count: byRun, by_variety: byVar, by_last_run_corner_count: byCount };
 }
 
 export function scoreRace({ entry, stage3 = null, stage4 = null, result } = {}) {
@@ -371,4 +385,57 @@ export function scoreRace({ entry, stage3 = null, stage4 = null, result } = {}) 
     contracts: { outlook: stage3?.contract ?? null, position: stage4?.contract ?? null },
     strata: computeStrata(targets, horses, nEntry),
   };
+}
+
+/* ---------- 段階間の矛盾（STEP3 のハナの想定と、STEP4 の first_corner の答え）。記録の consistency に入れる ---------- */
+/* stage3・stage4 は記録の形（buildRecord の stage3・stage4）。Jev の答えは変えず、突き合わせるだけ */
+export function consistencyOf(stage3, stage4) {
+  const lead = stage3?.answers?.lead_horse;
+  const top = lead && !lead.error ? topKey(lead) : undefined;
+  let leaderNum = null, prob = null, level = null;
+  if (top && !top.tie && top.key !== 'unclear') {
+    const m = /^h(\d{2,})$/.exec(top.key);
+    if (m) { leaderNum = +m[1]; prob = lead.probabilities.find(x => x.key === top.key).probability; level = lead.level ?? null; }
+  }
+  const results = stage4?.results ?? [];
+  const okNums = new Set(results.filter(r => r.status === 'ok').map(r => r.num));
+  const front = results.filter(r => r.status === 'ok' && topKey(r.firstCorner)?.key === 'front').map(r => r.num).sort((a, b) => a - b);
+  // STEP4 でその馬の答えがない（未実行・失敗）ときは、矛盾とはみなさない
+  const conflict = leaderNum !== null && okNums.has(leaderNum) && !front.includes(leaderNum);
+  return {
+    leader_vs_step4_front: { step3_leader: leaderNum, step3_probability: prob, step3_level: level, step4_front: front, conflict },
+    step4_front_count: front.length,
+  };
+}
+
+/* 混同行列（confusion[実際][予測]）から、区分ごとの予測の頭数と実際の頭数 */
+export function zoneCounts(confusion) {
+  const predicted = Object.fromEntries(ZONE_KEYS.map(k => [k, 0])), actual = Object.fromEntries(ZONE_KEYS.map(k => [k, 0]));
+  for (const a of ZONE_KEYS) for (const p of ZONE_KEYS) { const n = confusion?.[a]?.[p] ?? 0; predicted[p] += n; actual[a] += n; }
+  return { predicted, actual };
+}
+
+const ZONE_LABEL_JA = Object.fromEntries(ZONES.map(z => [z.key, z.label]));
+const nums = a => (a.length ? a.map(n => `${n}番`).join('、') : 'なし');
+/* 段階間の照合の文。画面と要約で同じ文面を使う */
+export function consistencyText(c) {
+  const L = c?.leader_vs_step4_front;
+  if (!L) return '—';
+  const f = `STEP4 で first_corner が先頭：${nums(L.step4_front)}`;
+  if (L.step3_leader == null) return `STEP3 の想定なし（${f}）`;
+  if (L.conflict) return `STEP3 の想定（${L.step3_leader}番）と STEP4 の答えが一致しません（${f}）`;
+  if (L.step4_front.includes(L.step3_leader)) return `STEP3 の想定（${L.step3_leader}番）と STEP4 の答えは一致（${f}）`;
+  return `STEP3 の想定（${L.step3_leader}番）は、STEP4 のその馬の答えがないため照合できません（${f}）`;
+}
+/* 頭数の比較の文（コーナー1つ分） */
+export function zoneCountsText(confusion) {
+  const z = zoneCounts(confusion), t = o => ZONE_KEYS.map(k => `${ZONE_LABEL_JA[k]}${o[k]}`).join(' ');
+  return `予測 ${t(z.predicted)} ／ 実際 ${t(z.actual)}`;
+}
+export const FEW_ITEMS = 10;
+/* 前走と違えた項目の文 */
+export function deviateText(agreement) {
+  const D = agreement?.total?.deviate;
+  if (!D) return '—';
+  return `${D.items}件、Jev の正解 ${D.jev_correct}件、前走の区分の正解 ${D.last_run_correct}件${D.items < FEW_ITEMS ? '（件数が少ないため判断できない）' : ''}`;
 }

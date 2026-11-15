@@ -356,7 +356,7 @@ async function rescore(){
   if(my!==scGen) return;
   SC=scoreRace({entry:{race:D.race,horses:D.horses},stage3:rec.stage3,stage4:rec.stage4,result:res});
   SCAT=new Date();
-  $('res-out').innerHTML=scoreHtml(SC,{stage3:rec.stage3,result:res});
+  $('res-out').innerHTML=scoreHtml(SC,{stage3:rec.stage3,result:res,consistency:rec.consistency});
   refreshFeedback();
 }
 /* ---------- フィードバック用のコピーと記録のダウンロード ---------- */
