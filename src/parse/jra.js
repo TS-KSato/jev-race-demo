@@ -1,4 +1,12 @@
-import { pad, DATE_RE } from '../util.js';
+import { pad, DATE_RE, splitJockeyMark } from '../util.js';
+import { JOCKEY_MARKS } from './result.js';
+
+// 騎手名の減量記号を取り除き、記号は jockey_mark に残す（記号がないときは jockey_mark を付けない）
+function setJockey(o,raw){
+  if(raw==null){o.jockey=raw;return;}
+  const sj=splitJockeyMark(raw,JOCKEY_MARKS);o.jockey=sj.jockey;
+  if(sj.mark) o.jockey_mark=sj.mark;
+}
 import { splitName } from './markers.js';
 
 /* ---------- STEP1: 読み取り ---------- */
@@ -159,7 +167,7 @@ function parseHorse(block,h){
     else if(x.carried==null&&(m=l.match(/^(\d+(?:\.\d)?)kg$/))){x.carried=+m[1];ci=k;}
   });
   if(ci>=0){
-    x.jockey=prof[ci+1]||null;
+    setJockey(x,prof[ci+1]||null);
     if(/^\d{2,3}$/.test(prof[ci+2]||'')){
       x.rating=+prof[ci+2];
       if(/^[SMILE](,[SMILE])*$/.test(prof[ci+3]||'')) x.ratingCategory=prof[ci+3];
@@ -190,7 +198,7 @@ function parseRace(r){
       o.finish=/^\d+着$/.test(m[1])?parseInt(m[1]):m[1]; o.field=+m[2]; o.gate=m[3]?+m[3]:null; continue;
     }
     if((m=l.match(/^(\d+)番人気$/))){o.pop=+m[1];continue;}
-    if(o.jockey===undefined&&(m=l.match(/^(.+?)\t(\d+\.\d)kg$/))){o.jockey=m[1].trim();o.carried=+m[2];continue;}
+    if(o.jockey===undefined&&(m=l.match(/^(.+?)\t(\d+\.\d)kg$/))){setJockey(o,m[1].trim());o.carried=+m[2];continue;}
     if(o.dist===undefined&&(m=l.match(/^(\d{3,4})(芝|ダ|障)/))){o.dist=+m[1];o.surface=m[2];continue;}
     if(o.dist!==undefined&&o.time===undefined&&/^(?:\d+:)?\d+\.\d$/.test(l)){o.time=l;continue;}
     if(!o.going&&/^(良|稍重|重|不良)$/.test(l)){o.going=l;continue;}

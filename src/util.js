@@ -19,3 +19,11 @@ export function formatMoisture(m){
   const parts=[ok(m?.goal)?`ゴール前 ${m.goal}%`:null,ok(m?.corner4)?`4コーナー ${m.corner4}%`:null].filter(Boolean);
   return parts.length?parts.join(' ／ '):'—';
 }
+
+/* 騎手名の先頭・末尾の減量記号を取り除く。記号だけの名前は変えない（結果ページの splitJockey と同じ考え方） */
+export function splitJockeyMark(raw,marks){
+  let j=String(raw);const removed=[];
+  while(j.length>1&&marks.includes(j[0])){removed.push(j[0]);j=j.slice(1);}
+  while(j.length>1&&marks.includes(j[j.length-1])){removed.push(j[j.length-1]);j=j.slice(0,-1);}
+  return j.trim()===''?{jockey:raw,mark:null}:{jockey:j.trim(),mark:removed.length?removed.join(''):null};
+}
