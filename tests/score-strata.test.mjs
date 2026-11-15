@@ -61,9 +61,9 @@ test('層の項目数の合計は Jev が scored の項目の総数と一致す�
 
 test('contracts・schema・定義・既存の項目', () => {
   const r = go();
-  assert.equal(r.schema, 'scoring@2');
+  assert.equal(r.schema, 'scoring@3');
   assert.deepEqual(r.contracts, { outlook: 'race-outlook@2', position: 'horse-position@3' });
-  assert.deepEqual(Object.keys(r.strata.definitions), ['item', 'last_run', 'run_count', 'variety']);
+  assert.deepEqual(Object.keys(r.strata.definitions), ['item', 'last_run', 'run_count', 'variety', 'last_run_corner_count']);
   assert.deepEqual(go({ stage3: null, stage4: { results: stage4().results } }).contracts, { outlook: null, position: null });
   assert.deepEqual(r.summary.total, { scored: 12, correct: 8, unscorable: 0, missing: 0 });
   assert.equal(r.baselines.last_run.total.no_data, 2);
@@ -73,7 +73,7 @@ test('失敗時（レースの不一致）は strata・contracts が null', () =
   const e = entry(); e.race.venue = '京都';
   const r = scoreRace({ entry: e, stage3: null, stage4: stage4(), result });
   assert.equal(r.ok, false);
-  assert.equal(r.schema, 'scoring@2');
+  assert.equal(r.schema, 'scoring@3');
   assert.equal(r.strata, null);
   assert.equal(r.contracts, null);
 });

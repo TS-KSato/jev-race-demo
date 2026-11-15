@@ -1,8 +1,8 @@
 /*
  * 採点の表示用の組み立て。HTML の文字列と整形だけを作り、DOM・ネットワーク・保存領域には触れない。
- * 入力：scoreRace の返り値（scoring@2）、記録の stage3、parseResult の返り値（着順と馬名のため）。
+ * 入力：scoreRace の返り値（scoring@3。@2 も表示できる）、記録の stage3、parseResult の返り値（着順と馬名のため）。
  */
-import { levelLabel } from './score.js';
+import { levelLabel, consistencyText, zoneCountsText, deviateText } from './score.js';
 import { formatFirst3f } from './util.js';
 
 export const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -122,6 +122,7 @@ export function summaryHtml(scoring) {
   const T = S.total;
   let h = `<div class="lbl">集計</div><div class="kv"><b>全体</b><span>採点 ${esc(T.scored)}件、正解 ${esc(T.correct)}件、正答率 ${formatRate(T.correct, T.scored)}</span>
 <b>採点不能・未実行</b><span>採点不能 ${esc(T.unscorable)}件、未実行 ${esc(T.missing)}件</span>`;
+  if (scoring.strata?.agreement) h += `<b>前走と違えた項目</b><span>${esc(deviateText(scoring.strata.agreement))}</span>`;
   for (const c of Object.keys(CORNER_LABEL)) {
     const b = S.by_corner?.[c] ?? { scored: 0, correct: 0 };
     h += `<b>${CORNER_LABEL[c]}</b><span>${formatRate(b.correct, b.scored)}（採点 ${esc(b.scored)}件、採点不能 ${esc(b.unscorable ?? 0)}件、未実行 ${esc(b.missing ?? 0)}件）</span>`;
@@ -132,6 +133,7 @@ export function summaryHtml(scoring) {
   }
   h += `</div><p class="desc">${esc(NOTE_INDEPENDENCE)}</p>`;
   h += confusionHtml(CORNER_LABEL.first_corner, S.confusion?.first_corner) + confusionHtml(CORNER_LABEL.last_corner, S.confusion?.last_corner);
+  h += `<div class="lbl">区分ごとの頭数（予測と実際）</div><div class="kv">${Object.keys(CORNER_LABEL).map(c => `<b>${CORNER_LABEL[c]}</b><span>${esc(zoneCountsText(S.confusion?.[c]))}</span>`).join('')}</div>`;
   h += '<div class="lbl">高確信で外れた馬</div>';
   const misses = S.high_confidence_misses ?? [];
   if (!misses.length) return h + '<p class="muted">なし</p>';
@@ -184,18 +186,29 @@ export function strataHtml(scoring) {
     + `<tr><td>前走の区分なし</td><td>${esc(A.no_last_run.items)}</td><td>—</td><td>—</td></tr></tbody></table></div>`;
   const R = strataRows(X);
   h += strataTable('実質走数別', R.run_count) + strataTable('通過順のばらつき別', R.variety);
+  const K = X.by_last_run_corner_count; // scoring@3 から。@2 の記録にはない
+  if (K) h += '<div class="lbl">前走の通過順の個数別</div><div class="tbl"><table><thead><tr><th>層</th><th>項目数</th><th>Jev の正解</th><th>前走の区分の正解</th></tr></thead><tbody>'
+    + [['4', '4個'], ['3-', '3個以下'], ['unknown', '不明']].map(([k, l]) => { const g = K[k] ?? { items: 0, jev_correct: 0, last_run_correct: 0 }; return `<tr><td>${l}</td><td>${esc(g.items)}</td><td>${formatRate(g.jev_correct, g.items)}</td><td>${formatRate(g.last_run_correct, g.items)}</td></tr>`; }).join('')
+    + '</tbody></table></div>';
   return h + `<p class="desc">${esc(NOTE_STRATA)}</p><p class="desc">契約：${label(scoring.contracts?.outlook)} / ${label(scoring.contracts?.position)}</p>`;
 }
 
 /* ---------- 全体 ---------- */
-export function scoreHtml(scoring, { stage3 = null, result = null } = {}) {
+/* 段階間の照合（STEP3 のハナの想定と STEP4 の first_corner）。Jev の答えは変えない */
+export function consistencyHtml(consistency) {
+  const L = consistency?.leader_vs_step4_front;
+  if (!L) return '';
+  const msg = L.conflict ? `<div class="warn">STEP3 の想定（${esc(L.step3_leader)}番）と STEP4 の答えが一致しません</div>` : '';
+  return `<div class="lbl">段階間の照合</div>${msg}<p class="desc">${esc(consistencyText(consistency))}</p>`;
+}
+export function scoreHtml(scoring, { stage3 = null, result = null, consistency = null } = {}) {
   if (!scoring) return '';
   if (!scoring.ok) {
     return `<div class="err">${esc(MSG_MISMATCH)}<ul>${(scoring.reasons ?? []).map(r => `<li>${esc(r.message)}</li>`).join('')}</ul></div>`;
   }
   let h = '';
   if (scoring.warnings?.length) h += `<div class="warn">採点時の注意（${scoring.warnings.length}件）<ul>${scoring.warnings.map(w => `<li>${esc(w.code)}：${esc(w.message)}</li>`).join('')}</ul></div>`;
-  return h + factsHtml(scoring, result) + paceHtml(scoring, stage3) + leaderHtml(scoring, result, stage3) + horsesHtml(scoring, result) + summaryHtml(scoring) + baselinesHtml(scoring) + strataHtml(scoring);
+  return h + factsHtml(scoring, result) + paceHtml(scoring, stage3) + leaderHtml(scoring, result, stage3) + consistencyHtml(consistency) + horsesHtml(scoring, result) + summaryHtml(scoring) + baselinesHtml(scoring) + strataHtml(scoring);
 }
 
 /* 読み取りの警告の一覧（コードとメッセージ） */

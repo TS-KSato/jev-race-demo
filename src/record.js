@@ -5,9 +5,9 @@
  *   s3: null | {parsed, meta{method,at,request?{state,questions}}, state, overrides, error?}   s3Error: null | {kind,message,at}
  *   s4: null | {results, usedOutlook, usedOverridden, aborted, cancelled, states{馬番:state}}
  *   result（任意）: parseResult の返り値（race-result@1。警告を含む。結果ページの本文は含まない）
- *   scoring（任意）: scoreRace の返り値（scoring@2）   scoredAt（任意）: 採点した日時
+ *   scoring（任意）: scoreRace の返り値（scoring@3。@2 の記録も読める）   scoredAt（任意）: 採点した日時
  */
-import { describeAnswer, outlookFromAnswers, levelLabel } from './score.js';
+import { describeAnswer, outlookFromAnswers, levelLabel, consistencyOf, consistencyText, zoneCountsText, deviateText } from './score.js';
 import { zoneRanges } from './derive.js';
 import { paceLabels, RACE_OUTLOOK_V1, HORSE_POSITION_V2 } from './contracts.js';
 import { MODEL_ID, estimateCostUsd } from './jev.js';
@@ -197,6 +197,7 @@ export async function buildRecord(ctx) {
     userInput: { memo: String(ctx.userInput?.memo ?? '') },
     execution: executionOf(ctx),
     stage3, stage4,
+    consistency: consistencyOf(stage3, stage4),
     result: ctx.result ? structuredClone(ctx.result) : null,
     scoring: ctx.result && ctx.scoring ? structuredClone(ctx.scoring) : null,
     scoredAt: ctx.result && ctx.scoring ? isoWithOffset(ctx.scoredAt ?? ctx.now) : null,
@@ -273,12 +274,21 @@ function scoringDetail(ctx) {
   L.push(scoringItems(ctx).join(' '));
   const P = ctx.result.pace || {}, d = v => (typeof v === 'number' && Number.isFinite(v) ? `${v > 0 ? '+' : ''}${v.toFixed(1)}` : '—');
   L.push(`前半3F：${formatFirst3f(P.first_3f, ctx.result.race?.distance)} ／ 後半3F：${typeof P.last_3f === 'number' ? P.last_3f.toFixed(1) : '—'} ／ 差（後半 − 前半）：${d(P.first_last_diff)}`);
+  if (S.strata?.agreement) L.push(`前走と違えた項目：${deviateText(S.strata.agreement)}`);
+  for (const c of ['first_corner', 'last_corner']) L.push(`${CL[c]}の頭数：${zoneCountsText(S.summary.confusion?.[c])}`);
   for (const h of S.horses) L.push(`${h.number}番 ${h.name}：最初のコーナー ${itemText(h.first_corner)} ／ 最後のコーナー ${itemText(h.last_corner)}`);
   const ms = S.summary.high_confidence_misses;
   L.push(`高確信で外れた馬：${ms.length ? '' : 'なし'}`);
   for (const m of ms) L.push(`- ${m.number}番 ${m.name} ${CL[m.corner] ?? m.corner} 予測 ${ZL[m.predicted] ?? '—'} 実際 ${ZL[m.actual] ?? '—'} confidence ${m.confidence ?? '—'}`);
   L.push(...strataText(S));
   return L;
+}
+
+/* 段階間の照合を ctx から作る（記録の consistency と同じ値） */
+function consistencyCtx(ctx) {
+  const s3 = ctx.s3 ? { answers: { lead_horse: s3Answers(ctx).lead_horse } } : null;
+  const s4 = ctx.s4 ? { results: ctx.s4.results.map(r => ({ num: r.num, status: r.status, firstCorner: r.status === 'ok' ? s4Corners(ctx, r).firstCorner : null })) } : null;
+  return consistencyOf(s3, s4);
 }
 
 /* ---------- 要約の1行 ---------- */
@@ -325,6 +335,11 @@ export function buildSummaryLine(ctx) {
     `exec=${ex.blindClass} 実行=${runSpan(ex)} 発走=${ex.postTimeIso ?? '不明'}`);
   const track = [T.weather, T.turfGoing, present(T.cushion) ? `CV${T.cushion}` : null, T.announcedAt ? `発表=${T.announcedAt}` : null].filter(present).join(' ');
   if (track) parts.push(`track=${track}`);
+  if (ctx.s3 || ctx.s4) {
+    const L = consistencyCtx(ctx).leader_vs_step4_front;
+    const st = L.step3_leader == null ? 'none' : L.conflict ? 'conflict' : L.step4_front.includes(L.step3_leader) ? 'ok' : 'na';
+    parts.push(`consist=${st} lead=${L.step3_leader ?? '-'} s4front=${L.step4_front.join(',') || '-'}`);
+  }
   if (ctx.s3) {
     const m = ctx.s3.meta?.method === 'api' ? 'api' : 'paste';
     parts.push(['S3=' + m, '成功', `model=${ctx.s3.parsed.answeredModel ?? '不明'}`, `ctr=${s3Label(ctx)}`, ...outlookItems(ctx)].join(' '));
@@ -382,6 +397,7 @@ export function buildDetailText(ctx) {
       else L.push(`${r.num}番 ${r.name}：未実行`);
     }
   }
+  if (ctx.s3 || ctx.s4) L.push('', '【段階間の照合】', consistencyText(consistencyCtx(ctx)));
   if (ctx.result && ctx.scoring) L.push(...scoringDetail(ctx));
   return L.join('\n');
 }
