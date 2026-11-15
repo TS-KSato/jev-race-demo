@@ -37,6 +37,13 @@ export function checkLimits(request) {
   return { ok, total, stateAndLongest, limits: LIMITS };
 }
 
+/* 目安が上限を超えたときの警告文（送信は止めない）。超えていなければ null */
+export function limitWarning(check) {
+  if (!check || check.ok) return null;
+  const L = check.limits;
+  return `リクエストの大きさが上限の目安を超えています（全体 ${check.total}／${L.requestTokens}、state と最大の質問 ${check.stateAndLongest}／${L.stateAndLongestQuestionTokens}。1文字を1トークンとみなした目安）。目安は実際より多めで、実際に超えているとは限らないため、送信は止めません。実際に超えている場合は、Jev のエラーが表示されます。`;
+}
+
 export function estimateCostUsd(inputTokens) {
   if (inputTokens == null) return null;
   return inputTokens * PRICE.usdPerMillionInputTokens / 1000000;

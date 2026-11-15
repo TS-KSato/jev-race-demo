@@ -75,9 +75,11 @@ export async function callRelay({ contract, state, questions, password, fetchImp
       const why = await reasonOf(text);
       throw new RelayError('contract', `リクエストが契約と合いません${why ? `（${why}）` : ''}`);
     }
-    if (st === 413) throw new RelayError('size', 'リクエストが大きすぎます');
+    // 中継関数が返した理由（例：「Jev がエラーを返しました（status 400）」）は言い換えずに添える
+    const why = await reasonOf(text), withWhy = m => (why ? `${m}（中継関数の応答：${why}）` : m);
+    if (st === 413) throw new RelayError('size', withWhy('リクエストが大きすぎます'));
     if (st === 500) throw new RelayError('config', 'サーバーの設定が不足しています');
-    if (st === 502 || st === 504) throw new RelayError('upstream', st === 504 ? 'Jev の応答がタイムアウトしました。手で再実行してください' : 'Jev との通信でエラーが発生しました。手で再実行してください');
+    if (st === 502 || st === 504) throw new RelayError('upstream', withWhy(st === 504 ? 'Jev の応答がタイムアウトしました。手で再実行してください' : 'Jev との通信でエラーが発生しました。手で再実行してください'));
     throw new RelayError('other', `中継関数からの応答が想定外です（状態：${st}）`);
   }
 }

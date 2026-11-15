@@ -5,7 +5,7 @@ import { validate } from './parse/validate.js';
 import { raceBlock, raceState, raceQuestions, horseRequest } from './requests.js';
 import { CONTRACT_SETS, DEFAULT_SET, RACE_OUTLOOK_V1, setOfLabel } from './contracts.js';
 import { outlookFromValues, outlookFromAnswers, describeAnswer } from './score.js';
-import { MODEL_ID, PRICE, buildRequest, checkLimits, parseResponse, estimateCostUsd } from './jev.js';
+import { MODEL_ID, PRICE, buildRequest, checkLimits, limitWarning, parseResponse, estimateCostUsd } from './jev.js';
 import { paceLabels } from './contracts.js';
 import { callRelay, isRelayAvailable } from './client.js';
 import { runStage4, summarizeStage4, isStale } from './stage4.js';
@@ -174,9 +174,8 @@ function showMeta(stateId,contract,req){
   const grid=$(stateId).closest('.grid');
   let box=document.getElementById(stateId+'-meta');
   if(!box){box=document.createElement('div');box.id=stateId+'-meta';grid.before(box);}
-  const c=checkLimits(req),L=c.limits;
-  box.innerHTML=`<div class="lbl">契約：${esc(contract.label)} ／ モデル：${esc(MODEL_ID)}</div>`+(c.ok?'':
-    `<div class="warn">リクエストの大きさが上限の目安を超えています（全体 ${c.total}／${L.requestTokens}、state と最大の質問 ${c.stateAndLongest}／${L.stateAndLongestQuestionTokens}。1文字を1トークンとみなした目安）</div>`);
+  const w=limitWarning(checkLimits(req));
+  box.innerHTML=`<div class="lbl">契約：${esc(contract.label)} ／ モデル：${esc(MODEL_ID)}</div>`+(w?`<div class="warn">${esc(w)}</div>`:'');
 }
 function renderS3(){
   const set=setKey(),st=raceState(D,set),qs=raceQuestions(D,set),req=buildRequest(st,qs);
@@ -287,8 +286,15 @@ function outlookText(ol){
   if(!ol) return 'なし';
   return ['expected_leader','early_lead_battle','pace'].filter(k=>k in ol).map(k=>`<code>${esc(ol[k])}</code>`).join(' ');
 }
+// STEP4 で目安を超える馬の警告（送信は止めない）
+function renderSize4(){
+  const box=$('x4-size');if(!box) return;
+  if(!D){box.innerHTML='';return;}
+  const set=setKey(),over=D.horses.map(h=>{const r=horseRequest(D,h,outlook(),set);return {h,w:limitWarning(checkLimits(buildRequest(r.state,r.questions)))};}).filter(x=>x.w);
+  box.innerHTML=over.length?`<div class="warn">${over.map(x=>`${x.h.num}番 ${esc(x.h.name)}：${esc(x.w)}`).join('<br>')}</div>`:'';
+}
 function renderStage4(){
-  renderProgress4();
+  renderProgress4();renderSize4();
   const box=$('x4-out');
   if(!D||!S4){
     box.innerHTML=''; $('x4-retry').hidden=true;

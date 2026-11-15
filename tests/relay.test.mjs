@@ -141,13 +141,14 @@ test('400 の本文にリクエストの内容を含めない', async () => {
   assert.ok(!out.body.includes('LEAK-MARKER'));
 });
 
-test('512KB 超は 413、Jev の上限超過も 413', async () => {
+test('512KB 超は 413。大きさの目安が Jev の上限を超えても、止めずに転送する', async () => {
   let r = await relay(null, { raw: 'x'.repeat(512 * 1024 + 1) });
   assert.equal(r.out.status, 413); assert.equal(r.calls.length, 0);
   const b = outlookBody();
-  b.state.race_facts.pad = 'あ'.repeat(40000); // 契約の形の検査は通るが state が大きい
+  b.state.race_facts.pad = 'あ'.repeat(40000); // 契約の形の検査は通るが state が大きい（目安は上限超過）
   r = await relay(b);
-  assert.equal(r.out.status, 413); assert.equal(r.calls.length, 0);
+  assert.equal(r.out.status, 200); assert.equal(r.calls.length, 1);
+  assert.equal(JSON.parse(r.calls[0].init.body).state.race_facts.pad.length, 40000);
 });
 
 test('上流 429 は Retry-After つきで返す', async () => {
